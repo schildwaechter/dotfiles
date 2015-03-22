@@ -1,0 +1,9 @@
+---
+:hierarchy:
+  - "%{::hostname}"
+  - default
+:backends:
+  - yaml
+:yaml:
+  :datadir: "%{::homedir}/%{::dotsecrets}/hiera"
+
