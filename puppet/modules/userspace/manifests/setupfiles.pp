@@ -19,7 +19,7 @@ class userspace::setupfiles {
     backup => true,
   }
   userspace::dotfilelink { 'conkyrc':
-    targetfile => "${::dotfiles}/${userspace::conkyrc}",
+    targetfile => $userspace::conkyrc,
     linkfile   => '.conkyrc',
   }
   file { "${::homedir}/.bashrc_dotfiles":

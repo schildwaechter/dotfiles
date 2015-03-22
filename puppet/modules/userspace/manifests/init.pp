@@ -1,7 +1,7 @@
 class userspace (
     $displayname       = $::id,
     $mailaddress       = "${::id}@${::fqdn}",
-    $conkyrc           = "conkyrc-${::hostname}",
+    $conkyrc           = "${::dotfiles}/conkyrc-default",
     $taskd_credentials = '',
     $taskd_server      = '',
     $grip_github_token = '',
