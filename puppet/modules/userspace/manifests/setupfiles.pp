@@ -36,7 +36,7 @@ dotfiles ()
       /bin/bash ${::homedir}/${::dotfiles}/install.sh autorun
     ;;
     *update)
-      cd ${::homedir}/${::dotfiles} && git pull && cd -
+      cd ${::homedir}/${::dotfiles} && git pull && git submodule init && git submodule sync && git submodule update && cd -
     ;;
     *status)
       cd ${::homedir}/${::dotfiles} && git status && cd -
