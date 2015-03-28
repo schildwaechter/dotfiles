@@ -9,9 +9,9 @@ class software::sysconfigchanges {
 
   exec { 'uscat_evdev_xml.py':
     path    => ['/usr/bin','/bin','/usr/sbin'],
-    command => "sudo python ${::dotfilespath}/bin/uscat_evdev_xml.py",
+    command => "sudo python ${::dotfilespath}/us_cat/evdev_xml_entry.py",
     unless  => 'grep CaT /usr/share/X11/xkb/rules/evdev.xml',
-    require => Class['Software::Aptinstalls'],
+    require => Class['Software::Otherinstalls'],
   }
 
   if $software::us_cat_default {
@@ -43,7 +43,6 @@ class software::sysconfigchanges {
       'set net.ipv6.conf.wlan2.use_tempaddr 2',
     ],
   }
-
 
 }
 

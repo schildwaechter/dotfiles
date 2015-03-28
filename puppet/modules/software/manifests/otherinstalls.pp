@@ -13,11 +13,19 @@ class software::otherinstalls {
   }
 
   file {'/usr/share/X11/xkb/symbols/us_cat':
+    ensure => present,
     owner  => 'root',
     group  => 'root',
     mode   => '0644',
+    source => "${::dotfilespath}/us_cat/us_cat",
+  }
+
+  file {'/usr/share/X11/xkb/symbols/de_cat':
     ensure => present,
-    source => "${::dotfilespath}/us_cat",
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+    source => "${::dotfilespath}/us_cat/de_cat",
   }
 
 }

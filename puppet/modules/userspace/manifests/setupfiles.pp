@@ -36,10 +36,10 @@ dotfiles ()
       /bin/bash ${::homedir}/${::dotfiles}/install.sh autorun
     ;;
     *update)
-      cd ${::homedir}/${::dotfiles} && hg pull && hg update && cd -
+      cd ${::homedir}/${::dotfiles} && git pull && cd -
     ;;
     *status)
-      cd ${::homedir}/${::dotfiles} && hg status && cd -
+      cd ${::homedir}/${::dotfiles} && git status && cd -
     ;;
     *software)
       echo \"Running 'sudo puppet apply'\" 

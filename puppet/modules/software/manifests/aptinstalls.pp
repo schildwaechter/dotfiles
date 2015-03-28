@@ -22,6 +22,7 @@ class software::aptinstalls {
     'dnsutils':                  ensure => installed;
     'python-pip':                ensure => installed;
     'python-virtualenv':         ensure => installed;
+    'python3-lxml':              ensure => installed;
     'pidgin':                    ensure => installed;
     'pidgin-gnome-keyring':      ensure => installed;
     'pidgin-libnotify':          ensure => installed;
