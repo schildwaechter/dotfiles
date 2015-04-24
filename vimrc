@@ -33,8 +33,9 @@ set noswapfile
 set fileformat=unix
 set backspace=indent,eol,start
 set nofoldenable
-let g:latex_fold_enabled=0
-let g:vim_markdown_folding_disabled=1
+let g:vimtex_fold_enabled = 0
+let g:vimtex_quickfix_open_on_warning = 0
+let g:vim_markdown_folding_disabled = 1
 
 inoremap <Down> <C-O>gj
 inoremap <Up> <C-O>gk
