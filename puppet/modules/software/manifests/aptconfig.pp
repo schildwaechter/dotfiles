@@ -9,7 +9,7 @@ class software::aptconfig {
     release     => '',
     repos       => '/',
     include_src => false,
-    key         => 'BA684223',
+    key         => 'F9EA4996747310AE79474F44977C43A8BA684223',
     key_source  => 'http://download.opensuse.org/repositories/isv:ownCloud:desktop/xUbuntu_14.04/Release.key',
   }
 
@@ -18,7 +18,7 @@ class software::aptconfig {
     release     => 'stable',
     repos       => 'main',
     include_src => false,
-    key         => '7FAC5991',
+    key         => '4CCA1EAF950CEE4AB83976DCA040830F7FAC5991',
   }
 
   apt::source { 'dropbox':
@@ -26,12 +26,10 @@ class software::aptconfig {
     release     => 'trusty',
     repos       => 'main',
     include_src => false,
-    key         => '5044912E',
+    key         => '1C61A2656FB57B7E4DE0F4C1FC918B335044912E',
   }
 
   apt::ppa { 'ppa:stebbins/handbrake-snapshots': }
-  apt::ppa { 'ppa:jfi/ptask': }
-  apt::ppa { 'ppa:jd-team/jdownloader': }
   apt::ppa { 'ppa:cdemu/ppa': }
   apt::ppa { 'ppa:pidgin-gnome-keyring/ppa': }
 
@@ -40,7 +38,7 @@ class software::aptconfig {
     release     => '',
     repos       => '/',
     include_src => false,
-    key         => 'B84288D9',
+    key         => '8F0845FE77B16294429A79346BCA5E4DB84288D9',
   }
 
 }

@@ -9,22 +9,31 @@ class userspace::setupfiles {
   ]
   userspace::simpledotfilelink { $simpledotfilelinks : }
 
-  userspace::dotfilelink { 'powerline-symbols':
-    targetfile => "${::dotfiles}/powerline-symbols.conf",
-    linkfile   => '.config/fontconfig/conf.d/10-powerline-symbols.conf',
+  if $::operatingsystem == 'Ubuntu' {
+    userspace::dotfilelink { 'powerline-symbols':
+      targetfile => "${::dotfiles}/powerline-symbols.conf",
+      linkfile   => '.config/fontconfig/conf.d/10-powerline-symbols.conf',
+    }
+    file { "${::homedir}/.local/share/applications/mimeapps.list":
+      ensure => present,
+      source => "${::homedir}/${::dotfiles}/local-mimeapps.list",
+      backup => true,
+    }
+    userspace::dotfilelink { 'conkyrc':
+      targetfile => $userspace::conkyrc,
+      linkfile   => '.conkyrc',
+    }
   }
-  file { "${::homedir}/.local/share/applications/mimeapps.list":
-    ensure => present,
-    source => "${::homedir}/${::dotfiles}/local-mimeapps.list",
-    backup => true,
+
+  if $::operatingsystem == 'Ubuntu' {
+    $gmvimalias = "alias mvim='gvim'"
+  } elsif $::operatingsystem == 'Darwin' {
+    $gmvimalias = "alias gvim='mvim'"
   }
-  userspace::dotfilelink { 'conkyrc':
-    targetfile => $userspace::conkyrc,
-    linkfile   => '.conkyrc',
-  }
+
   file { "${::homedir}/.bashrc_dotfiles":
     ensure  => present,
-    content => "# ~/.bashrc EXTENSION
+    content => inline_template("# ~/.bashrc EXTENSION
 # ###################
 # INSTALLED BY PUPPET
 # ###################
@@ -33,27 +42,33 @@ dotfiles ()
   case \$1 in
     *upgrade)
       echo \"Running 'puppet apply'\" 
-      /bin/bash ${::homedir}/${::dotfiles}/install.sh autorun
+      /bin/bash <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/install.sh autorun
     ;;
     *update)
-      cd ${::homedir}/${::dotfiles} && git pull && git submodule init && git submodule sync && git submodule update && cd -
+      cd <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %> && git pull && git submodule init && git submodule sync && git submodule update && cd -
     ;;
     *status)
-      cd ${::homedir}/${::dotfiles} && git status && cd -
+      cd <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %> && git status && cd -
     ;;
+<% if scope['::operatingsystem'] == 'Ubuntu' -%>
     *software)
       echo \"Running 'sudo puppet apply'\" 
-      env FACTER_dotfilespath=${::homedir}/${::dotfiles} sudo -E puppet apply \\
-        --modulepath ${::homedir}/${::dotfiles}/puppet/modules \\
-        --hiera_config ${::homedir}/${::dotfiles}/puppet/hiera.yaml \\
-        ${::homedir}/${::dotfiles}/puppet/manifest.pp
+      env FACTER_dotfilespath=<%= scope['::homedir'] %>/<%= scope['::dotfiles'] %> sudo -E puppet apply \\
+        --modulepath<%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/puppet/modules \\
+        --hiera_config <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/puppet/hiera.yaml \\
+        <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/puppet/manifest.pp
     ;;
+<% end -%>
     *)
       echo -e \"Usage:\"
       echo -e \"dotfiles upgrade  [install dotfiles via puppet apply] \"
       echo -e \"dotfiles update   [update dotfile repository] \"
       echo -e \"dotfiles status   [check dotfiles repository status] \"
+<% if scope['::operatingsystem'] == 'Ubuntu' -%>
       echo -e \"dotfiles software [install software via sudo puppet apply] \\n\"
+<% else -%>
+      echo -e \"\nSoftware is managed through boxen!\"
+<% end -%>
       tput sgr0
     ;;
   esac
@@ -61,18 +76,23 @@ dotfiles ()
 _dotfiles()
 {
     local cur=\${COMP_WORDS[COMP_CWORD]}
+<% if scope['::operatingsystem'] == 'Ubuntu' -%>
     COMPREPLY=( \$(compgen -W \"upgrade update status software\" -- \$cur) )
+<% else -%>
+    COMPREPLY=( \$(compgen -W \"upgrade update status\" -- \$cur) )
+<% end -%>
 }
 complete -F _dotfiles dotfiles
 
+<%= scope['::userspace::setupfiles::gmvimalias'] %>
 
-export DEBFULLNAME='${userspace::displayname}'
-export DEBEMAIL='${userspace::mailaddress}'
+export DEBFULLNAME='<%= scope['::userspace::displayname'] %>'
+export DEBEMAIL='<%= scope['::userspace::mailaddress'] %>'
 
 # ###############
 # DO EDITS THERE:
-. ~/${::dotfiles}/bashrc
-    "
+. ~/<%= scope['::dotfiles'] %>/bashrc
+    "),
   }
 
   exec { 'install_bashrc_dotfiles':
@@ -145,18 +165,20 @@ fi
     require => File["${::homedir}/.ssh"],
   }
   
-  $dotfileexecutables = [
-    'gitdiff.py',
-    'myipv4',
-    'myipv6',
-    'colog',
-    'gtk_cleanup.py',
-  ]
-  userspace::dotfileexecutable { $dotfileexecutables: }
+  if $::operatingsystem == 'Ubuntu' {
+    $dotfileexecutables = [
+      'gitdiff.py',
+      'myipv4',
+      'myipv6',
+      'colog',
+      'gtk_cleanup.py',
+    ]
+    userspace::dotfileexecutable { $dotfileexecutables: }
 
-  file { "${::homedir}/.config/xfce4/terminal/terminalrc":
-    ensure  => present,
-    source => "${::homedir}/${::dotfiles}/xfce4-terminalrc",
+    file { "${::homedir}/.config/xfce4/terminal/terminalrc":
+      ensure  => present,
+      source => "${::homedir}/${::dotfiles}/xfce4-terminalrc",
+    }
   }
 
   file { "${::homedir}/.grip/settings.py":
