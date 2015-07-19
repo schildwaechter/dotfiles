@@ -40,10 +40,15 @@ export EDITOR="vim"
 alias cp='cp -i'
 alias mv='mv -i'
 
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
+if [[ -n `which gdircolors` ]]; then
+    test -r ~/.dircolors && eval "$(gdircolors -b ~/.dircolors)" || eval "$(gdircolors -b)"
 
+    alias grepc='grep -n --color=auto'
+    alias fgrepc='fgrep -n --color=auto'
+    alias egrepc='egrep -n --color=auto'
+elif [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    
     alias grepc='grep -n --color=auto'
     alias fgrepc='fgrep -n --color=auto'
     alias egrepc='egrep -n --color=auto'
@@ -57,13 +62,35 @@ fi
 ###############################################
 #### lots of aliases ...
 
-alias ks='ls'
-alias l='ls -lF --time-style=+\ %d.%m.%Y\ %R'
-alias la='ls -ACF'
-alias ll='ls -alF --time-style=+\ %d.%m.%Y\ %R'
-alias ls='ls -CF --color=auto'
-alias lt='ls -alrtF --time-style=+\ %d.%m.%Y\ %R'
-alias l.='ls -d .[[:alnum:]]* 2> /dev/null || echo "No hidden file here..."'		# list only hidden files
+if [[ `uname` == 'Darwin' ]]; then
+  if [[ -n `which gls` ]]; then
+    alias ls='gls -CF    --color=auto'
+    alias ks='gls -CF    --color=auto'
+    alias l='gls  -lF    --color=auto --time-style=+\ %d.%m.%Y\ %R'
+    alias la='gls -ACF   --color=auto'
+    alias ll='gls -alF   --color=auto --time-style=+\ %d.%m.%Y\ %R'
+    alias ls='gls -CF    --color=auto'
+    alias lt='gls -alrtF --color=auto --time-style=+\ %d.%m.%Y\ %R'
+    alias l.='gls --color=auto -d .[[:alnum:]]* 2> /dev/null || echo "No hidden file here..."'		# list only hidden files
+  else
+    alias ls='ls -CF'
+    alias ks='ls -CF'
+    alias l='ls  -lF'
+    alias la='ls -ACF'
+    alias ll='ls -alF'
+    alias ls='ls -CF'
+    alias lt='ls -alrtF'
+    alias l.='ls -d .[[:alnum:]]* 2> /dev/null || echo "No hidden file here..."'		# list only hidden files
+  fi
+else
+  alias ls='ls -CF    --color=auto'
+  alias ks='ls -CF    --color=auto'
+  alias l='ls  -lF    --color=auto --time-style=+\ %d.%m.%Y\ %R'
+  alias la='ls -ACF   --color=auto'
+  alias ll='ls -alF   --color=auto --time-style=+\ %d.%m.%Y\ %R'
+  alias lt='ls -alrtF --color=auto --time-style=+\ %d.%m.%Y\ %R'
+  alias l.='ls -d .[[:alnum:]]* 2> /dev/null || echo "No hidden file here..."'		# list only hidden files
+fi
 
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -78,8 +105,16 @@ alias dum='du -h | grep ^[0-9.]*M | sort -rn | head -n 20 | cut -d: -f2'
 
 alias schriftenliste="fc-list '' family | sort -u"
 alias myinxi='inxi -CGiISs'
-alias du0='du --max-depth=0'
-alias du1='du --max-depth=1'
+if [[ `uname` == 'Darwin' ]]; then
+  if [[ -n `which gdu` ]]; then
+    alias du='gdu'
+    alias du0='gdu --max-depth=0'
+    alias du1='gdu --max-depth=1'
+  fi
+else
+  alias du0='du --max-depth=0'
+  alias du1='du --max-depth=1'
+fi
 
 alias tcal='cal | sed "s/^/ /;s/$/ /;s/ $(date +%e) / $(date +%e | sed '\''s/./#/g'\'') /"'
 

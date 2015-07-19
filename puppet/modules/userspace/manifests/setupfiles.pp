@@ -121,7 +121,7 @@ export FACTER_dotsecrets=<%= scope['::dotsecrets'] %>
 
 # ###############
 # DO EDITS THERE:
-. \$HOME/<%= scope['::dotfiles'] %>/profile
+source \$HOME/<%= scope['::dotfiles'] %>/profile
     "),
   }
 
@@ -139,16 +139,27 @@ fi
 
   file { "${::homedir}/.gitconfig":
     ensure  => present,
-    content => "[user]
-    name = ${userspace::displayname}
-    email = ${userspace::mailaddress}
+    content =>  inline_template("[user]
+    name = <%= scope['::userspace::displayname'] %>
+    email = <%= scope['::userspace::mailaddress']%>
 
 [diff]
-    external = ${::homedir}/.bin/gitdiff.py
+    external = <%= scope['::homedir']%>/.bin/gitdiff.py
 
 [include]
-    path = ${::homedir}/${::dotfiles}/gitconfig
-    "
+    path = <%= scope['::homedir']%>/<%= scope['::dotfiles']%>/gitconfig
+
+<% if scope['::operatingsystem'] == 'Darwin' -%>
+[core]
+    editor = /usr/bin/vim
+<% if scope['::boxen'] == 'true' -%>
+    excludesfile = /opt/boxen/config/git/gitignore
+
+[credential]
+    helper = /opt/boxen/bin/boxen-git-credential
+<% end -%>
+<% end -%>
+    ")
   }
 
   userspace::dotfilessh { $userspace::sshkeys :
@@ -179,6 +190,11 @@ fi
       ensure  => present,
       source => "${::homedir}/${::dotfiles}/xfce4-terminalrc",
     }
+  } elsif $::operatingsystem == 'Darwin' {
+    $dotfileexecutables = [
+      'gitdiff.py',
+    ]
+    userspace::dotfileexecutable { $dotfileexecutables: }
   }
 
   file { "${::homedir}/.grip/settings.py":

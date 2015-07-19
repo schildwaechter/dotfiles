@@ -9,7 +9,7 @@ fi
 puppet apply \
   --modulepath $HOME/$FACTER_dotfiles/puppet/modules \
   --hiera_config $HOME/$FACTER_dotfiles/puppet/hiera.yaml \
-  $HOME/$FACTER_dotfiles/puppet/manifest.pp
+  --show_diff $HOME/$FACTER_dotfiles/puppet/manifest.pp
 
 if [[ $# -eq 0 ]] ; then
   echo '---'
