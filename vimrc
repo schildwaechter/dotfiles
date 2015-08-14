@@ -45,6 +45,7 @@ noremap <Up> gk
 " syntastic
 let g:syntastic_puppet_checkers=['puppetlint']
 let g:syntastic_puppet_puppetlint_args='--no-80chars-check --no-class_inherits_from_params_class-check'
+let g:syntastic_eruby_ruby_quiet_messages = {"regex": "possibly useless use of a variable in void context"}
 let g:syntastic_tex_checkers = ['']
 let g:syntastic_python_checkers = ['pylint']
 let g:syntastic_enable_signs = 0
