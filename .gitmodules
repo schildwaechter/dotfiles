@@ -51,7 +51,7 @@
 	url = https://github.com/tpope/vim-unimpaired
 [submodule "us_cat"]
 	path = us_cat
-	url = git@github.com:frejbow/us_cat.git
+	url = https://github.com/schildwaechter/us_cat.git
 [submodule "vim/bundle/jedi-vim"]
 	path = vim/bundle/jedi-vim
 	url = https://github.com/davidhalter/jedi-vim.git

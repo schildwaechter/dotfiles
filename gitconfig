@@ -11,3 +11,5 @@
     lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(blue)%h%C(reset) - %C(bold blue)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
     search = "!f() { git rev-list --all | xargs git grep -F $1; }; f"
     rb = "!f() { git rebase -i HEAD~$1; }; f"
+    wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+    up = !git pull --rebase --prune $@ && git submodule update --init --recursive

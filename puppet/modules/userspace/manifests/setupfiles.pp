@@ -53,8 +53,8 @@ dotfiles ()
 <% if scope['::operatingsystem'] == 'Ubuntu' -%>
     *software)
       echo \"Running 'sudo puppet apply'\" 
-      env FACTER_dotfilespath=<%= scope['::homedir'] %>/<%= scope['::dotfiles'] %> sudo -E puppet apply \\
-        --modulepath<%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/puppet/modules \\
+      env FACTER_dotfilespath=<%= scope['::homedir'] %>/<%= scope['::dotfiles'] %> sudo -E <%= scope['::puppetbin'] apply \\
+        --modulepath <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/puppet/modules \\
         --hiera_config <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/puppet/hiera.yaml \\
         <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/puppet/manifest.pp
     ;;
@@ -115,6 +115,7 @@ fi
 # ###################
 export FACTER_homedir=\$HOME
 export FACTER_dotfiles=<%= scope['::dotfiles'] %>
+export FACTER_puppetbin=<%= scope['::puppetbin'] %>
 <% if scope['::userspace::include_dotsecrets'] == true -%>
 export FACTER_dotsecrets=<%= scope['::dotsecrets'] %>
 <% end -%>
