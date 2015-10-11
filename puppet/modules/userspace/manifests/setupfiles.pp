@@ -53,7 +53,7 @@ dotfiles ()
 <% if scope['::operatingsystem'] == 'Ubuntu' -%>
     *software)
       echo \"Running 'sudo puppet apply'\" 
-      env FACTER_dotfilespath=<%= scope['::homedir'] %>/<%= scope['::dotfiles'] %> sudo -E <%= scope['::puppetbin'] apply \\
+      env FACTER_dotfilespath=<%= scope['::homedir'] %>/<%= scope['::dotfiles'] %> sudo -E <%= scope['::puppetbin'] %> apply \\
         --modulepath <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/puppet/modules \\
         --hiera_config <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/puppet/hiera.yaml \\
         <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/puppet/manifest.pp
@@ -116,7 +116,7 @@ fi
 export FACTER_homedir=\$HOME
 export FACTER_dotfiles=<%= scope['::dotfiles'] %>
 export FACTER_puppetbin=<%= scope['::puppetbin'] %>
-<% if scope['::userspace::include_dotsecrets'] == true -%>
+<% if scope['::dotsecrets'] -%>
 export FACTER_dotsecrets=<%= scope['::dotsecrets'] %>
 <% end -%>
 
@@ -176,7 +176,7 @@ fi
     linkfile   => '.ssh/config',
     require => File["${::homedir}/.ssh"],
   }
-  
+ 
   if $::operatingsystem == 'Ubuntu' {
     $dotfileexecutables = [
       'gitdiff.py',

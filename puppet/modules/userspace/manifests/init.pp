@@ -14,12 +14,7 @@ class userspace (
     require => Class['userspace::setupdirs'],
   }
 
-  if empty($::dotsecrets) {
-    $include_dotsecrets = false
-  } else {
-    $include_dotsecrets = true
-  }
-  if $include_dotsecrets {
+  unless empty($::dotsecrets) {
     class { 'userspace::include_secrets':
       require => Class['userspace::setupdirs'],
     }

@@ -51,8 +51,6 @@ class software::aptinstalls {
     'texlive-full':              ensure => installed;
     'biber':                     ensure => installed;
     'pdftk':                     ensure => installed;
-    'ptask':                     ensure => installed;
-    'gcdemu':                    ensure => installed;
   }
 
 }
