@@ -8,7 +8,10 @@ export LESS_TERMCAP_so=$'\E[38;5;246m' # begin standout-mode - info box export $
 export LESS_TERMCAP_us=$'\E[04;33;5;146m' # begin underline
 export LESS_TERMCAP_ue=$'\E[0m' # end underline
 
-export PS1="\[\033[00;33m\]\u\[\033[37m\]@\[\033[00;32m\]\h\[\033[00m\]:\[\033[36m\]\w\[\033[00m\]\$ "
+source ~/.git-prompt.sh
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWUPSTREAM="auto"
+export PS1="\[\033[00;33m\]\u\[\033[37m\]@\[\033[00;32m\]\h\[\033[00m\]:\[\033[36m\]\w\[\033[00m\]\[\033[01;33m\]\$(__git_ps1)\[\033[00m\]\$ "
 
 export PAPERSIZE="a4"
 

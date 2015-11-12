@@ -203,6 +203,11 @@ fi
     content => "PASSWORD = '${userspace::grip_github_token}'"
   }
 
+  remote_file { "${::homedir}/.git-prompt.sh":
+    ensure => present,
+    source => 'https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh',
+  }
+
 }
 
 
