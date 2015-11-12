@@ -26,6 +26,10 @@ class software::aptinstalls {
     'pidgin':                    ensure => installed;
     'pidgin-gnome-keyring':      ensure => installed;
     'pidgin-libnotify':          ensure => installed;
+    'gnupg2':                    ensure => installed;
+    'openjdk-7-jre':             ensure => installed;
+    'flvstreamer':               ensure => installed;
+    'libav-tools':               ensure => installed;
   }
 
   package {
