@@ -61,3 +61,6 @@
 [submodule "puppet/modules/remote_file"]
 	path = puppet/modules/remote_file
 	url = https://github.com/lwf/puppet-remote_file
+[submodule "vim/bundle/fountain.vim"]
+	path = vim/bundle/fountain.vim
+	url = https://github.com/vim-scripts/fountain.vim.git

@@ -30,6 +30,7 @@ class software::aptinstalls {
     'openjdk-7-jre':             ensure => installed;
     'flvstreamer':               ensure => installed;
     'libav-tools':               ensure => installed;
+    'zlib1g-dev':                ensure => installed;
   }
 
   package {

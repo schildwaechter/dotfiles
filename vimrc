@@ -56,3 +56,5 @@ let g:syntastic_check_on_open = 1
 let g:signify_disable_by_default = 1
 let g:signify_vcs_list= ['git','hg','svn','bzr']
 
+au BufRead,BufNewFile *.fountain set filetype=fountain
+
