@@ -28,7 +28,7 @@ vbell off
 vbell_msg "   Wuff  ----  Wuff!!  "
 
 # define a bigger scrollback, default is 100 lines
-defscrollback 1024
+defscrollback 4096
 
 # ------------------------------------------------------------------------------
 # SCREEN KEYBINDINGS
@@ -88,6 +88,9 @@ termcapinfo xterm|xterms|xs|rxvt ti@:te@
 
 # Enable non-blocking mode to better cope with flaky ssh connections.
 defnonblock 5
+
+# Always start `screen` with UTF-8 enabled (`screen -U`)
+defutf8 on
 
 # ------------------------------------------------------------------------------
 # STARTUP SCREENS

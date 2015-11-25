@@ -6,10 +6,21 @@
     current = blue
     local = yellow
     remote = green
+[help]
+    autocorrect = 1
+[merge]
+    log = true
+[mailmap]
+    file = ~/.mailmap
 [alias]
-    new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
+    amend = commit --amend --reuse-message=HEAD
+    contribs = shortlog --summary --email --numbered 
+    contributors = "!f() { git shortlog -sn |  sed 's/^[[:space:]]*[0-9]*[[:space:]]*//g'; }; f"
     lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(blue)%h%C(reset) - %C(bold blue)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
-    search = "!f() { git rev-list --all | xargs git grep -F $1; }; f"
+    new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
     rb = "!f() { git rebase -i HEAD~$1; }; f"
-    wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+    s = status -s
+    search = "!f() { git rev-list --all | xargs git grep -F $1; }; f"
     up = !git pull --rebase --prune $@ && git submodule update --init --recursive
+    wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+

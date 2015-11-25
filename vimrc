@@ -1,6 +1,7 @@
 filetype off
 set nocompatible
 execute pathogen#infect()
+set encoding=utf-8 nobomb
 Helptags
 filetype plugin indent on
 set t_Co=256

@@ -15,16 +15,16 @@ export PS1="\[\033[00;33m\]\u\[\033[37m\]@\[\033[00;32m\]\h\[\033[00m\]:\[\033[3
 
 export PAPERSIZE="a4"
 
-export HISTCONTROL=ignoreboth
-
 if [ "$TERM" = screen ]; then
     stty erase '^H'
 fi
 
 PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}\007"'
 
+export HISTCONTROL=ignoreboth
 export HISTTIMEFORMAT="%F %T "
-export HISTFILESIZE=5000
+export HISTSIZE='32768'
+export HISTFILESIZE="${HISTSIZE}"
 shopt -s histappend
 
 PROMPT_COMMAND=${PROMPT_COMMAND:=default_value}
@@ -51,7 +51,7 @@ if [[ -n `which gdircolors` ]]; then
     alias egrepc='egrep -n --color=auto'
 elif [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    
+
     alias grepc='grep -n --color=auto'
     alias fgrepc='fgrep -n --color=auto'
     alias egrepc='egrep -n --color=auto'
@@ -133,6 +133,7 @@ alias timestamp='date "+%Y%m%dT%H%M%S"'
 alias heute='date +"%A, %-d. %B %Y"'
 alias KW='date +%V'
 alias kalenderwoche='date +%V'
+alias timer='echo "Timer started at $(date) - stop with Ctrl-D." && /usr/bin/time --format "Time: %E" cat && date'
 
 alias ccat='pygmentize -g'
 
