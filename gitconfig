@@ -11,10 +11,10 @@
 [merge]
     log = true
 [mailmap]
-    file = ~/.mailmap
+    file = ~/.gitmailmap
 [alias]
     amend = commit --amend --reuse-message=HEAD
-    contribs = shortlog --summary --email --numbered 
+    contribs = shortlog --summary --email --numbered
     contributors = "!f() { git shortlog -sn |  sed 's/^[[:space:]]*[0-9]*[[:space:]]*//g'; }; f"
     lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(blue)%h%C(reset) - %C(bold blue)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
     new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
