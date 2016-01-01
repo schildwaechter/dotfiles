@@ -20,9 +20,11 @@ class software::aptinstalls {
     'ruby':                      ensure => installed;
     'ntp':                       ensure => installed;
     'dnsutils':                  ensure => installed;
+    'python-dev':                ensure => installed;
     'python-pip':                ensure => installed;
     'python-virtualenv':         ensure => installed;
     'python3-lxml':              ensure => installed;
+    'libsasl2-dev':              ensure => installed;
     'pidgin':                    ensure => installed;
     'pidgin-gnome-keyring':      ensure => installed;
     'pidgin-libnotify':          ensure => installed;
