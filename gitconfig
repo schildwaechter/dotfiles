@@ -12,15 +12,31 @@
     log = true
 [mailmap]
     file = ~/.gitmailmap
+[url "git@github.com:"]
+    # push to github via ssh
+    pushinsteadof = "https://github.com/"
+    pushinsteadof = "git://github.com/"
+[url "git@git.projects.gwdg.de:"]
+    # push to gwdg projects via ssh
+    pushinsteadof = "git://git.projects.gwdg.de/"
 [alias]
+    # show all aliases
+    aliases = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\ \t => \\2/' | sort
+    # re-edit last commit
     amend = commit --amend --reuse-message=HEAD
+    # show crontribution stats (respects mailmap)
     contribs = shortlog --summary --email --numbered
+    # list all contributors (respects mailmap)
     contributors = "!f() { git shortlog -sn |  sed 's/^[[:space:]]*[0-9]*[[:space:]]*//g'; }; f"
-    lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(blue)%h%C(reset) - %C(bold blue)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
-    new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
+    # graphed log
+    lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(blue)%h%C(reset) - %C(bold blue)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white) [%an%C(reset)%C(bold yellow)%d%C(reset)]' --all
+    # interactive rebase of ARG commits
     rb = "!f() { git rebase -i HEAD~$1; }; f"
+    # short git status
     s = status -s
     search = "!f() { git rev-list --all | xargs git grep -F $1; }; f"
+    # update with rebase and submodule update
     up = !git pull --rebase --prune $@ && git submodule update --init --recursive
+    # reset all changes (but keep a backup findable with git reflog)
     wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
 
