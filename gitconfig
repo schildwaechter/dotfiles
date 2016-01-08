@@ -29,7 +29,7 @@
     # list all contributors (respects mailmap)
     contributors = "!f() { git shortlog -sn |  sed 's/^[[:space:]]*[0-9]*[[:space:]]*//g'; }; f"
     # graphed log
-    lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(blue)%h%C(reset) - %C(bold blue)(%ar)%C(reset) %C(white)%s%C(reset) [%an]' --all
+    lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(blue)%h%C(reset) - %C(bold blue)(%ar)%C(reset) %C(white)%s%C(reset) [%an]%C(bold yellow)%d%C(reset)' --all
     # interactive rebase of ARG commits
     rb = "!f() { git rebase -i HEAD~$1; }; f"
     # short git status
