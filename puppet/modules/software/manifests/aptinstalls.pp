@@ -33,6 +33,8 @@ class software::aptinstalls {
     'flvstreamer':               ensure => installed;
     'libav-tools':               ensure => installed;
     'zlib1g-dev':                ensure => installed;
+    'libpq-dev':                 ensure => installed;
+    'coffeescript':              ensure => installed;
   }
 
   package {
