@@ -16,6 +16,7 @@ set t_Co=256
 set laststatus=2
 " vim-airline autopopulate fonts
 let g:airline_powerline_fonts = 1
+let g:airline_theme = 'solarized'
 
 " syntax
 syntax enable
@@ -27,12 +28,16 @@ colorscheme solarized
 set shiftwidth=2
 " tab inserts two spaces
 set tabstop=2
+" different for python
+autocmd FileType python setlocal shiftwidth=4 softtabstop=4
 " replace tabs with spaces
 set expandtab
 " use shiftwidth when indenting blocks
 set shiftround
 " ignore case in search unless term has cases
 set smartcase
+" bigger history
+set history=200
 " turn off numbering (enbaled only in gvimrc)
 set nonumber
 " highlight search terms
@@ -45,6 +50,8 @@ set showmatch
 highlight NonText guifg=#4a4a59
 highlight SpecialKey guifg=#4a4a59
 set listchars=tab:▸\ ,eol:¬
+" toggle paste mode
+set pastetoggle=<F12>
 
 " editing behaviour
 set scrolloff=3
@@ -61,6 +68,14 @@ set nofoldenable
 let g:vimtex_fold_enabled = 0
 let g:vimtex_quickfix_open_on_warning = 0
 let g:vim_markdown_folding_disabled = 1
+
+" allow accidental use of shift
+command! -bang -nargs=* -complete=file W w<bang> <args>
+command! -bang -nargs=* -complete=file Wq wq<bang> <args>
+command! -bang -nargs=* -complete=file WQ wq<bang> <args>
+command! -bang Q q<bang>
+command! -bang QA qa<bang>
+command! -bang Qa qa<bang>
 
 " move cursor by display lines
 inoremap <Down> <C-O>gj
@@ -81,8 +96,24 @@ let g:syntastic_check_on_open = 1
 " signify off by default (on in gvimrc)
 let g:signify_disable_by_default = 1
 " sginify ordered list of cvs
-let g:signify_vcs_list= ['git','hg','svn','bzr']
+let g:signify_vcs_list= ['git','hg','svn']
 
 " add fountain filetype manually
 au BufRead,BufNewFile *.fountain set filetype=fountain
+
+" Strip whitespace {
+" http://vim.spf13.com/
+autocmd FileType puppet,python,yml autocmd BufWritePre <buffer> call StripTrailingWhitespace()
+function! StripTrailingWhitespace()
+  " Preparation: save last search, and cursor position.
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
+  " do the business:
+  %s/\s\+$//e
+  " clean up: restore previous search history, and cursor position
+  let @/=_s
+  call cursor(l, c)
+endfunction
+" }
 

@@ -6,6 +6,9 @@ set guioptions-=T
 set guioptions+=c
 " use mouse copy/paste
 set mousemodel=popup
+" bigger by default
+set lines=40
+set columns=120
 
 " enable signify by default
 let g:signify_disable_by_default = 0
