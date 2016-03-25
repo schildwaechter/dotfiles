@@ -8,7 +8,7 @@ class software (
   class { 'software::aptinstalls':
     require => Class['software::aptconfig']
   }
-  
+
   class { 'software::otherinstalls':
     require => Class['software::aptinstalls']
   }

@@ -25,6 +25,8 @@ class software::aptinstalls {
     'python-virtualenv':         ensure => installed;
     'python3-lxml':              ensure => installed;
     'libsasl2-dev':              ensure => installed;
+    'ruby-dev':                  ensure => installed;
+    'bundler':                   ensure => installed;
     'pidgin':                    ensure => installed;
     'pidgin-gnome-keyring':      ensure => installed;
     'pidgin-libnotify':          ensure => installed;
@@ -35,6 +37,11 @@ class software::aptinstalls {
     'zlib1g-dev':                ensure => installed;
     'libpq-dev':                 ensure => installed;
     'coffeescript':              ensure => installed;
+    'build-essential':           ensure => installed;
+    'libffi-dev':                ensure => installed;
+    'libssl-dev':                ensure => installed;
+    'libldap2-dev':              ensure => installed;
+    'libmysqlclient-dev':        ensure => installed;
   }
 
   package {
@@ -46,7 +53,7 @@ class software::aptinstalls {
     'owncloud-client':           ensure => installed;
     'vim-gtk':                   ensure => installed;
     'conky-all':                 ensure => installed;
-    'keepassx':                  ensure => installed;
+    'keepass2':                  ensure => installed;
     'seahorse':                  ensure => installed;
     'chromium-browser':          ensure => installed;
     'pepperflashplugin-nonfree': ensure => installed;

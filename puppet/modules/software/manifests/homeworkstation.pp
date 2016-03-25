@@ -1,5 +1,7 @@
 class software::homeworkstation {
 
+  apt::ppa { 'ppa:stebbins/handbrake-snapshots': }
+
   package {
     'handbrake-gtk':         ensure => installed;
     'easytag':               ensure => installed;
@@ -20,7 +22,7 @@ class software::homeworkstation {
     group   => 'root',
     mode    => '0644',
     content => '# DHCP for eth0 set through puppet
-auto eth0 
+auto eth0
 iface eth0 inet dhcp
 '
   }
@@ -33,7 +35,7 @@ iface eth0 inet dhcp
 
   apt::source { 'virtualbox':
     location   => 'http://download.virtualbox.org/virtualbox/debian',
-    release    => 'trusty',
+    release    => $::lsbdistcodename,
     repos      => 'contrib',
     key        => {
       'id'     => '7B0FAB3A13B907435925D9C954422A4B98AB5139',
@@ -41,12 +43,12 @@ iface eth0 inet dhcp
     },
     include    => {
       'src'    => false,
-    },    
+    },
   }->
   package { 'virtualbox-5.0':
     ensure => installed,
   }
 
- 
+
 }
 
