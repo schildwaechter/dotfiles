@@ -27,7 +27,7 @@ class software::sysconfigchanges {
   augeas { 'default_apport':
     context => '/files/etc/default/apport',
     changes => [
-      "set enabled 0",
+      'set enabled 0',
     ],
   }
 
@@ -41,6 +41,14 @@ class software::sysconfigchanges {
       'set net.ipv6.conf.wlan0.use_tempaddr 2',
       'set net.ipv6.conf.wlan1.use_tempaddr 2',
       'set net.ipv6.conf.wlan2.use_tempaddr 2',
+    ],
+  }
+
+  augeas { 'sudo_insults':
+    context => '/files/etc/sudoers',
+    changes => [
+      'set Defaults[1] ""',
+      'set Defaults[1]/insults ""'
     ],
   }
 

@@ -9,14 +9,14 @@ else
   exit 1
 fi
 
-export FACTER_homedir=$HOME 
+export FACTER_homedir=$HOME
 export FACTER_dotfiles=${DOTFILES:=".dotfiles"}
 : ${DOTSECRETS:=".dotsecrets"}
 if [ -e "${HOME}/${DOTSECRETS}" ] ; then
   export FACTER_dotsecrets=$DOTSECRETS
 fi
 
-$FACTER_puppetbin apply \
+$FACTER_puppetbin apply --show_diff \
   --modulepath $HOME/$FACTER_dotfiles/puppet/modules \
   --hiera_config $HOME/$FACTER_dotfiles/puppet/hiera.yaml \
   --show_diff $HOME/$FACTER_dotfiles/puppet/manifest.pp

@@ -41,7 +41,7 @@ dotfiles ()
 {
   case \$1 in
     *upgrade)
-      echo \"Running 'puppet apply'\" 
+      echo \"Running 'puppet apply'\"
       /bin/bash <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/install.sh autorun
     ;;
     *update)
@@ -52,9 +52,9 @@ dotfiles ()
     ;;
 <% if scope['::operatingsystem'] == 'Ubuntu' -%>
     *software)
-      echo \"Running 'sudo puppet apply'\" 
+      echo \"Running 'sudo puppet apply'\"
       env FACTER_dotfilespath=<%= scope['::homedir'] %>/<%= scope['::dotfiles'] %> sudo -E <%= scope['::puppetbin'] %> apply \\
-        --modulepath <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/puppet/modules \\
+        --modulepath <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/puppet/modules --show_diff \\
         --hiera_config <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/puppet/hiera.yaml \\
         <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/puppet/manifest.pp
     ;;
@@ -176,7 +176,7 @@ fi
     linkfile   => '.ssh/config',
     require => File["${::homedir}/.ssh"],
   }
- 
+
   if $::operatingsystem == 'Ubuntu' {
     $dotfileexecutables = [
       'gitdiff.py',
