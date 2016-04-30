@@ -1,5 +1,24 @@
 class software::aptinstalls {
 
+  case $::lsbdistcodename {
+    'trusty','wily': {
+      package {
+        'keepass2':              ensure => installed;
+        'openjdk-7-jre':         ensure => installed;
+      }
+      package {
+        'software-center':                   ensure => absent;
+        'software-center-aptdaemon-plugins': ensure => absent;
+      }
+    }
+    default: {
+      package {
+        'keepassx':              ensure => installed;
+        'openjdk-8-jre':         ensure => installed;
+      }
+    }
+  }
+
   package {
     'language-pack-de':          ensure => installed;
     'language-pack-en':          ensure => installed;
@@ -31,7 +50,6 @@ class software::aptinstalls {
     'pidgin-gnome-keyring':      ensure => installed;
     'pidgin-libnotify':          ensure => installed;
     'gnupg2':                    ensure => installed;
-    'openjdk-7-jre':             ensure => installed;
     'flvstreamer':               ensure => installed;
     'libav-tools':               ensure => installed;
     'zlib1g-dev':                ensure => installed;
@@ -45,15 +63,9 @@ class software::aptinstalls {
   }
 
   package {
-    'software-center':           ensure => absent;
-    'software-center-aptdaemon-plugins': ensure => absent;
-  }
-
-  package {
     'owncloud-client':           ensure => installed;
     'vim-gtk':                   ensure => installed;
     'conky-all':                 ensure => installed;
-    'keepass2':                  ensure => installed;
     'seahorse':                  ensure => installed;
     'chromium-browser':          ensure => installed;
     'pepperflashplugin-nonfree': ensure => installed;

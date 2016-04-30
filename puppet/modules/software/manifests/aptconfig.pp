@@ -1,17 +1,5 @@
 class software::aptconfig {
 
-  case $::lsbdistcodename {
-    'trusty': {
-      $owncloud_location   = 'http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_14.04/'
-      $owncloud_key_source = 'http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_14.04/Release.key'
-    }
-    'wily':   {
-      $owncloud_location   = 'http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_15.10/'
-      $owncloud_key_source = 'http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_15.10/Release.key'
-    }
-    default:  {}
-  }
-
   class { 'apt':
     update => {
       frequency => 'always',
@@ -19,28 +7,31 @@ class software::aptconfig {
   }
 
   apt::source { 'owncloud':
-    location => $owncloud_location,
+    location => "http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_${::lsbdistrelease}/",
     release  => '',
     repos    => '/',
     key      => {
-      'id'     =>  'F9EA4996747310AE79474F44977C43A8BA684223',
-      'source' => $owncloud_key_source,
+      'id'     => 'F9EA4996747310AE79474F44977C43A8BA684223',
+      'source' => "http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_${::lsbdistrelease}/Release.key",
     },
     include  => {
       'src' => false,
     },
   }
 
-  apt::source { 'google-earth':
-    location => 'http://dl.google.com/linux/earth/deb/',
-    release  => 'stable',
-    repos    => 'main',
-    key      => {
-      'id' => '4CCA1EAF950CEE4AB83976DCA040830F7FAC5991',
-    },
-    include  => {
-      'src' => false,
-    },
+  if $::lsbdistcodename != 'xenial' {
+  # not yet compatible with xenial
+    apt::source { 'google-earth':
+      location => 'http://dl.google.com/linux/earth/deb/',
+      release  => 'stable',
+      repos    => 'main',
+      key      => {
+        'id' => '4CCA1EAF950CEE4AB83976DCA040830F7FAC5991',
+      },
+      include  => {
+        'src' => false,
+      },
+    }
   }
 
   apt::ppa { 'ppa:cdemu/ppa': }
