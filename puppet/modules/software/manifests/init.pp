@@ -1,6 +1,7 @@
 class software (
     $us_cat_default  = false,
     $homeworkstation = false,
+    $puppetdev       = true,
   ){
 
   class { 'software::aptconfig': }
@@ -21,6 +22,12 @@ class software (
 
   class {'software::sysconfigchanges':
     require => Class['software::otherinstalls']
+  }
+
+  if $puppetdev {
+    class {'software::puppetdev':
+      require => Class['software::otherinstalls']
+    }
   }
 
 }

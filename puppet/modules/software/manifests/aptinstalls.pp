@@ -77,7 +77,7 @@ class software::aptinstalls {
     'encfs':                     ensure => installed;
     'xubuntu-restricted-extras': ensure => installed;
     'texlive-full':              ensure => installed;
-    'biber':                     ensure => installed;
+    #    'biber':                     ensure => installed; # broken in xenial!!!!!
     'pdftk':                     ensure => installed;
   }
 

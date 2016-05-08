@@ -64,3 +64,6 @@
 [submodule "vim/bundle/fountain.vim"]
 	path = vim/bundle/fountain.vim
 	url = https://github.com/vim-scripts/fountain.vim.git
+[submodule "puppet/modules/vagrant"]
+	path = puppet/modules/vagrant
+	url = https://github.com/unibet/puppet-vagrant.git
