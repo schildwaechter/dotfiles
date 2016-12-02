@@ -60,6 +60,9 @@ class software::aptinstalls {
     'libssl-dev':                ensure => installed;
     'libldap2-dev':              ensure => installed;
     'libmysqlclient-dev':        ensure => installed;
+    'nodejs':                    ensure => installed;
+    'nodejs-legacy':             ensure => installed;
+    'npm':                       ensure => installed;
   }
 
   package {
@@ -71,14 +74,16 @@ class software::aptinstalls {
     'pepperflashplugin-nonfree': ensure => installed;
     'meld':                      ensure => installed;
     'inkscape':                  ensure => installed;
+    'gimp':                      ensure => installed;
     'scribus':                   ensure => installed;
     'icc-profiles':              ensure => installed;
     'vlc':                       ensure => installed;
     'encfs':                     ensure => installed;
     'xubuntu-restricted-extras': ensure => installed;
     'texlive-full':              ensure => installed;
-    #    'biber':                     ensure => installed; # broken in xenial!!!!!
+    'biber':                     ensure => installed;
     'pdftk':                     ensure => installed;
+    'usb-creator-gtk':           ensure => installed;
   }
 
 }

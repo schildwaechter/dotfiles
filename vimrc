@@ -63,6 +63,8 @@ set noswapfile
 set fileformat=unix
 " enable backspacing across lines etc
 set backspace=indent,eol,start
+" reload when changed on disk
+set autoread
 " disable folding on default
 set nofoldenable
 let g:vimtex_fold_enabled = 0
@@ -116,4 +118,25 @@ function! StripTrailingWhitespace()
   call cursor(l, c)
 endfunction
 " }
+
+
+let g:tagbar_type_puppet = {
+  \ 'ctagstype': 'puppet',
+  \ 'kinds': [
+    \'c:class',
+    \'s:site',
+    \'n:node',  
+    \'d:definition',
+    \'r:resource',
+    \'f:default'
+  \]
+\}
+" allow for top level ctags directory
+set tags=./tags;
+" add : to name of keyword
+au FileType puppet setlocal isk+=:
+" change behaviour of ctags lookup to strip preceding ::
+" https://www.maxmanders.co.uk/2016/01/12/my-puppet-vimrc.html
+au FileType puppet nnoremap <c-]> :exe "tag " . substitute(expand("<cword>"), "^::", "", "")<CR>  
+au FileType puppet nnoremap <c-w><c-]> :tab split<CR>:exe "tag " . substitute(expand("<cword>"), "^::", "", "")<CR>
 

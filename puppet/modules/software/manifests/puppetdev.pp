@@ -28,26 +28,37 @@ class software::puppetdev {
   }
 
   package { 'librarian-puppet':
-    ensure   => 'installed',
+    ensure   => latest,
     provider => 'gem',
   }
+
+  package { 'r10k':
+    ensure   => latest,
+    provider => 'gem',
+  }
+
   package { 'puppet-lint':
-    ensure   => 'installed',
+    ensure   => latest,
     provider => 'gem',
   }
 
   package { 'rspec-puppet':
-    ensure   => 'installed',
+    ensure   => latest,
     provider => 'gem',
   }
 
   package { 'puppetlabs_spec_helper':
-    ensure   => 'installed',
+    ensure   => latest,
     provider => 'gem',
   }
 
   package { 'metadata-json-lint':
-    ensure   => 'installed',
+    ensure   => latest,
+    provider => 'gem',
+  }
+
+  package { 'puppet-syntax':
+    ensure   => latest,
     provider => 'gem',
   }
 

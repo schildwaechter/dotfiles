@@ -1,6 +1,7 @@
 class userspace::setupfiles {
 
   $simpledotfilelinks = [
+    'ctags',
     'dircolors',
     'locale',
     'screenrc',

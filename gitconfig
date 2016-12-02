@@ -1,5 +1,9 @@
+# vi:syntax=gitconfig
+
 [core]
     abbrev = 8
+    editor = vim
+    whitespace = tab-in-indent,trailing-space,space-before-tab
 [push]
     default = simple
 [color "branch"]
@@ -7,7 +11,7 @@
     local = yellow
     remote = green
 [help]
-    autocorrect = 1
+    autocorrect = 15
 [merge]
     log = true
 [mailmap]
@@ -40,7 +44,7 @@
     # undo last commit
     uncommit = reset --soft HEAD~
     # update with rebase and submodule update
-    up = !git pull --rebase --prune $@ && git submodule update --init --recursive
+    update = !git pull --rebase --prune $@ && git submodule update --init --recursive
     # reset all changes (but keep a backup findable with git reflog)
     wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
 
