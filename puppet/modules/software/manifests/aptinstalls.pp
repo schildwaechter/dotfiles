@@ -39,6 +39,7 @@ class software::aptinstalls {
     'ruby':                      ensure => installed;
     'ntp':                       ensure => installed;
     'dnsutils':                  ensure => installed;
+    'shellcheck':                ensure => installed;
     'python-dev':                ensure => installed;
     'python-pip':                ensure => installed;
     'python-virtualenv':         ensure => installed;
@@ -84,6 +85,7 @@ class software::aptinstalls {
     'biber':                     ensure => installed;
     'pdftk':                     ensure => installed;
     'usb-creator-gtk':           ensure => installed;
+    'xfce4-goodies':             ensure => installed;
   }
 
 }

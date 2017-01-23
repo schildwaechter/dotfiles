@@ -151,6 +151,9 @@ fi
 [include]
     path = <%= scope['::homedir']%>/<%= scope['::dotfiles']%>/gitconfig
 
+[init]
+    templatedir = <%= scope['::homedir']%>/<%= scope['::dotfiles']%>/bin/git-templates/
+
 <% if scope['::operatingsystem'] == 'Darwin' -%>
 [core]
     editor = /usr/bin/vim

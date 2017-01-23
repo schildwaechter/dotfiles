@@ -1,0 +1,5 @@
+#!/bin/sh
+echo "# COMMITING AS:" >> $1
+echo "# GIT_COMMITTER_IDENT=$(git var GIT_COMMITTER_IDENT)" >> $1
+echo "# GIT_AUTHOR_IDENT=$(git var GIT_AUTHOR_IDENT)" >> $1
+

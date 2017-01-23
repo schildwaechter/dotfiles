@@ -76,5 +76,8 @@ class software::puppetdev {
     user => 'cat'
   }
 
+  vagrant::plugin { 'vagrant-vbguest':
+    user => 'cat'
+  }
 }
 

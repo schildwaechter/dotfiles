@@ -24,7 +24,7 @@
 	url = https://github.com/godlygeek/tabular
 [submodule "vim/bundle/vim-airline"]
 	path = vim/bundle/vim-airline
-	url = https://github.com/bling/vim-airline
+	url = https://github.com/vim-airline/vim-airline
 [submodule "vim/bundle/vim-colors-solarized"]
 	path = vim/bundle/vim-colors-solarized
 	url = https://github.com/altercation/vim-colors-solarized
@@ -42,7 +42,7 @@
 	url = https://github.com/jlfwong/vim-mercenary
 [submodule "vim/bundle/vim-puppet"]
 	path = vim/bundle/vim-puppet
-	url = https://github.com/rodjek/vim-puppet
+	url = https://github.com/voxpupuli/vim-puppet
 [submodule "vim/bundle/vim-signify"]
 	path = vim/bundle/vim-signify
 	url = https://github.com/mhinz/vim-signify
@@ -64,3 +64,6 @@
 [submodule "puppet/modules/vagrant"]
 	path = puppet/modules/vagrant
 	url = https://github.com/unibet/puppet-vagrant.git
+[submodule "vim/bundle/vim-airline-themes"]
+	path = vim/bundle/vim-airline-themes
+	url = https://github.com/vim-airline/vim-airline-themes

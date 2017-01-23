@@ -1,0 +1,105 @@
+#!/bin/bash
+#
+# https://rnelson0.com/2014/06/16/puppet-and-git-205-git-hooks/
+# https://github.com/mattiasgeniar/puppet-pre-commit-hook
+# 
+# Authors:
+#  Ronny Roethof
+#  Mattias Geniar
+#  Rob Nelson
+#  Carsten Thiel
+
+echo "### Performing Syntax checks ###"
+
+# PUPPET
+if [ "$(command -v puppet)" ] ; then
+  for file in $(git diff --name-only --cached | grep -E '\.(pp)')
+  do
+    if [[ -f $file && $file == *.pp ]] ; then
+      puppet parser validate "${file}"
+      if [[ $? -ne 0 ]] ; then
+        echo "ERROR: puppet parser failed at: $file"
+        syntax_is_bad=1
+      else
+        echo "OK: $file looks valid"
+      fi
+    fi
+  done
+fi
+
+# ERB TEMPLATE
+if [ "$(command -v erb)" ] && [ "$(command -v ruby)" ] ; then
+  for file in $(git diff --name-only --cached | grep -E '\.(erb)')
+  do
+    if [[ -f $file ]] ; then
+      erb -P -x -T '-' "${file}" | ruby -c > /dev/null
+      if [[ $? -ne 0 ]] ; then
+        echo "ERROR: ruby template parser failed at: $file"
+        syntax_is_bad=1
+      else
+        echo "OK: $file looks like a valid ruby template"
+      fi
+    fi
+  done
+fi
+
+# EPP TEMPLATE
+if [ "$(command -v puppet)" ] ; then
+  for file in $(git diff --name-only --cached | grep -E '\.(epp)')
+  do
+    if [[ -f $file ]] ; then
+      puppet epp validate "${file}"
+      if [[ $? -ne 0 ]] ; then
+        echo "ERROR: puppet template parser failed at: $file"
+        syntax_is_bad=1
+      else
+        echo "OK: $file looks like a valid puppet template"
+      fi
+    fi
+  done
+fi
+
+# YAML
+if [ "$(command -v ruby)" ] ; then
+  function checkyaml() {
+    ruby -e "require 'yaml'; YAML.load_file('$1')"
+  }
+  for file in $(git diff --name-only --cached | grep -E '\.(yaml)')
+  do
+    if [[ -f $file ]] ; then
+      checkyaml "${file}"
+      if [[ $? -ne 0 ]] ; then
+        echo "ERROR: YAML syntax validation failed at: $file"
+        syntax_is_bad=1
+      else
+        echo "OK: $file looks like a valid YAML file"
+      fi
+    fi
+  done
+fi
+
+#METADATA.JSON
+if [ "$(command -v metadata-json-lint)" ] ; then
+  for file in $(git diff --name-only --cached | grep -E '(metadata)\.(json)')
+  do
+    if [[ -f $file ]] ; then
+      metadata-json-lint "${file}"
+      if [[ $? -ne 0 ]] ; then
+        echo "ERROR: matadata.json linting failed at: $file"
+        syntax_is_bad=1
+      else
+        echo "OK: $file looks like a valid matadata.json"
+      fi
+    fi
+  done
+fi
+
+if [[ $syntax_is_bad -eq 1 ]]
+then
+  echo "FATAL: Syntax is bad. See above errors"
+  echo "Aborting"
+  exit 1
+else
+  echo "Everything looks good."
+fi
+

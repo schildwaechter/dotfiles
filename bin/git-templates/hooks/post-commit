@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# tool to copy to clipboard
+if [[ `uname` == 'Darwin' ]]; then
+  $_clipcopy = 'pbcopy'
+else
+  $_clipcopy = 'xsel --clipboard'
+fi
+
+# Copy last commit hash to clipboard on commit
+if [ $(command -v $_clipcopy) ] ; then
+  git log -1 --format=format:%H | $_clipcopy
+fi
+
