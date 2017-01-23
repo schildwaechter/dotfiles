@@ -23,6 +23,9 @@
 [url "git@git.projects.gwdg.de:"]
     # push to gwdg projects via ssh
     pushinsteadof = "git://git.projects.gwdg.de/"
+[url "git@gitlab.gwdg.de:"]
+    # push to gwdg gitlab via ssh
+    pushinsteadof = "https://gitlab.gwdg.de/"
 [alias]
     # show all aliases
     aliases = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\ \t => \\2/' | sort
