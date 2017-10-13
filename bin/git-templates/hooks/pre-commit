@@ -9,6 +9,8 @@
 #  Rob Nelson
 #  Carsten Thiel
 
+echo "### Committing as: $(git var GIT_COMMITTER_IDENT) with author $(git var GIT_AUTHOR_IDENT)"
+
 echo "### Performing Syntax checks ###"
 
 # PUPPET
