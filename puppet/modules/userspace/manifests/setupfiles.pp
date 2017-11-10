@@ -2,7 +2,9 @@ class userspace::setupfiles {
 
   $simpledotfilelinks = [
     'ctags',
+    'editorconfig',
     'dircolors',
+    'inputrc',
     'locale',
     'screenrc',
     'toprc',
@@ -154,8 +156,9 @@ fi
 [init]
     templatedir = <%= scope['::homedir']%>/<%= scope['::dotfiles']%>/bin/git-templates/
 
-<% if scope['::operatingsystem'] == 'Darwin' -%>
 [core]
+    excludesfile = <%= scope['::homedir']%>/<%= scope['::dotfiles']%>/gitignore_global
+<% if scope['::operatingsystem'] == 'Darwin' -%>
     editor = /usr/bin/vim
 <% if scope['::boxen'] == 'true' -%>
     excludesfile = /opt/boxen/config/git/gitignore
