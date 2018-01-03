@@ -24,7 +24,6 @@ PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}\007"'
 export HISTCONTROL=ignoreboth
 export HISTTIMEFORMAT="%F %T "
 export HISTSIZE='32768'
-export HISTFILESIZE="${HISTSIZE}"
 shopt -s histappend
 
 PROMPT_COMMAND=${PROMPT_COMMAND:=default_value}

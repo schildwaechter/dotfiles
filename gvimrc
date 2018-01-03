@@ -9,7 +9,8 @@ set mousemodel=popup
 " bigger by default
 set lines=40
 set columns=120
-
+" highlight long lines
+let &colorcolumn="80,".join(range(140,999),",")
 " enable signify by default
 let g:signify_disable_by_default = 0
 " set the font explicitly for airline compatibility

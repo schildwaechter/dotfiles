@@ -20,9 +20,10 @@
     # push to github via ssh
     pushinsteadof = "https://github.com/"
     pushinsteadof = "git://github.com/"
-[url "git@git.projects.gwdg.de:"]
+[url "git@projects.gwdg.de:"]
     # push to gwdg projects via ssh
-    pushinsteadof = "git://git.projects.gwdg.de/"
+    pushinsteadof = "https://projects.gwdg.de/gitolite/"
+    pushinsteadof = "git://projects.gwdg.de/"
 [url "git@gitlab.gwdg.de:"]
     # push to gwdg gitlab via ssh
     pushinsteadof = "https://gitlab.gwdg.de/"
@@ -35,6 +36,8 @@
     contribs = shortlog --summary --email --numbered
     # list all contributors (respects mailmap)
     contributors = "!f() { git shortlog -sn |  sed 's/^[[:space:]]*[0-9]*[[:space:]]*//g'; }; f"
+    # submodule updates
+    fix-submodules = submodule update --recursive --init
     # print the full hash of the current commit
     hash = log -1 --format=format:'%H - (%ai) %s [%an]'
     # graphed log

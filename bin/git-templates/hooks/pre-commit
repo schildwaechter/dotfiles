@@ -87,10 +87,26 @@ if [ "$(command -v metadata-json-lint)" ] ; then
     if [[ -f $file ]] ; then
       metadata-json-lint "${file}"
       if [[ $? -ne 0 ]] ; then
-        echo "ERROR: matadata.json linting failed at: $file"
+        echo "ERROR: metadata.json linting failed at: $file"
         syntax_is_bad=1
       else
-        echo "OK: $file looks like a valid matadata.json"
+        echo "OK: $file looks like a valid metadata.json"
+      fi
+    fi
+  done
+fi
+
+#Markdown
+if [ "$(command -v mdl)" ] ; then
+  for file in $(git diff --name-only --cached | grep -E '\.(md)')
+  do
+    if [[ -f $file ]] ; then
+      mdl "${file}"
+      if [[ $? -ne 0 ]] ; then
+        echo "ERROR: markdown linting failed at: $file"
+        syntax_is_bad=1
+      else
+        echo "OK: $file looks like a valid markdown file"
       fi
     fi
   done
