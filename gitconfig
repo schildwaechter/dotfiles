@@ -38,6 +38,8 @@
     contributors = "!f() { git shortlog -sn |  sed 's/^[[:space:]]*[0-9]*[[:space:]]*//g'; }; f"
     # submodule updates
     fix-submodules = submodule update --recursive --init
+    # graphical diff
+    gdiff = difftool
     # print the full hash of the current commit
     hash = log -1 --format=format:'%H - (%ai) %s [%an]'
     # graphed log
@@ -51,6 +53,10 @@
     uncommit = reset --soft HEAD~
     # update with rebase and submodule update
     update = !git pull --rebase --prune $@ && git submodule update --init --recursive
+    # diff by character
+    wdiff = diff --word-diff
+    # print current git user name and mail address
+    whoami = "!f() { USERMAIL=$(git config user.email); USERNAME=$(git config user.name); echo \"$USERNAME <$USERMAIL>\"; }; f"
     # reset all changes (but keep a backup findable with git reflog)
     wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
 

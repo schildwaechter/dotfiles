@@ -144,28 +144,25 @@ fi
   file { "${::homedir}/.gitconfig":
     ensure  => present,
     content =>  inline_template("[user]
-    name = <%= scope['::userspace::displayname'] %>
-    email = <%= scope['::userspace::mailaddress']%>
+  name = <%= scope['::userspace::displayname'] %>
+  email = <%= scope['::userspace::mailaddress']%>
 
 [diff]
-    external = <%= scope['::homedir']%>/.bin/gitdiff.py
+  tool = meld
+
+[difftool]
+  prompt = false
 
 [include]
-    path = <%= scope['::homedir']%>/<%= scope['::dotfiles']%>/gitconfig
+  path = <%= scope['::homedir']%>/<%= scope['::dotfiles']%>/gitconfig
 
 [init]
-    templatedir = <%= scope['::homedir']%>/<%= scope['::dotfiles']%>/bin/git-templates/
+  templatedir = <%= scope['::homedir']%>/<%= scope['::dotfiles']%>/bin/git-templates/
 
 [core]
-    excludesfile = <%= scope['::homedir']%>/<%= scope['::dotfiles']%>/gitignore_global
+  excludesfile = <%= scope['::homedir']%>/<%= scope['::dotfiles']%>/gitignore_global
 <% if scope['::operatingsystem'] == 'Darwin' -%>
-    editor = /usr/bin/vim
-<% if scope['::boxen'] == 'true' -%>
-    excludesfile = /opt/boxen/config/git/gitignore
-
-[credential]
-    helper = /opt/boxen/bin/boxen-git-credential
-<% end -%>
+  editor = /usr/bin/vim
 <% end -%>
     ")
   }
