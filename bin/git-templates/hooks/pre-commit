@@ -2,7 +2,7 @@
 #
 # https://rnelson0.com/2014/06/16/puppet-and-git-205-git-hooks/
 # https://github.com/mattiasgeniar/puppet-pre-commit-hook
-# 
+#
 # Authors:
 #  Ronny Roethof
 #  Mattias Geniar
@@ -111,6 +111,23 @@ if [ "$(command -v mdl)" ] ; then
     fi
   done
 fi
+
+#GOLANG
+if [ "$(command -v go)" ] && [ "$(command -v golint)" ] ; then
+  for file in $(git diff --name-only --cached | grep -E '\.(go)')
+  do
+    if [[ -f $file ]] ; then
+      golint -set_exit_status "${file}"
+      if [[ $? -ne 0 ]] ; then
+        echo "ERROR: GO linting failed at: $file"
+        syntax_is_bad=1
+      else
+        echo "OK: $file looks like a valid GO file"
+      fi
+    fi
+  done
+fi
+
 
 if [[ $syntax_is_bad -eq 1 ]]
 then
