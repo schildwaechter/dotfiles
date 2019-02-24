@@ -95,6 +95,11 @@ let g:syntastic_enable_signs = 0
 let g:syntastic_auto_loc_list=1
 let g:syntastic_check_on_open = 1
 
+let g:godef_split = 0
+let g:go_fmt_fail_silently = 1
+let g:go_list_type = 'quickfix'
+let g:syntastic_go_checkers = ['golint', 'gofmt']
+
 " signify off by default (on in gvimrc)
 let g:signify_disable_by_default = 1
 " sginify ordered list of cvs
@@ -118,25 +123,4 @@ function! StripTrailingWhitespace()
   call cursor(l, c)
 endfunction
 " }
-
-
-let g:tagbar_type_puppet = {
-  \ 'ctagstype': 'puppet',
-  \ 'kinds': [
-    \'c:class',
-    \'s:site',
-    \'n:node',  
-    \'d:definition',
-    \'r:resource',
-    \'f:default'
-  \]
-\}
-" allow for top level ctags directory
-set tags=./tags;
-" add : to name of keyword
-au FileType puppet setlocal isk+=:
-" change behaviour of ctags lookup to strip preceding ::
-" https://www.maxmanders.co.uk/2016/01/12/my-puppet-vimrc.html
-au FileType puppet nnoremap <c-]> :exe "tag " . substitute(expand("<cword>"), "^::", "", "")<CR>  
-au FileType puppet nnoremap <c-w><c-]> :tab split<CR>:exe "tag " . substitute(expand("<cword>"), "^::", "", "")<CR>
 
