@@ -106,7 +106,13 @@ if [ "$(command -v mdl)" ] ; then
         echo "ERROR: markdown linting failed at: $file"
         syntax_is_bad=1
       else
-        echo "OK: $file looks like a valid markdown file"
+        gofmt -l "${file}"
+        if [[ $? -ne 0 ]] ; then
+          echo "ERROR: markdown linting failed at: $file"
+          syntax_is_bad=1
+        else
+          echo "OK: $file looks like a valid markdown file"
+        fi
       fi
     fi
   done
@@ -122,7 +128,13 @@ if [ "$(command -v go)" ] && [ "$(command -v golint)" ] ; then
         echo "ERROR: GO linting failed at: $file"
         syntax_is_bad=1
       else
-        echo "OK: $file looks like a valid GO file"
+        gofmt -l "${file}"
+        if [[ $? -ne 0 ]] ; then
+          echo "ERROR: GO fmt failed at: $file"
+          syntax_is_bad=1
+        else
+          echo "OK: $file looks like a valid GO file"
+        fi
       fi
     fi
   done
