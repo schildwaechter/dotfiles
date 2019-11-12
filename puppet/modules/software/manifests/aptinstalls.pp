@@ -1,31 +1,11 @@
 class software::aptinstalls {
 
-  case $::lsbdistcodename {
-    'trusty','wily': {
-      package {
-        'keepass2':              ensure => installed;
-        'openjdk-7-jre':         ensure => installed;
-      }
-      package {
-        'software-center':                   ensure => absent;
-        'software-center-aptdaemon-plugins': ensure => absent;
-      }
-    }
-    default: {
-      package {
-        'keepassx':              ensure => installed;
-        'openjdk-8-jre':         ensure => installed;
-      }
-    }
-  }
-
   package {
     'language-pack-de':          ensure => installed;
     'language-pack-en':          ensure => installed;
     'unrar':                     ensure => installed;
     'unzip':                     ensure => installed;
     'synaptic':                  ensure => installed;
-    'gksu':                      ensure => installed;
     'grc':                       ensure => installed;
     'gparted':                   ensure => installed;
     'vim-nox':                   ensure => installed;
@@ -36,8 +16,10 @@ class software::aptinstalls {
     'subversion':                ensure => installed;
     'screen':                    ensure => installed;
     'curl':                      ensure => installed;
+    'zsh':                       ensure => installed;
     'ruby':                      ensure => installed;
     'ntp':                       ensure => installed;
+    'dos2unix':                  ensure => installed;
     'dnsutils':                  ensure => installed;
     'shellcheck':                ensure => installed;
     'python-dev':                ensure => installed;
@@ -52,7 +34,7 @@ class software::aptinstalls {
     'pidgin-libnotify':          ensure => installed;
     'gnupg2':                    ensure => installed;
     'flvstreamer':               ensure => installed;
-    'libav-tools':               ensure => installed;
+    'ffmpeg':                    ensure => installed;
     'zlib1g-dev':                ensure => installed;
     'libpq-dev':                 ensure => installed;
     'coffeescript':              ensure => installed;
@@ -62,12 +44,14 @@ class software::aptinstalls {
     'libldap2-dev':              ensure => installed;
     'libmysqlclient-dev':        ensure => installed;
     'nodejs':                    ensure => installed;
-    'nodejs-legacy':             ensure => installed;
     'npm':                       ensure => installed;
+    'fonts-powerline':           ensure => installed;
   }
 
   package {
-    'owncloud-client':           ensure => installed;
+    'keepassxc':                 ensure => installed;
+    'nextcloud-client':          ensure => installed;
+    'openjdk-11-jre':            ensure => installed;
     'vim-gtk':                   ensure => installed;
     'conky-all':                 ensure => installed;
     'seahorse':                  ensure => installed;
@@ -79,13 +63,13 @@ class software::aptinstalls {
     'scribus':                   ensure => installed;
     'icc-profiles':              ensure => installed;
     'vlc':                       ensure => installed;
-    'encfs':                     ensure => installed;
     'xubuntu-restricted-extras': ensure => installed;
     'texlive-full':              ensure => installed;
     'biber':                     ensure => installed;
-    'pdftk':                     ensure => installed;
     'usb-creator-gtk':           ensure => installed;
     'xfce4-goodies':             ensure => installed;
+    'openjfx':                   ensure => installed;
+    'virtualbox-6.0':            ensure => installed;
   }
 
 }

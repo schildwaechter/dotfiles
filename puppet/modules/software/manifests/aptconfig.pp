@@ -6,33 +6,8 @@ class software::aptconfig {
     },
   }
 
-  apt::source { 'owncloud':
-    location => "http://download.opensuse.org/repositories/isv:/ownCloud:/desktop/Ubuntu_${::lsbdistrelease}/",
-    release  => '',
-    repos    => '/',
-    key      => {
-      'id'     => 'F9EA4996747310AE79474F44977C43A8BA684223',
-      'source' => "http://download.opensuse.org/repositories/isv:ownCloud:desktop/Ubuntu_${::lsbdistrelease}/Release.key",
-    },
-    include  => {
-      'src' => false,
-    },
-  }
 
-  if $::lsbdistcodename != 'xenial' {
-  # not yet compatible with xenial
-    apt::source { 'google-earth':
-      location => 'http://dl.google.com/linux/earth/deb/',
-      release  => 'stable',
-      repos    => 'main',
-      key      => {
-        'id' => '4CCA1EAF950CEE4AB83976DCA040830F7FAC5991',
-      },
-      include  => {
-        'src' => false,
-      },
-    }
-  }
+  apt::ppa { 'ppa:nextcloud-devs/client': }
 
   apt::ppa { 'ppa:cdemu/ppa': }
 
@@ -45,6 +20,19 @@ class software::aptconfig {
     },
     include  => {
       'src' => false,
+    },
+  }
+
+  apt::source { 'virtualbox':
+    location   => 'http://download.virtualbox.org/virtualbox/debian',
+    release    => $::lsbdistcodename,
+    repos      => 'contrib',
+    key        => {
+      'id'     => 'B9F8D658297AF3EFC18D5CDFA2F683C52980AECF',
+      'source' => 'https://www.virtualbox.org/download/oracle_vbox_2016.asc',
+    },
+    include    => {
+      'src'    => false,
     },
   }
 

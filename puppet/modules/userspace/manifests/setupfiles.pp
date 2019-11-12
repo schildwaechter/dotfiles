@@ -98,6 +98,73 @@ export DEBEMAIL='<%= scope['::userspace::mailaddress'] %>'
     "),
   }
 
+  file { "${::homedir}/.zshrc_dotfiles":
+    ensure  => present,
+    content => inline_template("# ~/.zshrc EXTENSION
+# ###################
+# INSTALLED BY PUPPET
+# ###################
+autoload -U +X compinit && compinit
+autoload -U +X bashcompinit && bashcompinit
+
+dotfiles ()
+{
+  case \$1 in
+    *upgrade)
+      echo \"Running 'puppet apply'\"
+      /bin/bash <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/install.sh autorun
+    ;;
+    *update)
+      cd <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %> && git pull && git submodule init && git submodule sync && git submodule update && cd -
+    ;;
+    *status)
+      cd <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %> && git status && cd -
+    ;;
+<% if scope['::operatingsystem'] == 'Ubuntu' -%>
+    *software)
+      echo \"Running 'sudo puppet apply'\"
+      env FACTER_dotfilespath=<%= scope['::homedir'] %>/<%= scope['::dotfiles'] %> sudo -E <%= scope['::puppetbin'] %> apply \\
+        --modulepath <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/puppet/modules --show_diff \\
+        --hiera_config <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/puppet/hiera.yaml \\
+        <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/puppet/manifest.pp
+    ;;
+<% end -%>
+    *)
+      echo -e \"Usage:\"
+      echo -e \"dotfiles upgrade  [install dotfiles via puppet apply] \"
+      echo -e \"dotfiles update   [update dotfile repository] \"
+      echo -e \"dotfiles status   [check dotfiles repository status] \"
+<% if scope['::operatingsystem'] == 'Ubuntu' -%>
+      echo -e \"dotfiles software [install software via sudo puppet apply] \\n\"
+<% else -%>
+      echo -e \"\nSoftware is managed through boxen!\"
+<% end -%>
+      tput sgr0
+    ;;
+  esac
+}
+_dotfiles()
+{
+    local cur=\${COMP_WORDS[COMP_CWORD]}
+<% if scope['::operatingsystem'] == 'Ubuntu' -%>
+    COMPREPLY=( \$(compgen -W \"upgrade update status software\" -- \$cur) )
+<% else -%>
+    COMPREPLY=( \$(compgen -W \"upgrade update status\" -- \$cur) )
+<% end -%>
+}
+complete -F _dotfiles dotfiles
+
+<%= scope['::userspace::setupfiles::gmvimalias'] %>
+
+export DEBFULLNAME='<%= scope['::userspace::displayname'] %>'
+export DEBEMAIL='<%= scope['::userspace::mailaddress'] %>'
+
+# ###############
+# DO EDITS THERE:
+. ~/<%= scope['::dotfiles'] %>/zshrc
+    "),
+  }
+
   exec { 'install_bashrc_dotfiles':
     path    => ['/usr/bin','/bin','/usr/sbin'],
     command => "echo \"
@@ -108,6 +175,18 @@ if [ -f ~/.bashrc_dotfiles ]; then
 fi
    \" >> ${::homedir}/.bashrc",
     unless  => "grep 'bashrc_dotfiles' ${::homedir}/.bashrc",
+  }
+
+  exec { 'install_zshrc_dotfiles':
+    path    => ['/usr/bin','/bin','/usr/sbin'],
+    command => "echo \"
+# THE FOLLOWING IS ADDED BY PUPPET !!!
+# uncomment to disable (deleting is futile)
+if [ -f ~/.zshrc_dotfiles ]; then
+    . ~/.zshrc_dotfiles
+fi
+   \" >> ${::homedir}/.zshrc",
+    unless  => "grep 'zshrc_dotfiles' ${::homedir}/.zshrc",
   }
 
   file { "${::homedir}/.profile_dotfiles":
@@ -167,19 +246,31 @@ fi
     ")
   }
 
-  userspace::dotfilessh { $userspace::sshkeys :
-    require => File["${::homedir}/.ssh"],
+  file { "${::homedir}/.ssh/config":
+    ensure  => present,
+    content =>  inline_template("# ssh config following mozilla guidelines - https://infosec.mozilla.org/guidelines/openssh.html
+# Ensure KnownHosts are unreadable if leaked - it is otherwise easier to know which hosts your keys have access to.
+HashKnownHosts yes
+# Host keys the client accepts - order here is honored by OpenSSH
+HostKeyAlgorithms ssh-ed25519-cert-v01@openssh.com,ssh-rsa-cert-v01@openssh.com,ssh-ed25519,ssh-rsa,ecdsa-sha2-nistp521-cert-v01@openssh.com,ecdsa-sha2-nistp384-cert-v01@openssh.com,ecdsa-sha2-nistp256-cert-v01@openssh.com,ecdsa-sha2-nistp521,ecdsa-sha2-nistp384,ecdsa-sha2-nistp256
+
+KexAlgorithms curve25519-sha256@libssh.org,ecdh-sha2-nistp521,ecdh-sha2-nistp384,ecdh-sha2-nistp256,diffie-hellman-group-exchange-sha256
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
+
+<% if scope['::operatingsystem'] == 'Darwin' -%>
+Host *
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/id_rsa
+<% end -%>
+
+Include <%= scope['::homedir']%>/<%= scope['::dotsecrets']%>/ssh/config_<%= scope['::hostname']%>
+    ")
   }
 
-  file {"${::homedir}/.ssh":
-    ensure => directory,
-    mode   => '0700',
-  }
-  userspace::dotfilelink { 'ssh_config':
-    targetfile => "${::dotsecrets}/ssh/config",
-    linkfile   => '.ssh/config',
-    require => File["${::homedir}/.ssh"],
-  }
+
 
   if $::operatingsystem == 'Ubuntu' {
     $dotfileexecutables = [
