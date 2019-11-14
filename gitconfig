@@ -20,10 +20,9 @@
     # push to github via ssh
     pushinsteadof = "https://github.com/"
     pushinsteadof = "git://github.com/"
-[url "git@projects.gwdg.de:"]
-    # push to gwdg projects via ssh
-    pushinsteadof = "https://projects.gwdg.de/gitolite/"
-    pushinsteadof = "git://projects.gwdg.de/"
+[url "git@bitbucket.org:"]
+    # push to gbitbucket via ssh
+    pushinsteadof = "https://bitbucket.org/"
 [url "git@gitlab.gwdg.de:"]
     # push to gwdg gitlab via ssh
     pushinsteadof = "https://gitlab.gwdg.de/"
