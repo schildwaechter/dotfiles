@@ -8,7 +8,7 @@ class software::otherinstalls {
 
   exec { 'install_grip':
     path    => ['/usr/bin','/bin','/usr/sbin','/usr/local/bin'],
-    command => 'pip install grip',
+    command => 'python3 -m pip install grip',
     unless  => 'which grip',
   }
 

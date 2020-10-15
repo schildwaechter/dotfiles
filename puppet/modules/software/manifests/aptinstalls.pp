@@ -3,6 +3,9 @@ class software::aptinstalls {
   package {
     'language-pack-de':          ensure => installed;
     'language-pack-en':          ensure => installed;
+    'language-pack-nb':          ensure => installed;
+    'language-pack-bs':          ensure => installed;
+    'language-pack-fr':          ensure => installed;
     'unrar':                     ensure => installed;
     'unzip':                     ensure => installed;
     'synaptic':                  ensure => installed;
@@ -23,15 +26,11 @@ class software::aptinstalls {
     'dnsutils':                  ensure => installed;
     'shellcheck':                ensure => installed;
     'python-dev':                ensure => installed;
-    'python-pip':                ensure => installed;
-    'python-virtualenv':         ensure => installed;
+    'python3-pip':               ensure => installed;
     'python3-lxml':              ensure => installed;
     'libsasl2-dev':              ensure => installed;
     'ruby-dev':                  ensure => installed;
     'bundler':                   ensure => installed;
-    'pidgin':                    ensure => installed;
-    'pidgin-gnome-keyring':      ensure => installed;
-    'pidgin-libnotify':          ensure => installed;
     'gnupg2':                    ensure => installed;
     'flvstreamer':               ensure => installed;
     'ffmpeg':                    ensure => installed;
@@ -46,6 +45,8 @@ class software::aptinstalls {
     'nodejs':                    ensure => installed;
     'npm':                       ensure => installed;
     'fonts-powerline':           ensure => installed;
+    'cifs-utils':                ensure => installed;
+    'libmediainfo0v5':           ensure => installed;
   }
 
   package {
@@ -60,16 +61,18 @@ class software::aptinstalls {
     'meld':                      ensure => installed;
     'inkscape':                  ensure => installed;
     'gimp':                      ensure => installed;
+    'darktable':                 ensure => installed;
     'scribus':                   ensure => installed;
     'icc-profiles':              ensure => installed;
+    'pdftk':                     ensure => installed;
     'vlc':                       ensure => installed;
-    'xubuntu-restricted-extras': ensure => installed;
+    'ubuntu-restricted-extras':  ensure => installed;
     'texlive-full':              ensure => installed;
     'biber':                     ensure => installed;
     'usb-creator-gtk':           ensure => installed;
     'xfce4-goodies':             ensure => installed;
     'openjfx':                   ensure => installed;
-    'virtualbox-6.0':            ensure => installed;
+    'virtualbox-6.1':            ensure => installed;
   }
 
 }
