@@ -1,4 +1,5 @@
-# top-most EditorConfig file
+# THIS IS MY HOME's EditorConfig - no need to traverse towards /
+# Don't do this in a code repository!
 root = true
 
 [*]
@@ -17,5 +18,9 @@ indent_style = tab
 indent_size = 4
 
 [Makefile]
+indent_style = tab
+indent_size = 4
+
+[Jenkinsfile]
 indent_style = tab
 indent_size = 4

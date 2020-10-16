@@ -85,6 +85,9 @@ inoremap <Up> <C-O>gk
 noremap <Down> gj
 noremap <Up> gk
 
+" add custom runtime path
+let &runtimepath  = '~/.dotsecrets/vim,' . &runtimepath
+
 " syntastic rules for different languages
 let g:syntastic_puppet_checkers=['puppetlint']
 let g:syntastic_puppet_puppetlint_args='--no-80chars-check --no-class_inherits_from_params_class-check'
@@ -107,6 +110,13 @@ let g:signify_vcs_list= ['git','hg','svn']
 
 " add fountain filetype manually
 au BufRead,BufNewFile *.fountain set filetype=fountain
+
+" enable spell-check for some files
+autocmd FileType markdown setlocal spell
+autocmd FileType gitcommit setlocal spell
+autocmd FileType fountain setlocal spell
+
+set spelllang=en_GB-ise
 
 " Strip whitespace {
 " http://vim.spf13.com/

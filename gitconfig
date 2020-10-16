@@ -6,6 +6,8 @@
     whitespace = tab-in-indent,trailing-space,space-before-tab
 [push]
     default = simple
+[pull]
+    rebase = true
 [color "branch"]
     current = blue
     local = yellow
@@ -37,6 +39,8 @@
     contributors = "!f() { git shortlog -sn |  sed 's/^[[:space:]]*[0-9]*[[:space:]]*//g'; }; f"
     # submodule updates
     fix-submodules = submodule update --recursive --init
+    # force-push with a bit more care
+    forcepush = push --force-with-lease
     # graphical diff
     gdiff = difftool
     # print the full hash of the current commit

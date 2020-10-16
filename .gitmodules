@@ -73,3 +73,6 @@
 [submodule "vim/bundle/vim/bundle/Dockerfile"]
 	path = vim/bundle/Dockerfile
 	url = https://github.com/ekalinin/Dockerfile.vim.git
+[submodule "vim/bundle/Jenkinsfile-vim-syntax"]
+	path = vim/bundle/Jenkinsfile-vim-syntax
+	url = https://github.com/martinda/Jenkinsfile-vim-syntax.git
