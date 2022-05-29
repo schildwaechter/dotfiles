@@ -25,7 +25,7 @@ class software::aptinstalls {
     'dos2unix':                  ensure => installed;
     'dnsutils':                  ensure => installed;
     'shellcheck':                ensure => installed;
-    'python-dev':                ensure => installed;
+    'python3-dev':               ensure => installed;
     'python3-pip':               ensure => installed;
     'python3-lxml':              ensure => installed;
     'libsasl2-dev':              ensure => installed;
@@ -57,7 +57,6 @@ class software::aptinstalls {
     'conky-all':                 ensure => installed;
     'seahorse':                  ensure => installed;
     'chromium-browser':          ensure => installed;
-    'pepperflashplugin-nonfree': ensure => installed;
     'meld':                      ensure => installed;
     'inkscape':                  ensure => installed;
     'gimp':                      ensure => installed;
@@ -72,7 +71,7 @@ class software::aptinstalls {
     'usb-creator-gtk':           ensure => installed;
     'xfce4-goodies':             ensure => installed;
     'openjfx':                   ensure => installed;
-    'virtualbox-6.1':            ensure => installed;
+#   'virtualbox-6.1':            ensure => installed;
   }
 
 }

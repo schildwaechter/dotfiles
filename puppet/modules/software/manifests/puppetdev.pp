@@ -35,7 +35,9 @@ class software::puppetdev {
     provider => 'gem',
   }
 
-  class { 'vagrant': }
+  class { 'vagrant':
+    version => '2.2.19',
+  }
 
   vagrant::plugin { 'vagrant-cachier':
     user => 'cat'
