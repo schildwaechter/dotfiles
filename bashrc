@@ -107,16 +107,8 @@ alias dum='du -h | grep ^[0-9.]*M | sort -rn | head -n 20 | cut -d: -f2'
 
 alias schriftenliste="fc-list '' family | sort -u"
 alias myinxi='inxi -CGiISs'
-if [[ `uname` == 'Darwin' ]]; then
-  if [[ -n `which gdu` ]]; then
-    alias du='gdu'
-    alias du0='gdu --max-depth=0'
-    alias du1='gdu --max-depth=1'
-  fi
-else
-  alias du0='du --max-depth=0'
-  alias du1='du --max-depth=1'
-fi
+alias du0='du --max-depth=0'
+alias du1='du --max-depth=1'
 
 alias tcal='cal | sed "s/^/ /;s/$/ /;s/ $(date +%e) / $(date +%e | sed '\''s/./#/g'\'') /"'
 
