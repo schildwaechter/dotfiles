@@ -1,39 +1,11 @@
 # vi:syntax=gitconfig
-[init]
-    defaultBranch = main
-[core]
-    abbrev = 8
-    editor = vim
-    whitespace = tab-in-indent,trailing-space,space-before-tab
-[push]
-    default = simple
-[pull]
-    rebase = true
-[color "branch"]
-    current = blue
-    local = yellow
-    remote = green
-[help]
-    autocorrect = 15
-[merge]
-    log = true
-[mailmap]
-    file = ~/.gitmailmap
-[url "git@github.com:"]
-    # push to github via ssh
-    pushinsteadof = "https://github.com/"
-    pushinsteadof = "git://github.com/"
-[url "git@bitbucket.org:"]
-    # push to gbitbucket via ssh
-    pushinsteadof = "https://bitbucket.org/"
-[url "git@gitlab.gwdg.de:"]
-    # push to gwdg gitlab via ssh
-    pushinsteadof = "https://gitlab.gwdg.de/"
 [alias]
     # show all aliases
     aliases = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\ \t => \\2/' | sort
     # re-edit last commit
     amend = commit --amend --reuse-message=HEAD
+    # show all branches
+    branches = branch --all
     # show crontribution stats (respects mailmap)
     contribs = shortlog --summary --email --numbered
     # list all contributors (respects mailmap)
@@ -48,19 +20,82 @@
     hash = log -1 --format=format:'%H - (%ai) %s [%an]'
     # graphed log
     lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(blue)%h%C(reset) - %C(bold blue)(%ar)%C(reset) %C(white)%s%C(reset) [%an]%C(bold yellow)%d%C(reset)' --all
+    # `main` or a `master` repo?
+    mainormaster = "!git branch --format '%(refname:short)' --sort=-committerdate --list master main | head -n1"
     # interactive rebase of ARG commits
     rb = "!f() { git rebase -i HEAD~$1; }; f"
+    # show remotes with URLs
+    remotes = remote --verbose
     # short git status
     s = status -s
     search = "!f() { git rev-list --all | xargs git grep -F $1; }; f"
+    # verbose tags list
+    tags = tag -l
     # undo last commit
     uncommit = reset --soft HEAD~
     # update with rebase and submodule update
-    update = !git pull --rebase --prune $@ && git submodule update --init --recursive
+    update = "!git pull --rebase --prune $@ && git submodule update --init --recursive"
     # diff by character
     wdiff = diff --word-diff
     # print current git user name and mail address
     whoami = "!f() { USERMAIL=$(git config user.email); USERNAME=$(git config user.name); echo \"$USERNAME <$USERMAIL>\"; }; f"
     # reset all changes (but keep a backup findable with git reflog)
     wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+
+[branch]
+    sort = -committerdate
+
+[color "branch"]
+    current = blue
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold # line info
+    old = red # deletions
+    new = green # additions
+
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
+
+[core]
+    abbrev = 8
+    editor = vim
+    whitespace = tab-in-indent,trailing-space,space-before-tab
+
+[help]
+    autocorrect = 15
+
+[init]
+    defaultBranch = main
+
+[merge]
+    log = true
+
+[mailmap]
+    file = ~/.gitmailmap
+
+[pull]
+    rebase = true
+
+[push]
+    default = simple
+    # autopush relevant tags
+    followTags = true
+
+[url "git@github.com:"]
+    # push to github via ssh
+    pushinsteadof = "https://github.com/"
+    pushinsteadof = "git://github.com/"
+
+[url "git@bitbucket.org:"]
+    # push to gbitbucket via ssh
+    pushinsteadof = "https://bitbucket.org/"
+
+[url "git@gitlab.gwdg.de:"]
+    # push to gwdg gitlab via ssh
+    pushinsteadof = "https://gitlab.gwdg.de/"
 
