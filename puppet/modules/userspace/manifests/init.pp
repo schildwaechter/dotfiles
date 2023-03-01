@@ -2,6 +2,7 @@ class userspace (
     $displayname       = $::id,
     $mailaddress       = "${::id}@${::fqdn}",
     $conkyrc           = "${::dotfiles}/conkyrc-default",
+    $github_user       = '',
     $grip_github_token = '',
     $sshkeys           = [],
   ) {

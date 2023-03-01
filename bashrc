@@ -249,3 +249,17 @@ netinfo ()
 	echo "MAC: " `ifconfig | awk '/HWaddr/ { print $NF }'`
 }
 
+# load come completion if commands are installed
+if command -v minikube &> /dev/null
+then
+  source <(minikube completion bash)
+fi
+if command -v kubectl &> /dev/null
+then
+  source <(kubectl completion bash)
+fi
+if command -v helm &> /dev/null
+then
+  source <(helm completion bash)
+fi
+

@@ -295,7 +295,7 @@ Include <%= scope['::homedir']%>/<%= scope['::dotsecrets']%>/ssh/config_<%= scop
 
   file { "${::homedir}/.grip/settings.py":
     ensure  => present,
-    content => "PASSWORD = '${userspace::grip_github_token}'"
+    content => "USERNAME = '${userspace::github_user}'\nPASSWORD = '${userspace::grip_github_token}'"
   }
 
   remote_file { "${::homedir}/.git-prompt.sh":

@@ -54,4 +54,16 @@ catnocomment ()
         fi
 }
 
-
+# load come completion if commands are installed
+if command -v minikube &> /dev/null
+then
+  source <(minikube completion zsh)
+fi
+if command -v kubectl &> /dev/null
+then
+  source <(kubectl completion zsh)
+fi
+if command -v helm &> /dev/null
+then
+  source <(helm completion zsh)
+fi

@@ -2,7 +2,7 @@
 #
 if [[ `uname` == 'Darwin' ]]; then
   # Mac is fuzzy on locales
-  export LC_ALL=en_GB.UTF-8  
+  export LC_ALL=en_GB.UTF-8
   export LANG=en_GB.UTF-8
 
   # iterm2 color settings
@@ -42,3 +42,4 @@ export BSTINPUTS
 export TEXCONFIG
 export TEXFONTS
 
+export DOTNET_CLI_TELEMETRY_OPTOUT="1"
