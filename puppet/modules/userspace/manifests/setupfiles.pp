@@ -6,6 +6,7 @@ class userspace::setupfiles {
     'dircolors',
     'inputrc',
     'locale',
+    'p10k.zsh',
     'screenrc',
     'toprc',
     'vim', 'vimrc', 'gvimrc',
@@ -26,12 +27,6 @@ class userspace::setupfiles {
       targetfile => $userspace::conkyrc,
       linkfile   => '.conkyrc',
     }
-  }
-
-  if $::operatingsystem == 'Ubuntu' {
-    $gmvimalias = "alias mvim='gvim'"
-  } elsif $::operatingsystem == 'Darwin' {
-    $gmvimalias = "alias gvim='mvim'"
   }
 
   file { "${::homedir}/.bashrc_dotfiles":
@@ -87,7 +82,9 @@ _dotfiles()
 }
 complete -F _dotfiles dotfiles
 
-<%= scope['::userspace::setupfiles::gmvimalias'] %>
+<% if scope['::operatingsystem'] == 'Ubuntu' -%>
+alias mvim='gvim'
+<% end -%>
 
 export DEBFULLNAME='<%= scope['::userspace::displayname'] %>'
 export DEBEMAIL='<%= scope['::userspace::mailaddress'] %>'
@@ -154,7 +151,15 @@ _dotfiles()
 }
 complete -F _dotfiles dotfiles
 
-<%= scope['::userspace::setupfiles::gmvimalias'] %>
+<% if scope['::operatingsystem'] == 'Ubuntu' -%>
+alias mvim='gvim'
+<% end -%>
+<% if scope['::operatingsystem'] == 'Darwin' -%>
+source ~/.profile
+if [ -d \"/Applications/MacVim.app/Contents/bin\" ] ; then
+  PATH=\"/Applications/MacVim.app/Contents/bin:\$PATH\"
+fi
+<% end -%>
 
 export DEBFULLNAME='<%= scope['::userspace::displayname'] %>'
 export DEBEMAIL='<%= scope['::userspace::mailaddress'] %>'
@@ -241,7 +246,7 @@ fi
 [core]
   excludesfile = <%= scope['::homedir']%>/<%= scope['::dotfiles']%>/gitignore_global
 <% if scope['::operatingsystem'] == 'Darwin' -%>
-  editor = /usr/bin/vim
+  editor = vim
 <% end -%>
     ")
   }

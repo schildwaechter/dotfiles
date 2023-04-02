@@ -34,9 +34,6 @@
 [submodule "vim/bundle/vim-markdown"]
 	path = vim/bundle/vim-markdown
 	url = https://github.com/tpope/vim-markdown
-[submodule "vim/bundle/vim-mercenary"]
-	path = vim/bundle/vim-mercenary
-	url = https://github.com/jlfwong/vim-mercenary
 [submodule "vim/bundle/vim-puppet"]
 	path = vim/bundle/vim-puppet
 	url = https://github.com/rodjek/vim-puppet
@@ -73,6 +70,3 @@
 [submodule "vim/bundle/vim/bundle/Dockerfile"]
 	path = vim/bundle/Dockerfile
 	url = https://github.com/ekalinin/Dockerfile.vim.git
-[submodule "vim/bundle/Jenkinsfile-vim-syntax"]
-	path = vim/bundle/Jenkinsfile-vim-syntax
-	url = https://github.com/martinda/Jenkinsfile-vim-syntax.git

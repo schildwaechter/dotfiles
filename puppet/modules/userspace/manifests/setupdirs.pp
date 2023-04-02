@@ -5,6 +5,10 @@ class userspace::setupdirs (
     ensure => directory,
   }
 
+  file {"${::homedir}/.ssh":
+    ensure => directory,
+  }
+
   file { "${::homedir}/.config":
     ensure  => directory,
   }

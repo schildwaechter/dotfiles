@@ -37,6 +37,8 @@ if [ -d $HOME/.TeX ]; then
   TEXFONTS=".:$HOME/.TeX//:$TEXFONTS"
 fi
 
+export PAPERSIZE="a4"
+
 export TEXINPUTS
 export BSTINPUTS
 export TEXCONFIG
