@@ -25,10 +25,7 @@ rm "puppet-release-$(lsb_release -cs).deb";
 apt-get update;
 apt-get -y install puppet-agent;
 ```
-or
-```
-https://downloads.puppetlabs.com/mac/puppet7
-```
+or use Homebrew for MacOS.
 
 Then run `install.sh` from within the folder.
 
@@ -50,22 +47,9 @@ Some software must (currently) be installed manually
 * [Powerlevel10k](https://github.com/romkatv/powerlevel10k#installation)
   and its [Meslo Nerd Font](https://github.com/romkatv/powerlevel10k#meslo-nerd-font-patched-for-powerlevel10k)
 
-### MacOS software links
+### MacOS
 
-Mac software installation is not automated.
-
-* [iTerm2](https://iterm2.com/)
-* [1Password](https://1password.com/downloads/mac/)
-* [Nextcloud](https://nextcloud.com/install/)
-* [Firefox](https://www.mozilla.org/en-US/firefox/new/)
-* [MacVim](https://macvim.org/)
-* [MacPorts](https://www.macports.org/install.php)
-
-This also applies to some configuration, so
-```bash
-sudo cp ~/.dotfiles/us_cat/osx/*.keylayout /Library/Keyboard Layouts
-```
-log out and back in and apply through settings.
+See [MacOS.md](MacOS.md).
 
 ### Ubuntu software packages
 

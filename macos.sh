@@ -23,7 +23,7 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 #sudo scutil --set LocalHostName "catmac"
 #sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "catmac"
 
-# Disable the sound effects on boot
+# Disable the sound effects on boot (System Setting -> Sound -> Play sound on startup)
 sudo nvram SystemAudioVolume=" "
 
 # Disable automatic capitalization as it’s annoying when typing code

@@ -105,6 +105,15 @@ alias timer='echo "Timer started at $(date) - stop with Ctrl-D." && /usr/bin/tim
 
 alias ccat='pygmentize -g'
 
+alias k='kubectl'
+alias tf='terraform'
+alias kubcetl='kubectl'
+alias terrafrom='terraform'
+
+if [[ `uname` == 'Darwin' ]]; then
+  alias code="open -a 'Visual Studio Code'"
+fi
+
 ##############################################
 #### lots of functions ...
 

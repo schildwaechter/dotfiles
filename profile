@@ -17,6 +17,11 @@ if [ -d "$HOME/.gem/ruby/1.9.1/bin" ] ; then
     PATH="$HOME/.gem/ruby/1.9.1/bin:$PATH"
 fi
 
+# add gopath to path
+if command -v go &> /dev/null ; then
+    PATH="$(go env GOPATH)/bin:$PATH"
+fi
+
 # add personal bin dirs to path
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
@@ -45,3 +50,5 @@ export TEXCONFIG
 export TEXFONTS
 
 export DOTNET_CLI_TELEMETRY_OPTOUT="1"
+export HOMEBREW_NO_ANALYTICS=1
+

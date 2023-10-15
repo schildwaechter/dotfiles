@@ -140,6 +140,39 @@ if [ "$(command -v go)" ] && [ "$(command -v golint)" ] ; then
   done
 fi
 
+#TERRAFORM
+if [ "$(command -v terraform)" ] && [ "$(command -v tflint)" ] ; then
+  for file in $(git diff --name-only --cached | grep -E '\.(tf)$')
+  do
+    if [[ -f $file ]] ; then
+      terraform fmt -check "${file}"
+      if [[ $? -ne 0 ]] ; then
+        echo "ERROR: Formating wrong for: ${file}"
+        syntax_is_bad=1
+      else
+        tflint --minimum-failure-severity=error --filter="${file}"
+        if [[ $? -ne 0 ]] ; then
+          echo "ERROR: TFlint failed at: $file"
+          syntax_is_bad=1
+        else
+          echo "OK: $file looks like a properly formatted Terraform file"
+        fi
+      fi
+    fi
+  done
+  # validate only if we haven't failed already
+  if [[ ! $syntax_is_bad -eq 1 ]] ; then
+    echo -n "Performing Terraform validate ..."
+    terraform validate
+    if [[ $? -ne 0 ]] ; then
+      echo "\nERROR: Terraform validate failed."
+      syntax_is_bad=1
+    else
+      echo " -- OK"
+    fi
+  fi
+fi
+
 
 if [[ $syntax_is_bad -eq 1 ]]
 then

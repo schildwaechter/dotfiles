@@ -1,15 +1,20 @@
 # vi:syntax=gitconfig
 [alias]
     # show all aliases
-    aliases = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\ \t => \\2/' | sort
+    aliases = "!f() { git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\ \t => \\2/' | sort; }; f"
     # re-edit last commit
-    amend = commit --amend --reuse-message=HEAD
+    amend = commit --amend --date=now --reuse-message=HEAD
     # show all branches
     branches = branch --all
+    # clean mergend branches (use default or specify)
+    cleanmerged = "!f() { export DEFAULT=$(git default) && git branch --merged ${1-${DEFAULT}} | grep -v \" ${1-${DEFAULT}}$\" | xargs -r git branch -d; }; f"
+    # TODO: use something like git for-each-ref --format '%(refname:short)' refs/heads | grep -v "master\|main" | xargs git branch -D
     # show crontribution stats (respects mailmap)
     contribs = shortlog --summary --email --numbered
     # list all contributors (respects mailmap)
-    contributors = "!f() { git shortlog -sn |  sed 's/^[[:space:]]*[0-9]*[[:space:]]*//g'; }; f"
+    contributors = "!f() { git shortlog -sn | sed 's/^[[:space:]]*[0-9]*[[:space:]]*//g'; }; f"
+    # get default branch from origin
+    default = "!f() { git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'; }; f"
     # submodule updates
     fix-submodules = submodule update --recursive --init
     # force-push with a bit more care
@@ -22,6 +27,10 @@
     lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(blue)%h%C(reset) - %C(bold blue)(%ar)%C(reset) %C(white)%s%C(reset) [%an]%C(bold yellow)%d%C(reset)' --all
     # `main` or a `master` repo?
     mainormaster = "!git branch --format '%(refname:short)' --sort=-committerdate --list master main | head -n1"
+    # PR is done - so go to main and delete current branch
+    prdone = "!f() { export DEFAULT=$(git default) && git checkout ${DEFAULT} && git branch -D @{-1}; echo \"Remember to pull!\"; }; f"
+    # PR is merged, but we need to go for another iteration, so let's rebase
+    priterate = "!f() { export DEFAULT=$(git default) && git checkout ${DEFAULT} && git pull && git checkout - && git rebase ${DEFAULT}; }; f"
     # interactive rebase of ARG commits
     rb = "!f() { git rebase -i HEAD~$1; }; f"
     # show remotes with URLs
@@ -34,13 +43,16 @@
     # undo last commit
     uncommit = reset --soft HEAD~
     # update with rebase and submodule update
-    update = "!git pull --rebase --prune $@ && git submodule update --init --recursive"
+    update = "!f() { git pull --rebase --prune $@ && git submodule update --init --recursive; }; f"
     # diff by character
     wdiff = diff --word-diff
     # print current git user name and mail address
     whoami = "!f() { USERMAIL=$(git config user.email); USERNAME=$(git config user.name); echo \"$USERNAME <$USERMAIL>\"; }; f"
     # reset all changes (but keep a backup findable with git reflog)
-    wipe = !git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard
+    wipe = "!f() { git add -A && git commit -qm 'WIPE SAVEPOINT' && git reset HEAD~1 --hard; }; f"
+
+[advice]
+    skippedCherryPicks = false
 
 [branch]
     sort = -committerdate
@@ -66,6 +78,9 @@
     editor = vim
     whitespace = tab-in-indent,trailing-space,space-before-tab
 
+[fetch]
+    prune = true
+
 [help]
     autocorrect = 15
 
@@ -85,6 +100,8 @@
     default = simple
     # autopush relevant tags
     followTags = true
+    # automatically create remote tracking branches
+    autoSetupRemote = true
 
 [url "git@github.com:"]
     # push to github via ssh
