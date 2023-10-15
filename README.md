@@ -5,7 +5,7 @@
 This folder contains all of CaT's public dotfiles.
 They can be installed using puppet.
 
-This has most recently been tested on both Ubuntu (22.04) and macOS 13.
+This has most recently been tested on both Debian 12 and macOS 13.
 
 ### install
 
@@ -17,7 +17,11 @@ git submodule init
 git submodule update
 ```
 
-Install [puppet](https://www.puppet.com/docs/puppet/7/install_agents.html) installed, execute the `install.sh`.
+Install [puppet](https://www.puppet.com/docs/puppet/7/install_agents.html)
+```bash
+apt install puppet-agent
+```
+Or, once Puppet decides to support current Debian, this should work again
 ```bash
 wget -q "https://apt.puppetlabs.com/puppet-release-$(lsb_release -cs).deb"
 dpkg -i "puppet-release-$(lsb_release -cs).deb";
@@ -25,7 +29,8 @@ rm "puppet-release-$(lsb_release -cs).deb";
 apt-get update;
 apt-get -y install puppet-agent;
 ```
-or use Homebrew for MacOS.
+
+Or use Homebrew for MacOS.
 
 Then run `install.sh` from within the folder.
 

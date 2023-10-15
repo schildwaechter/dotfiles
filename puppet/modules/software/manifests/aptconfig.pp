@@ -6,9 +6,7 @@ class software::aptconfig {
     },
   }
 
-  apt::ppa { 'ppa:nextcloud-devs/client': }
-
-  apt::ppa { 'ppa:cdemu/ppa': }
+  #### NEED TO ADD crontrib & non-free to debian!!!!!!
 
   apt::source { 'virtualbox':
     location     => 'http://download.virtualbox.org/virtualbox/debian',
@@ -23,6 +21,28 @@ class software::aptconfig {
       'src'    => false,
     },
   }
+
+
+archive { '/tmp/packages.microsoft.gpg':
+  source          => 'https://packages.microsoft.com/keys/microsoft.asc',
+  extract         => true,
+  extract_path    => '/etc/apt/keyrings/',
+  extract_command => 'gpg --dearmor < %s > /etc/apt/keyrings/packages.microsoft.gpg',
+  creates         => '/etc/apt/keyrings/packages.microsoft.gpg',
+}
+
+
+  apt::source { 'vscode':
+    location     => 'https://packages.microsoft.com/repos/code',
+    release      => 'stable',
+    repos        => 'main',
+    architecture => 'amd64',
+    keyring => '/etc/apt/keyrings/packages.microsoft.gpg',
+    include      => {
+      'src'    => false,
+    },
+  }
+
 
 }
 

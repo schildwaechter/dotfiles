@@ -13,10 +13,25 @@ class userspace::setupfiles {
   ]
   userspace::simpledotfilelink { $simpledotfilelinks : }
 
-  if $::operatingsystem == 'Ubuntu' {
+  if $::operatingsystem == 'Debian' {
+    file { "${::homedir}/.config/fontconfig":
+      ensure => directory
+    }
+    file { "${::homedir}/.config/fontconfig/conf.d":
+      ensure => directory
+    }
     userspace::dotfilelink { 'powerline-symbols':
       targetfile => "${::dotfiles}/powerline-symbols.conf",
       linkfile   => '.config/fontconfig/conf.d/10-powerline-symbols.conf',
+    }
+    file { "${::homedir}/.local":
+      ensure => directory
+    }
+    file { "${::homedir}/.local/share":
+      ensure => directory
+    }
+    file { "${::homedir}/.local/share/applications":
+      ensure => directory
     }
     file { "${::homedir}/.local/share/applications/mimeapps.list":
       ensure => present,
@@ -48,7 +63,7 @@ dotfiles ()
     *status)
       cd <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %> && git status && cd -
     ;;
-<% if scope['::operatingsystem'] == 'Ubuntu' -%>
+<% if scope['::operatingsystem'] == 'Debian' -%>
     *software)
       echo \"Running 'sudo puppet apply'\"
       env FACTER_dotfilespath=<%= scope['::homedir'] %>/<%= scope['::dotfiles'] %> sudo -E <%= scope['::puppetbin'] %> apply \\
@@ -62,7 +77,7 @@ dotfiles ()
       echo -e \"dotfiles upgrade  [install dotfiles via puppet apply] \"
       echo -e \"dotfiles update   [update dotfile repository] \"
       echo -e \"dotfiles status   [check dotfiles repository status] \"
-<% if scope['::operatingsystem'] == 'Ubuntu' -%>
+<% if scope['::operatingsystem'] == 'Debian' -%>
       echo -e \"dotfiles software [install software via sudo puppet apply] \\n\"
 <% else -%>
       echo -e \"\nSoftware is managed through boxen!\"
@@ -74,7 +89,7 @@ dotfiles ()
 _dotfiles()
 {
     local cur=\${COMP_WORDS[COMP_CWORD]}
-<% if scope['::operatingsystem'] == 'Ubuntu' -%>
+<% if scope['::operatingsystem'] == 'Debian' -%>
     COMPREPLY=( \$(compgen -W \"upgrade update status software\" -- \$cur) )
 <% else -%>
     COMPREPLY=( \$(compgen -W \"upgrade update status\" -- \$cur) )
@@ -82,7 +97,7 @@ _dotfiles()
 }
 complete -F _dotfiles dotfiles
 
-<% if scope['::operatingsystem'] == 'Ubuntu' -%>
+<% if scope['::operatingsystem'] == 'Debian' -%>
 alias mvim='gvim'
 <% end -%>
 
@@ -117,7 +132,7 @@ dotfiles ()
     *status)
       cd <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %> && git status && cd -
     ;;
-<% if scope['::operatingsystem'] == 'Ubuntu' -%>
+<% if scope['::operatingsystem'] == 'Debian' -%>
     *software)
       echo \"Running 'sudo puppet apply'\"
       env FACTER_dotfilespath=<%= scope['::homedir'] %>/<%= scope['::dotfiles'] %> sudo -E <%= scope['::puppetbin'] %> apply \\
@@ -131,7 +146,7 @@ dotfiles ()
       echo -e \"dotfiles upgrade  [install dotfiles via puppet apply] \"
       echo -e \"dotfiles update   [update dotfile repository] \"
       echo -e \"dotfiles status   [check dotfiles repository status] \"
-<% if scope['::operatingsystem'] == 'Ubuntu' -%>
+<% if scope['::operatingsystem'] == 'Debian' -%>
       echo -e \"dotfiles software [install software via sudo puppet apply] \\n\"
 <% else -%>
       echo -e \"\nSoftware is managed through boxen!\"
@@ -143,7 +158,7 @@ dotfiles ()
 _dotfiles()
 {
     local cur=\${COMP_WORDS[COMP_CWORD]}
-<% if scope['::operatingsystem'] == 'Ubuntu' -%>
+<% if scope['::operatingsystem'] == 'Debian' -%>
     COMPREPLY=( \$(compgen -W \"upgrade update status software\" -- \$cur) )
 <% else -%>
     COMPREPLY=( \$(compgen -W \"upgrade update status\" -- \$cur) )
@@ -151,11 +166,11 @@ _dotfiles()
 }
 complete -F _dotfiles dotfiles
 
-<% if scope['::operatingsystem'] == 'Ubuntu' -%>
+<% if scope['::operatingsystem'] == 'Debian' -%>
 alias mvim='gvim'
 <% end -%>
-<% if scope['::operatingsystem'] == 'Darwin' -%>
 source ~/.profile
+<% if scope['::operatingsystem'] == 'Darwin' -%>
 if [ -d \"/Applications/MacVim.app/Contents/bin\" ] ; then
   PATH=\"/Applications/MacVim.app/Contents/bin:\$PATH\"
 fi
@@ -163,6 +178,8 @@ fi
 
 export DEBFULLNAME='<%= scope['::userspace::displayname'] %>'
 export DEBEMAIL='<%= scope['::userspace::mailaddress'] %>'
+
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # ###############
 # DO EDITS THERE:
@@ -277,7 +294,7 @@ Include <%= scope['::homedir']%>/<%= scope['::dotsecrets']%>/ssh/config_<%= scop
 
 
 
-  if $::operatingsystem == 'Ubuntu' {
+  if $::operatingsystem == 'Debian' {
     $dotfileexecutables = [
       'gitdiff.py',
       'myipv4',

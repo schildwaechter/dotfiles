@@ -9,7 +9,7 @@ class software::sysconfigchanges {
 
   exec { 'uscat_evdev_xml.py':
     path    => ['/usr/bin','/bin','/usr/sbin'],
-    command => "sudo python ${::dotfilespath}/us_cat/evdev_xml_entry.py",
+    command => "sudo python3 ${::dotfilespath}/us_cat/evdev_xml_entry.py",
     unless  => 'grep CaT /usr/share/X11/xkb/rules/evdev.xml',
     require => Class['Software::Otherinstalls'],
   }
@@ -24,24 +24,29 @@ class software::sysconfigchanges {
     }
   }
 
-  augeas { 'default_apport':
-    context => '/files/etc/default/apport',
-    changes => [
-      'set enabled 0',
-    ],
+  if $facts['::operatingsystem'] == 'Ubuntu' {
+    augeas { 'default_apport':
+      context => '/files/etc/default/apport',
+      changes => [
+        'set enabled 0',
+      ],
+    }
   }
 
-  augeas { 'ipv6_privacy':
+  augeas { 'ipv6_privacy_default':
     context => '/files/etc/sysctl.conf',
     changes => [
       'set net.ipv6.conf.default.use_tempaddr 2',
-      'set net.ipv6.conf.eth0.use_tempaddr 2',
-      'set net.ipv6.conf.eth1.use_tempaddr 2',
-      'set net.ipv6.conf.eth2.use_tempaddr 2',
-      'set net.ipv6.conf.wlan0.use_tempaddr 2',
-      'set net.ipv6.conf.wlan1.use_tempaddr 2',
-      'set net.ipv6.conf.wlan2.use_tempaddr 2',
     ],
+  }
+
+  $facts['networking']['interfaces'].each |$key, $value| {
+    augeas { "ipv6_privacy_${key}":
+      context => '/files/etc/sysctl.conf',
+      changes => [
+        "set net.ipv6.conf.${key}.use_tempaddr 2",
+      ],
+    }
   }
 
   augeas { 'sudo_insults':

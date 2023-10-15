@@ -6,11 +6,11 @@ class software::otherinstalls {
     unless  => 'which puppet-lint',
   }
 
-  exec { 'install_grip':
-    path    => ['/usr/bin','/bin','/usr/sbin','/usr/local/bin'],
-    command => 'python3 -m pip install grip',
-    unless  => 'which grip',
-  }
+  # exec { 'install_grip':
+  #   path    => ['/usr/bin','/bin','/usr/sbin','/usr/local/bin'],
+  #   command => 'pipx install grip',
+  #   unless  => 'which grip',
+  # }
 
   file {'/usr/share/X11/xkb/symbols/us_cat':
     ensure => present,
