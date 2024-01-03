@@ -23,6 +23,10 @@ if command -v helm &> /dev/null
 then
   source <(helm completion zsh)
 fi
+if command -v direnv &> /dev/null
+then
+  eval "$(direnv hook zsh)"
+fi
 
 ## LOAD COMMON ALIASES
 source ${HOME}/${FACTER_dotfiles}/alias.sh
