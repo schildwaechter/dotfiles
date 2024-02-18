@@ -8,7 +8,12 @@ To install the keyboard layout, do
 ```bash
 sudo cp ~/.dotfiles/us_cat/osx/*.keylayout /Library/Keyboard\ Layouts
 ```
+then copy the Caps-Lock-Fix
+```bash
+cp ~/.dotfiles/macos-KeyRemapping.plist ~/Library/LaunchAgents/com.local.KeyRemapping.plist
+```
 log out and back in and apply through settings.
+
 
 ## MacOS software
 
@@ -31,6 +36,7 @@ brew tap puppetlabs/puppet
 brew install --cask puppetlabs/puppet/puppet-agent
 brew install --cask meld
 brew install bash
+brew install coreutils
 brew install gh
 brew install kubernetes-cli
 brew install kubectx
@@ -70,4 +76,10 @@ brew install FairwindsOps/tap/pluto
 brew install krr
 brew install --cask virtualbox
 brew install --cask notunes
+brew install --cask spotify
+brew install --cask iterm2
+brew install --cask visual-studio-code
+brew install --cask vlc
+brew install --cask firefox
+
 ```
