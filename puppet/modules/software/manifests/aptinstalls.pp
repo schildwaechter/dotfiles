@@ -64,6 +64,9 @@ class software::aptinstalls {
     'direnv':                     ensure => installed;
     'httpie':                     ensure => installed;
     'gdu':                        ensure => installed;
+    'sshfs':                      ensure => installed;
+    'exfat-fuse':                 ensure => installed;
+    'simple-scan':                ensure => installed;
     'neofetch':                   ensure => installed;
     'golang-go':                  ensure => installed;
     'xfce4-goodies':              ensure => installed;
