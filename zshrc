@@ -28,5 +28,9 @@ then
   eval "$(direnv hook zsh)"
 fi
 
+if [ -d /opt/homebrew/share/zsh/site-functions ]; then
+  fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
+fi
+
 ## LOAD COMMON ALIASES
 source ${HOME}/${FACTER_dotfiles}/alias.sh

@@ -244,3 +244,12 @@ sourcedotenv ()
   fi
 }
 
+activate-venv() {
+  # https://seb.jambor.dev/posts/improving-shell-workflows-with-fzf/
+  local selected_env
+  selected_env=$(ls ~/.venv/ | fzf)
+
+  if [ -n "$selected_env" ]; then
+    source "$HOME/.venv/$selected_env/bin/activate"
+  fi
+}
