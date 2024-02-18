@@ -134,3 +134,4 @@ function! StripTrailingWhitespace()
 endfunction
 " }
 
+set rtp+=/usr/local/opt/fzf
