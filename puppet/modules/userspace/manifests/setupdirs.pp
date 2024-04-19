@@ -1,55 +1,55 @@
 class userspace::setupdirs (
   ) {
 
-  file {"${::homedir}/.bin":
+  file {"${facts['homedir']}/.bin":
     ensure => directory,
   }
 
-  file {"${::homedir}/.ssh":
+  file {"${facts['homedir']}/.ssh":
     ensure => directory,
   }
 
-  file { "${::homedir}/.config":
+  file { "${facts['homedir']}/.config":
     ensure  => directory,
   }
-  
-  if $::operatingsystem == 'Ubuntu' {
-    file { "${::homedir}/.config/fontconfig":
+
+  if $facts['os']['name'] == 'Ubuntu' {
+    file { "${facts['homedir']}/.config/fontconfig":
       ensure  => directory,
-      require => File["${::homedir}/.config"]
+      require => File["${facts['homedir']}/.config"]
     }
-    
-    file { "${::homedir}/.config/fontconfig/conf.d":
+
+    file { "${facts['homedir']}/.config/fontconfig/conf.d":
       ensure  => directory,
-      require => File["${::homedir}/.config/fontconfig"]
+      require => File["${facts['homedir']}/.config/fontconfig"]
     }
-    
-    file { "${::homedir}/.config/xfce4":
+
+    file { "${facts['homedir']}/.config/xfce4":
       ensure  => directory,
-      require => File["${::homedir}/.config"]
+      require => File["${facts['homedir']}/.config"]
     }
-    
-    file { "${::homedir}/.config/xfce4/terminal":
+
+    file { "${facts['homedir']}/.config/xfce4/terminal":
       ensure  => directory,
-      require => File["${::homedir}/.config/xfce4"]
+      require => File["${facts['homedir']}/.config/xfce4"]
     }
-    
-    file { "${::homedir}/.local":
+
+    file { "${facts['homedir']}/.local":
       ensure  => directory,
     }
-    
-    file { "${::homedir}/.local/share":
+
+    file { "${facts['homedir']}/.local/share":
       ensure  => directory,
-      require => File["${::homedir}/.local"],
+      require => File["${facts['homedir']}/.local"],
     }
-    
-    file { "${::homedir}/.local/share/applications":
+
+    file { "${facts['homedir']}/.local/share/applications":
       ensure  => directory,
-      require => File["${::homedir}/.local/share"],
+      require => File["${facts['homedir']}/.local/share"],
     }
   }
 
-  file { "${::homedir}/.grip":
+  file { "${facts['homedir']}/.grip":
     ensure  => directory,
   }
 

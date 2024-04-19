@@ -1,11 +1,11 @@
 
 node 'default' {
 
-  if $::id != 'root' {
+  if $facts['identity']['user'] != 'root' {
     include 'userspace'
   }
 
-  if $::id == 'root' {
+  if $facts['identity']['user'] == 'root' {
     include 'software'
   }
 

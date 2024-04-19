@@ -1,7 +1,7 @@
 class userspace (
-    $displayname       = $::id,
-    $mailaddress       = "${::id}@${::fqdn}",
-    $conkyrc           = "${::dotfiles}/conkyrc-default",
+    $displayname       = $facts['identity']['user'],
+    $mailaddress       = "${facts['identity']['user']}@${facts['networking']['fqdn']}",
+    $conkyrc           = "${facts['dotfiles']}/conkyrc-default",
     $github_user       = '',
     $grip_github_token = '',
     $sshkeys           = [],
@@ -13,7 +13,7 @@ class userspace (
     require => Class['userspace::setupdirs'],
   }
 
-  unless empty($::dotsecrets) {
+  unless empty($facts['dotsecrets']) {
     class { 'userspace::include_secrets':
       require => Class['userspace::setupdirs'],
     }

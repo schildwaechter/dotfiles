@@ -14,6 +14,9 @@ export MANPAGER='less -s -M +Gg'
 
 [ $DISPLAY ] && \
 export EDITOR="vim"
+export BROWSER="firefox"
+
+export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:="${HOME}/.config"}
 
 # confirm overwrite
 #set -o noclobber
@@ -247,7 +250,7 @@ sourcedotenv ()
 activate-venv() {
   # https://seb.jambor.dev/posts/improving-shell-workflows-with-fzf/
   local selected_env
-  selected_env=$(ls ~/.venv/ | fzf)
+  selected_env=$(ls -1 ~/.venv/ | fzf)
 
   if [ -n "$selected_env" ]; then
     source "$HOME/.venv/$selected_env/bin/activate"

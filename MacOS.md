@@ -36,6 +36,8 @@ brew tap puppetlabs/puppet
 brew install --cask puppetlabs/puppet/puppet-agent
 brew install --cask meld
 brew install bash
+brew install ansible
+brew install btop
 brew install coreutils
 brew install gh
 brew install kubernetes-cli
@@ -55,6 +57,7 @@ brew install azure-cli
 brew install Azure/kubelogin/kubelogin
 brew install cue
 brew install go
+brew install dust
 brew install exa
 brew install fzf
 brew install jq
@@ -64,6 +67,7 @@ brew install tree
 brew install direnv
 brew install btop
 brew install gdu
+brew install tmux
 brew install neofetch
 brew install httpie
 brew install watch

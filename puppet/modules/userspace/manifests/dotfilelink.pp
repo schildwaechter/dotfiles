@@ -1,8 +1,8 @@
 define userspace::dotfilelink ($targetfile,$linkfile) {
 
-  file {"${::homedir}/${linkfile}":
+  file {"${facts['homedir']}/${linkfile}":
     ensure => link,
-    target => "${::homedir}/${targetfile}",
+    target => "${facts['homedir']}/${targetfile}",
   }
 
 }

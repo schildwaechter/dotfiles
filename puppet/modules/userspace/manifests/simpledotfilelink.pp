@@ -1,6 +1,6 @@
 define userspace::simpledotfilelink ($linkname=$title) {
   userspace::dotfilelink { $linkname:
-    targetfile => "${::dotfiles}/${linkname}",
+    targetfile => "${facts['dotfiles']}/${linkname}",
     linkfile   => ".${linkname}",
   }
 }

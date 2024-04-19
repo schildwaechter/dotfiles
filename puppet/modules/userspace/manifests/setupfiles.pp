@@ -9,33 +9,34 @@ class userspace::setupfiles {
     'p10k.zsh',
     'screenrc',
     'toprc',
+    'tmux.conf',
     'vim', 'vimrc', 'gvimrc',
   ]
   userspace::simpledotfilelink { $simpledotfilelinks : }
 
-  if $::operatingsystem == 'Debian' {
-    file { "${::homedir}/.config/fontconfig":
+  if $facts['os']['name'] == 'Debian' {
+    file { "${facts['homedir']}/.config/fontconfig":
       ensure => directory
     }
-    file { "${::homedir}/.config/fontconfig/conf.d":
+    file { "${facts['homedir']}/.config/fontconfig/conf.d":
       ensure => directory
     }
     userspace::dotfilelink { 'powerline-symbols':
-      targetfile => "${::dotfiles}/powerline-symbols.conf",
+      targetfile => "${facts['dotfiles']}/powerline-symbols.conf",
       linkfile   => '.config/fontconfig/conf.d/10-powerline-symbols.conf',
     }
-    file { "${::homedir}/.local":
+    file { "${facts['homedir']}/.local":
       ensure => directory
     }
-    file { "${::homedir}/.local/share":
+    file { "${facts['homedir']}/.local/share":
       ensure => directory
     }
-    file { "${::homedir}/.local/share/applications":
+    file { "${facts['homedir']}/.local/share/applications":
       ensure => directory
     }
-    file { "${::homedir}/.local/share/applications/mimeapps.list":
+    file { "${facts['homedir']}/.local/share/applications/mimeapps.list":
       ensure => present,
-      source => "${::homedir}/${::dotfiles}/local-mimeapps.list",
+      source => "${facts['homedir']}/${facts['dotfiles']}/local-mimeapps.list",
       backup => true,
     }
     userspace::dotfilelink { 'conkyrc':
@@ -44,7 +45,7 @@ class userspace::setupfiles {
     }
   }
 
-  file { "${::homedir}/.bashrc_dotfiles":
+  file { "${facts['homedir']}/.bashrc_dotfiles":
     ensure  => present,
     content => inline_template("# ~/.bashrc EXTENSION
 # ###################
@@ -110,7 +111,7 @@ export DEBEMAIL='<%= scope['::userspace::mailaddress'] %>'
     "),
   }
 
-  file { "${::homedir}/.zshrc_dotfiles":
+  file { "${facts['homedir']}/.zshrc_dotfiles":
     ensure  => present,
     content => inline_template("# ~/.zshrc EXTENSION
 # ###################
@@ -195,8 +196,8 @@ export DEBEMAIL='<%= scope['::userspace::mailaddress'] %>'
 if [ -f ~/.bashrc_dotfiles ]; then
     . ~/.bashrc_dotfiles
 fi
-   \" >> ${::homedir}/.bashrc",
-    unless  => "grep 'bashrc_dotfiles' ${::homedir}/.bashrc",
+   \" >> ${facts['homedir']}/.bashrc",
+    unless  => "grep 'bashrc_dotfiles' ${facts['homedir']}/.bashrc",
   }
 
   exec { 'install_zshrc_dotfiles':
@@ -207,11 +208,11 @@ fi
 if [ -f ~/.zshrc_dotfiles ]; then
     . ~/.zshrc_dotfiles
 fi
-   \" >> ${::homedir}/.zshrc",
-    unless  => "grep 'zshrc_dotfiles' ${::homedir}/.zshrc",
+   \" >> ${facts['homedir']}/.zshrc",
+    unless  => "grep 'zshrc_dotfiles' ${facts['homedir']}/.zshrc",
   }
 
-  file { "${::homedir}/.profile_dotfiles":
+  file { "${facts['homedir']}/.profile_dotfiles":
     ensure  => present,
     content => inline_template("# ~/.profile EXTENSION
 # ###################
@@ -238,11 +239,11 @@ source \$HOME/<%= scope['::dotfiles'] %>/profile
 if [ -f \\\$HOME/.profile_dotfiles ]; then
     . \\\$HOME/.profile_dotfiles
 fi
-   \" >> ${::homedir}/.profile",
-    unless  => "grep 'profile_dotfiles' ${::homedir}/.profile",
+   \" >> ${facts['homedir']}/.profile",
+    unless  => "grep 'profile_dotfiles' ${facts['homedir']}/.profile",
   }
 
-  file { "${::homedir}/.gitconfig":
+  file { "${facts['homedir']}/.gitconfig":
     ensure  => present,
     content =>  inline_template("[user]
   name = <%= scope['::userspace::displayname'] %>
@@ -268,7 +269,7 @@ fi
     ")
   }
 
-  file { "${::homedir}/.ssh/config":
+  file { "${facts['homedir']}/.ssh/config":
     ensure  => present,
     content =>  inline_template("# ssh config following mozilla guidelines - https://infosec.mozilla.org/guidelines/openssh.html
 # Ensure KnownHosts are unreadable if leaked - it is otherwise easier to know which hosts your keys have access to.
@@ -294,7 +295,7 @@ Include <%= scope['::homedir']%>/<%= scope['::dotsecrets']%>/ssh/config_<%= scop
 
 
 
-  if $::operatingsystem == 'Debian' {
+  if $facts['os']['name'] == 'Debian' {
     $dotfileexecutables = [
       'gitdiff.py',
       'myipv4',
@@ -304,23 +305,23 @@ Include <%= scope['::homedir']%>/<%= scope['::dotsecrets']%>/ssh/config_<%= scop
     ]
     userspace::dotfileexecutable { $dotfileexecutables: }
 
-    file { "${::homedir}/.config/xfce4/terminal/terminalrc":
-      ensure  => present,
-      source => "${::homedir}/${::dotfiles}/xfce4-terminalrc",
+    file { "${facts['homedir']}/.config/xfce4/terminal/terminalrc":
+      ensure => present,
+      source => "${facts['homedir']}/${facts['dotfiles']}/xfce4-terminalrc",
     }
-  } elsif $::operatingsystem == 'Darwin' {
+  } elsif $facts['os']['name'] == 'Darwin' {
     $dotfileexecutables = [
       'gitdiff.py',
     ]
     userspace::dotfileexecutable { $dotfileexecutables: }
   }
 
-  file { "${::homedir}/.grip/settings.py":
+  file { "${facts['homedir']}/.grip/settings.py":
     ensure  => present,
     content => "USERNAME = '${userspace::github_user}'\nPASSWORD = '${userspace::grip_github_token}'"
   }
 
-  remote_file { "${::homedir}/.git-prompt.sh":
+  remote_file { "${facts['homedir']}/.git-prompt.sh":
     ensure => present,
     source => 'https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh',
   }

@@ -1,25 +1,25 @@
 class userspace::include_secrets {
 
-  file {"${::homedir}/.purple":
+  file {"${facts['homedir']}/.purple":
     ensure => directory,
-  }->
-  userspace::dotfilelink { 'pidgin-logs':
-    targetfile => "${::dotsecrets}/pidgin-logs",
+  }
+  -> userspace::dotfilelink { 'pidgin-logs':
+    targetfile => "${facts['dotsecrets']}/pidgin-logs",
     linkfile   => '.purple/logs',
   }
 
   userspace::dotfilelink { 'fonts':
-    targetfile => "${::dotsecrets}/fonts",
+    targetfile => "${facts['dotsecrets']}/fonts",
     linkfile   => '.fonts',
   }
 
   userspace::dotfilelink { 'TeX':
-    targetfile => "${::dotsecrets}/TeX",
+    targetfile => "${facts['dotsecrets']}/TeX",
     linkfile   => '.TeX',
   }
 
   userspace::dotfilelink { 'face':
-    targetfile => "${::dotsecrets}/face",
+    targetfile => "${facts['dotsecrets']}/face",
     linkfile   => '.face',
   }
 

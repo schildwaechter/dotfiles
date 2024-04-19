@@ -1,9 +1,9 @@
 define userspace::dotfileexecutable ($executablename=$title) {
   userspace::dotfilelink { "executable_${executablename}":
-    targetfile => "${::dotfiles}/bin/${executablename}",
+    targetfile => "${facts['dotfiles']}/bin/${executablename}",
     linkfile   => ".bin/${executablename}",
   }
-  file { "${::homedir}/${::dotfiles}/bin/${executablename}":
+  file { "${facts['homedir']}/${facts['dotfiles']}/bin/${executablename}":
     mode => '0755',
   }
 }

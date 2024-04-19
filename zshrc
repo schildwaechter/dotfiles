@@ -34,3 +34,8 @@ fi
 
 ## LOAD COMMON ALIASES
 source ${HOME}/${FACTER_dotfiles}/alias.sh
+
+unsetopt share_history
+setopt inc_append_history
+
+alias loadhistory='fc -RI'
