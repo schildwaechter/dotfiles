@@ -53,6 +53,11 @@ class userspace::setupdirs (
     ensure  => directory,
   }
 
+  userspace::dotfilelink { 'nvim':
+    targetfile => "${facts['dotfiles']}/nvim",
+    linkfile   => '.config/nvim',
+  }
+
 }
 
 
