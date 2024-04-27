@@ -49,7 +49,7 @@ set showmatch
 " define color and chars for tab and eol
 highlight NonText guifg=#4a4a59
 highlight SpecialKey guifg=#4a4a59
-set listchars=tab:▸\ ,eol:¬
+set listchars=tab:▸␣,trail:￮,nbsp:‿,eol:↲
 " toggle paste mode
 set pastetoggle=<F12>
 
