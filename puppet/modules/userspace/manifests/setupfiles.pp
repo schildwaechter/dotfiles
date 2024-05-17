@@ -326,6 +326,11 @@ Include <%= scope['::homedir']%>/<%= scope['::dotsecrets']%>/ssh/config_<%= scop
     source => 'https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh',
   }
 
+  vcsrepo { "${facts['homedir']}/.local/share/zinit/zinit.git":
+    ensure   => present,
+    provider => git,
+    source   => 'https://github.com/zdharma-continuum/zinit.git',
+    revision => 'v3.13.1',
+  }
+
 }
-
-

@@ -76,3 +76,6 @@
 [submodule "puppet/modules/augeas_core"]
 	path = puppet/modules/augeas_core
 	url = https://github.com/puppetlabs/puppetlabs-augeas_core.git
+[submodule "puppet/modules/vcsrepo"]
+	path = puppet/modules/vcsrepo
+	url = https://github.com/puppetlabs/puppetlabs-vcsrepo.git

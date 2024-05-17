@@ -5,15 +5,18 @@
 Run the `macos.sh` script for a number of settings.
 
 To install the keyboard layout, do
+
 ```bash
 sudo cp ~/.dotfiles/us_cat/osx/*.keylayout /Library/Keyboard\ Layouts
 ```
+
 then copy the Caps-Lock-Fix
+
 ```bash
 cp ~/.dotfiles/macos-KeyRemapping.plist ~/Library/LaunchAgents/com.local.KeyRemapping.plist
 ```
-log out and back in and apply through settings.
 
+log out and back in and apply through settings.
 
 ## MacOS software
 
@@ -58,11 +61,14 @@ brew install Azure/kubelogin/kubelogin
 brew install cue
 brew install go
 brew install dust
+brew install bat
+brew install bottom
 brew install exa
 brew install fzf
 brew install jq
 brew install yq
 brew install grip
+brew install ripgrep
 brew install tree
 brew install direnv
 brew install btop
@@ -70,6 +76,7 @@ brew install gdu
 brew install tmux
 brew install neofetch
 brew install httpie
+brew install ripgrep
 brew install watch
 brew install tfk8s
 brew install podman-desktop
@@ -85,5 +92,6 @@ brew install --cask iterm2
 brew install --cask visual-studio-code
 brew install --cask vlc
 brew install --cask firefox
-
+brew install --cask paintbrush
+brew install --cask font-meslo-lg-nerd-font
 ```

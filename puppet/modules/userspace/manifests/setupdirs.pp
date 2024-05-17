@@ -13,6 +13,16 @@ class userspace::setupdirs (
     ensure  => directory,
   }
 
+  file { "${facts['homedir']}/.local":
+    ensure  => directory,
+  }
+
+  file { "${facts['homedir']}/.local/share":
+    ensure  => directory,
+    require => File["${facts['homedir']}/.local"],
+  }
+
+
   if $facts['os']['name'] == 'Ubuntu' {
     file { "${facts['homedir']}/.config/fontconfig":
       ensure  => directory,
@@ -34,19 +44,15 @@ class userspace::setupdirs (
       require => File["${facts['homedir']}/.config/xfce4"]
     }
 
-    file { "${facts['homedir']}/.local":
-      ensure  => directory,
-    }
-
-    file { "${facts['homedir']}/.local/share":
-      ensure  => directory,
-      require => File["${facts['homedir']}/.local"],
-    }
-
     file { "${facts['homedir']}/.local/share/applications":
       ensure  => directory,
       require => File["${facts['homedir']}/.local/share"],
     }
+  }
+
+  file { "${facts['homedir']}/.local/share/zinit":
+    ensure  => directory,
+    require => File["${facts['homedir']}/.local/share"],
   }
 
   file { "${facts['homedir']}/.grip":
