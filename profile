@@ -1,20 +1,12 @@
 # ~/.profile EXTENSION
 #
 if [[ `uname` == 'Darwin' ]]; then
-  # Mac is fuzzy on locales
-  export LC_ALL=en_GB.UTF-8
-  export LANG=en_GB.UTF-8
-
-  # iterm2 color settings
-  export CLICOLOR=1
-  export TERM=xterm-256color
+    # Mac is fuzzy on locales
+    export LC_ALL=en_GB.UTF-8
+    export LANG=en_GB.UTF-8
+    export CLICOLOR=1
 else
-  source "$HOME/.locale"
-fi
-
-# private ruby 1.9.1 gems
-if [ -d "$HOME/.gem/ruby/1.9.1/bin" ] ; then
-    PATH="$HOME/.gem/ruby/1.9.1/bin:$PATH"
+    source "$HOME/.locale"
 fi
 
 # add gopath to path
@@ -36,10 +28,10 @@ export PATH
 
 # custom TeX files
 if [ -d $HOME/.TeX ]; then
-  TEXINPUTS=".:$HOME/.TeX//:$TEXINPUTS"
-  BSTINPUTS=".:$HOME/.TeX//:$BSTINPUTS"
-  TEXCONFIG=".:$HOME/.TeX//:$TEXCONFIG"
-  TEXFONTS=".:$HOME/.TeX//:$TEXFONTS"
+    TEXINPUTS=".:$HOME/.TeX//:$TEXINPUTS"
+    BSTINPUTS=".:$HOME/.TeX//:$BSTINPUTS"
+    TEXCONFIG=".:$HOME/.TeX//:$TEXCONFIG"
+    TEXFONTS=".:$HOME/.TeX//:$TEXFONTS"
 fi
 
 export PAPERSIZE="a4"
@@ -51,4 +43,3 @@ export TEXFONTS
 
 export DOTNET_CLI_TELEMETRY_OPTOUT="1"
 export HOMEBREW_NO_ANALYTICS=1
-

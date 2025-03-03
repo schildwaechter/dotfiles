@@ -6,13 +6,13 @@ Run the `macos.sh` script for a number of settings.
 
 To install the keyboard layout, do
 
-```bash
+```shell
 sudo cp ~/.dotfiles/us_cat/osx/*.keylayout /Library/Keyboard\ Layouts
 ```
 
 then copy the Caps-Lock-Fix
 
-```bash
+```shell
 cp ~/.dotfiles/macos-KeyRemapping.plist ~/Library/LaunchAgents/com.local.KeyRemapping.plist
 ```
 
@@ -30,16 +30,20 @@ Mac software installation is not automated.
 * [Homebrew](https://brew.sh/)
 * [Rectangle](https://rectangleapp.com/)
 
+```shell
+sudo nvram StartupMute=%01
+```
+
 ### Homebrew
 
 ```shell
+brew install --cask ghostty
 brew tap 1password/tap
 brew install --cask 1password/tap/1password-cli
 brew tap puppetlabs/puppet
 brew install --cask puppetlabs/puppet/puppet-agent
 brew install --cask meld
 brew install bash
-brew install ansible
 brew install btop
 brew install coreutils
 brew install gh
@@ -62,8 +66,8 @@ brew install cue
 brew install go
 brew install dust
 brew install bat
+brew install fastfetch
 brew install bottom
-brew install exa
 brew install fzf
 brew install jq
 brew install yq
@@ -74,9 +78,8 @@ brew install direnv
 brew install btop
 brew install gdu
 brew install tmux
-brew install neofetch
 brew install httpie
-brew install ripgrep
+brew install bruno
 brew install watch
 brew install tfk8s
 brew install podman-desktop
@@ -94,4 +97,31 @@ brew install --cask vlc
 brew install --cask firefox
 brew install --cask paintbrush
 brew install --cask font-meslo-lg-nerd-font
+brew install jandedobbeleer/oh-my-posh/oh-my-posh
+```
+
+```shell
+oh-my-posh font install meslo
+```
+
+```shell
+kubectl krew list
+PLUGIN         VERSION
+modify-secret  v0.0.47
+neat           v2.0.4
+tree           v0.4.3
+```
+
+```shell
+helm plugin install https://github.com/databus23/helm-diff
+```
+
+Local `.zshrc`
+
+```shell
+bindkey "\e[3~" delete-char
+bindkey "^[^[[C" forward-word ## mac with option/alt
+bindkey "^[^[[D" backward-word ## mac with option/alt
+eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$(oh-my-posh init zsh --config ~/.dotfiles/oh-my-posh.yaml)"
 ```

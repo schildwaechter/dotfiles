@@ -23,10 +23,14 @@
     gdiff = difftool
     # print the full hash of the current commit
     hash = log -1 --format=format:'%H - (%ai) %s [%an]'
+    # last commit
+    last = log -1 HEAD
     # graphed log
     lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(blue)%h%C(reset) - %C(bold blue)(%ar)%C(reset) %C(white)%s%C(reset) [%an]%C(bold yellow)%d%C(reset)' --all
     # `main` or a `master` repo?
     mainormaster = "!git branch --format '%(refname:short)' --sort=-committerdate --list master main | head -n1"
+    # pull with rebase followed by push
+    pp = "!f() { git pull --rebase --prune $@ && git push }; f"
     # PR is done - so go to main and delete current branch
     prdone = "!f() { export DEFAULT=$(git default) && git checkout ${DEFAULT} && git branch -D @{-1}; echo \"Remember to pull!\"; }; f"
     # PR is merged, but we need to go for another iteration, so let's rebase
@@ -74,7 +78,7 @@
     untracked = cyan
 
 [core]
-    abbrev = 8
+    abbrev = 7
     editor = vim
     whitespace = tab-in-indent,trailing-space,space-before-tab
 
@@ -103,16 +107,10 @@
     # automatically create remote tracking branches
     autoSetupRemote = true
 
+[tag]
+    sort = version:refname
+
 [url "git@github.com:"]
     # push to github via ssh
     pushinsteadof = "https://github.com/"
     pushinsteadof = "git://github.com/"
-
-[url "git@bitbucket.org:"]
-    # push to gbitbucket via ssh
-    pushinsteadof = "https://bitbucket.org/"
-
-[url "git@gitlab.gwdg.de:"]
-    # push to gwdg gitlab via ssh
-    pushinsteadof = "https://gitlab.gwdg.de/"
-

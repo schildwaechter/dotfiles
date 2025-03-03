@@ -38,31 +38,31 @@ elif [ -x /usr/bin/dircolors ]; then
 fi
 
 if [[ `uname` == 'Darwin' ]]; then
-  if [[ -n `which gls &> /dev/null` ]]; then
-    alias ls='gls -CF    --color=auto'
-    alias ks='gls -CF    --color=auto'
-    alias l='gls  -lF    --color=auto --time-style=+\ %d.%m.%Y\ %R'
-    alias la='gls -ACF   --color=auto'
-    alias ll='gls -alF   --color=auto --time-style=+\ %d.%m.%Y\ %R'
-    alias lt='gls -alrtF --color=auto --time-style=+\ %d.%m.%Y\ %R'
-    alias l.='gls --color=auto -d .[[:alnum:]]* 2> /dev/null || echo "No hidden file here..."'		# list only hidden files
-  else
-    alias ls='ls -CF'
-    alias ks='ls -CF'
-    alias l='ls  -lF'
-    alias la='ls -ACF'
-    alias ll='ls -alF'
-    alias lt='ls -alrtF'
-    alias l.='ls -d .[[:alnum:]]* 2> /dev/null || echo "No hidden file here..."'		# list only hidden files
-  fi
+    if [[ -n `which gls &> /dev/null` ]]; then
+        alias ls='gls -CF    --color=auto'
+        alias ks='gls -CF    --color=auto'
+        alias l='gls  -lF    --color=auto --time-style=+\ %d.%m.%Y\ %R'
+        alias la='gls -ACF   --color=auto'
+        alias ll='gls -alF   --color=auto --time-style=+\ %d.%m.%Y\ %R'
+        alias lt='gls -alrtF --color=auto --time-style=+\ %d.%m.%Y\ %R'
+        alias l.='gls --color=auto -d .[[:alnum:]]* 2> /dev/null || echo "No hidden file here..."'		# list only hidden files
+    else
+        alias ls='ls -CF'
+        alias ks='ls -CF'
+        alias l='ls  -lF'
+        alias la='ls -ACF'
+        alias ll='ls -alF'
+        alias lt='ls -alrtF'
+        alias l.='ls -d .[[:alnum:]]* 2> /dev/null || echo "No hidden file here..."'		# list only hidden files
+    fi
 else
-  alias ls='ls -CF    --color=auto'
-  alias ks='ls -CF    --color=auto'
-  alias l='ls  -lF    --color=auto --time-style=+\ %d.%m.%Y\ %R'
-  alias la='ls -ACF   --color=auto'
-  alias ll='ls -alF   --color=auto --time-style=+\ %d.%m.%Y\ %R'
-  alias lt='ls -alrtF --color=auto --time-style=+\ %d.%m.%Y\ %R'
-  alias l.='ls -d .[[:alnum:]]* 2> /dev/null || echo "No hidden file here..."'		# list only hidden files
+    alias ls='ls -CF    --color=auto'
+    alias ks='ls -CF    --color=auto'
+    alias l='ls  -lF    --color=auto --time-style=+\ %d.%m.%Y\ %R'
+    alias la='ls -ACF   --color=auto'
+    alias ll='ls -alF   --color=auto --time-style=+\ %d.%m.%Y\ %R'
+    alias lt='ls -alrtF --color=auto --time-style=+\ %d.%m.%Y\ %R'
+    alias l.='ls -d .[[:alnum:]]* 2> /dev/null || echo "No hidden file here..."'		# list only hidden files
 fi
 
 alias ..='cd ..'
@@ -76,18 +76,18 @@ alias ..4='cd ../../../..'
 alias myinxi='inxi -CDGIMPRS'
 
 if [[ `uname` == 'Darwin' ]]; then
-  if [[ -n `which gdu &> /dev/null` ]]; then
-    alias du='gdu'
-    alias du0='gdu --max-depth=0'
-    alias du1='gdu --max-depth=1'
-    alias dug='gdu -h | grep ^[0-9.]*G | sort -rn | head -n 20 | cut -d: -f2'
-    alias dum='gdu -h | grep ^[0-9.]*M | sort -rn | head -n 20 | cut -d: -f2'
-  fi
+    if [[ -n `which gdu &> /dev/null` ]]; then
+        alias du='gdu'
+        alias du0='gdu --max-depth=0'
+        alias du1='gdu --max-depth=1'
+        alias dug='gdu -h | grep ^[0-9.]*G | sort -rn | head -n 20 | cut -d: -f2'
+        alias dum='gdu -h | grep ^[0-9.]*M | sort -rn | head -n 20 | cut -d: -f2'
+    fi
 else
-  alias du0='du --max-depth=0'
-  alias du1='du --max-depth=1'
-  alias dug='du -h | grep ^[0-9.]*G | sort -rn | head -n 20 | cut -d: -f2'
-  alias dum='du -h | grep ^[0-9.]*M | sort -rn | head -n 20 | cut -d: -f2'
+    alias du0='du --max-depth=0'
+    alias du1='du --max-depth=1'
+    alias dug='du -h | grep ^[0-9.]*G | sort -rn | head -n 20 | cut -d: -f2'
+    alias dum='du -h | grep ^[0-9.]*M | sort -rn | head -n 20 | cut -d: -f2'
 fi
 
 alias tcal='cal | sed "s/^/ /;s/$/ /;s/ $(date +%e) / $(date +%e | sed '\''s/./#/g'\'') /"'
@@ -114,7 +114,7 @@ alias kubcetl='kubectl'
 alias terrafrom='terraform'
 
 if [[ `uname` == 'Darwin' ]]; then
-  alias code="open -a 'Visual Studio Code'"
+    alias code="open -a 'Visual Studio Code'"
 fi
 
 ##############################################
@@ -133,11 +133,11 @@ catnocomment ()
 
 ### colourful less
 cless() {
-  pygmentize -g "$1" | less -R
+    pygmentize -g "$1" | less -R
 }
 
 grepp() {
-  [ $# -eq 1 ] && perl -00ne "print if /$1/i" || perl -00ne "print if /$1/i" < "$2";
+    [ $# -eq 1 ] && perl -00ne "print if /$1/i" || perl -00ne "print if /$1/i" < "$2";
 }
 
 hgg()
@@ -214,17 +214,16 @@ lls() {
 
 ### remove latex remnants
 unlatex() {
-  if [ "$1" == "" ]; then
-    return
-  fi
-  i=${1%%.*}
-  rm -f $i.aux $i.toc $i.lof $i.lot $i.los $i.?*~ $i.loa $i.log $i.bbl $i.blg $i.glo
-  rm -f $i.odt $i.tns $i.fax $i.bm $i.out $i.nav $i.snm
-  rm -f $i.mtc* $i.bmt
-  rm -f $i.dvi $i.ps
-  unset i
+    if [ "$1" == "" ]; then
+        return
+    fi
+    i=${1%%.*}
+    rm -f $i.aux $i.toc $i.lof $i.lot $i.los $i.?*~ $i.loa $i.log $i.bbl $i.blg $i.glo
+    rm -f $i.odt $i.tns $i.fax $i.bm $i.out $i.nav $i.snm
+    rm -f $i.mtc* $i.bmt
+    rm -f $i.dvi $i.ps
+    unset i
 }
-
 
 ### general network information
 netinfo ()
@@ -235,24 +234,24 @@ netinfo ()
 	echo "Internal IPv6 address: " `ifconfig | grep 'inet6 addr:'| grep -v '1/128'|grep -v 'Scope:Link' | cut -d: -f5- | awk '{ print $1}'`
     IPV6TEST=`myipv6`
 	if [ $IPV6TEST != $IPV4 ]; then
-      echo "External IPv6 address: " $IPV6TEST
+        echo "External IPv6 address: " $IPV6TEST
 	fi
 	echo "MAC: " `ifconfig | awk '/HWaddr/ { print $NF }'`
 }
 
 sourcedotenv ()
 {
-  if [ -f .env ]; then
-    set -o allexport && source .env && set +o allexport
-  fi
+    if [ -f .env ]; then
+        set -o allexport && source .env && set +o allexport
+    fi
 }
 
 activate-venv() {
-  # https://seb.jambor.dev/posts/improving-shell-workflows-with-fzf/
-  local selected_env
-  selected_env=$(ls -1 ~/.venv/ | fzf)
+    # https://seb.jambor.dev/posts/improving-shell-workflows-with-fzf/
+    local selected_env
+    selected_env=$(ls -1 ~/.venv/ | fzf)
 
-  if [ -n "$selected_env" ]; then
-    source "$HOME/.venv/$selected_env/bin/activate"
-  fi
+    if [ -n "$selected_env" ]; then
+        source "$HOME/.venv/$selected_env/bin/activate"
+    fi
 }

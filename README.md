@@ -48,9 +48,9 @@ to apply the latest version.
 
 Some software must (currently) be installed manually
 
-* [Oh My ZSH!](https://ohmyz.sh/#install)
-* [Powerlevel10k](https://github.com/romkatv/powerlevel10k#installation)
-  and its [Meslo Nerd Font](https://github.com/romkatv/powerlevel10k#meslo-nerd-font-patched-for-powerlevel10k)
+* [Oh My ZSH!](https://ohmyz.sh/)
+* [Oh My Posh](https://ohmyposh.dev/)
+  and the [Nerd Font](https://ohmyposh.dev/docs/installation/fonts)
 
 ### MacOS
 
