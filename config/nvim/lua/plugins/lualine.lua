@@ -55,6 +55,7 @@ return {
             },
           },
         },
+        lualine_x = { "encoding", "fileformat", "filetype", "diagnostics" },
       },
     })
   end,

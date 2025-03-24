@@ -75,8 +75,8 @@ class userspace::setupdirs (
   file { "${facts['homedir']}/.config/ghostty":
     ensure  => directory,
   }
-  ->userspace::dotfilelink { 'k9s-config':
-    targetfile => "${facts['dotfiles']}/.config/ghostty/config",
+  ->userspace::dotfilelink { 'ghostty-config':
+    targetfile => "${facts['dotfiles']}/config/ghostty/config",
     linkfile   => '/.config/ghostty/config',
   }
 

@@ -205,7 +205,7 @@ return {
       terraformls = {},
       -- tflint = {},
       jsonls = {},
-
+      --harper_ls = {},
       yamlls = {
         -- Have to add this for yamlls to understand that we support line folding
         capabilities = {
@@ -218,11 +218,8 @@ return {
         },
         -- lazy-load schemastore when needed
         on_new_config = function(new_config)
-          new_config.settings.yaml.schemas = vim.tbl_deep_extend(
-            "force",
-            new_config.settings.yaml.schemas or {},
-            require("schemastore").yaml.schemas()
-          )
+          new_config.settings.yaml.schemas =
+            vim.tbl_deep_extend("force", new_config.settings.yaml.schemas or {}, require("schemastore").yaml.schemas())
         end,
         settings = {
           redhat = { telemetry = { enabled = false } },
@@ -243,11 +240,9 @@ return {
         },
       },
 
-
       marksman = {},
       gitlint = {},
 
-      shellharden = {},
       bashls = {},
       texlab = {},
 
@@ -293,6 +288,7 @@ return {
       "stylua", -- Used to format Lua code
       "shfmt", -- Used to format shell scripts
       "shellcheck", -- Used to lint shell scripts
+      --"shellharden", -- another shell linter
       "markdownlint-cli2", -- Used to lint markdown files
       "vale", -- Used to lint prose in text, markdown and LaTeX
       "proselint", -- Used to lint prose in text and markdown
