@@ -18,6 +18,11 @@ set laststatus=2
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'solarized'
 
+" set leader key to space
+nnoremap <SPACE> <Nop>
+:let mapleader = " "
+:let maplocalleader = " "
+
 " syntax
 syntax enable
 " solarized theme in dark mode

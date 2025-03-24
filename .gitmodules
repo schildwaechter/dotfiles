@@ -79,3 +79,9 @@
 [submodule "puppet/modules/vcsrepo"]
 	path = puppet/modules/vcsrepo
 	url = https://github.com/puppetlabs/puppetlabs-vcsrepo.git
+[submodule "tmux/plugins/tpm"]
+	path = tmux/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm
+[submodule "k8sdebugger"]
+	path = k8sdebugger
+	url = https://github.com/schildwaechter/k8sdebugger.git

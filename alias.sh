@@ -12,8 +12,18 @@ export LESS_TERMCAP_ue=$'\e[0m'
 export GROFF_NO_SGR=1                  # for konsole and gnome-terminal
 export MANPAGER='less -s -M +Gg'
 
-[ $DISPLAY ] && \
-export EDITOR="vim"
+# https://unix.stackexchange.com/a/302391
+# Prefer nvim over vim over vi
+export EDITOR="$(command -v nvim 2>/dev/null || command -v vim 2>/dev/null || command -v vi)"
+# we have gvim, not in an SSH term, and the X11 display number is under 10
+if command -v gvim >/dev/null 2>&1 \
+&& [ "$SSH_TTY$DISPLAY" = "${DISPLAY#*:[1-9][0-9]}" ]; then
+  export VISUAL="$(command -v gvim) -f"
+  SUDO_EDITOR="$VISUAL"
+else
+  SUDO_EDITOR="$EDITOR"
+fi
+
 export BROWSER="firefox"
 
 export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:="${HOME}/.config"}

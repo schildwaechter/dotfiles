@@ -70,8 +70,8 @@ blocks:
           fetch_stash_count: true
           fetch_status: true
           fetch_upstream_icon: true
-  #  - type: prompt
-  - type: rprompt
+  - type: prompt
+    #- type: rprompt
     alignment: right
     segments:
       - template: " ⚡"
@@ -124,18 +124,38 @@ blocks:
         properties:
           always_enabled: true
           cache_duration: none
-  # - type: prompt
-  #   alignment: left
-  #   newline: true
-  #   segments:
-  #     - template: "  "
-  #       type: root
-  #       style: plain
-  #       properties:
-  #         cache_duration: none
-  #     - template: ❯
-  #       foreground: p:white
-  #       type: text
-  #       style: plain
-  #       properties:
-  #         cache_duration: none
+  - type: prompt
+    alignment: left
+    newline: true
+    segments:
+      - template: "  "
+        type: root
+        style: plain
+        properties:
+          cache_duration: none
+      - template: ❯
+        foreground: p:white
+        type: text
+        style: plain
+        properties:
+          cache_duration: none
+tooltips:
+  - type: gcp
+    tips:
+      - gcloud
+    style: diamond
+    foreground: "#193549"
+    background: p:salmon
+    leading_diamond: 
+    trailing_diamond: 
+    template: "  {{.Project}} :: {{.Account}} "
+  - type: az
+    tips:
+      - az
+      - azcopy
+    style: diamond
+    foreground: "#193549"
+    background: p:salmon
+    leading_diamond: 
+    trailing_diamond: 
+    template: "  {{.TenantDisplayName}}/{{ .Name }} :: {{.User.Name}}"

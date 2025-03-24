@@ -263,9 +263,6 @@ fi
 
 [core]
   excludesfile = <%= scope['::homedir']%>/<%= scope['::dotfiles']%>/gitignore_global
-<% if scope['::operatingsystem'] == 'Darwin' -%>
-  editor = vim
-<% end -%>
     ")
   }
 
@@ -314,6 +311,11 @@ Include <%= scope['::homedir']%>/<%= scope['::dotsecrets']%>/ssh/config_<%= scop
       'gitdiff.py',
     ]
     userspace::dotfileexecutable { $dotfileexecutables: }
+  }
+
+  file { "${facts['homedir']}/.hushlogin":
+    ensure  => present,
+    content => '',
   }
 
   file { "${facts['homedir']}/.grip/settings.py":

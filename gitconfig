@@ -79,7 +79,7 @@
 
 [core]
     abbrev = 7
-    editor = vim
+    editor = nvim
     whitespace = tab-in-indent,trailing-space,space-before-tab
 
 [fetch]
@@ -111,6 +111,5 @@
     sort = version:refname
 
 [url "git@github.com:"]
-    # push to github via ssh
-    pushinsteadof = "https://github.com/"
-    pushinsteadof = "git://github.com/"
+    insteadof = "https://github.com/"
+    insteadof = "git://github.com/"

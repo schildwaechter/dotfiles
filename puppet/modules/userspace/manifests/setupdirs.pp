@@ -60,11 +60,24 @@ class userspace::setupdirs (
   }
 
   userspace::dotfilelink { 'nvim':
-    targetfile => "${facts['dotfiles']}/nvim",
+    targetfile => "${facts['dotfiles']}/config/nvim",
     linkfile   => '.config/nvim',
   }
 
+  file { "${facts['homedir']}/.config/k9s":
+    ensure  => directory,
+  }
+  ->userspace::dotfilelink { 'k9s-config':
+    targetfile => "${facts['dotfiles']}/.config/k9s/config.yaml",
+    linkfile   => '/.config/k9s/config.yaml',
+  }
+
+  file { "${facts['homedir']}/.config/ghostty":
+    ensure  => directory,
+  }
+  ->userspace::dotfilelink { 'k9s-config':
+    targetfile => "${facts['dotfiles']}/.config/ghostty/config",
+    linkfile   => '/.config/ghostty/config',
+  }
+
 }
-
-
-

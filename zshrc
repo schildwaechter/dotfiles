@@ -46,16 +46,25 @@ unsetopt autocd extendedglob
 # error when globs don't match anything
 setopt nomatch
 
-# vim motions in prompt
-bindkey -v
+# non-vim motions in prompt
+bindkey -e
 
 alias loadhistory='fc -RI'
 export POWERLEVEL9K_INSTANT_PROMPT=quiet
 
 # completion fall-back to case insensitive
-zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
-export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS"\
-" --color=bg+:#073642,bg:#002b36,spinner:#2aa198,hl:#268bd2"\
-" --color=fg:#839496,header:#268bd2,info:#b58900,pointer:#2aa198"\
-" --color=marker:#2aa198,fg+:#eee8d5,prompt:#b58900,hl+:#268bd2"
+# FZF solarized dark
+export FZF_DEFAULT_OPTS="
+    --color=bg+:#073642,bg:#002b36,spinner:#2aa198,hl:#268bd2
+    --color=fg:#839496,header:#268bd2,info:#b58900,pointer:#2aa198
+    --color=marker:#2aa198,fg+:#eee8d5,prompt:#b58900,hl+:#268bd2"
+
+# FZF rose-pine
+# export FZF_DEFAULT_OPTS="
+#     --color=fg:$subtle,bg:$base,hl:$rose
+#     --color=fg+:$text,bg+:$overlay,hl+:$rose
+#     --color=border:$highlightMed,header:$pine,gutter:$base
+#     --color=spinner:$gold,info:$foam
+#     --color=pointer:$iris,marker:$love,prompt:$subtle"
