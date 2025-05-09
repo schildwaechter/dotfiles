@@ -2,6 +2,8 @@ macos-titlebar-proxy-icon = hidden
 theme = Solarized Dark - Patched
 #theme = rose-pine-moon
 font-family = "MesloLGS NF"
+# no ligatures
+font-feature = -calt, -liga, -dlig
 #font-family = "Menlo"
 ##solarized
 background=#002b36

@@ -6,6 +6,7 @@ return {
       local configs = require("nvim-treesitter.configs")
 
       configs.setup({
+        auto_install = true,
         ensure_installed = {
           "bash",
           "css",
@@ -38,7 +39,7 @@ return {
           "yaml",
         },
         highlight = { enable = true },
-        indent = { enable = true },
+        indent = { enable = true, disable = { 'ruby' }},
         incremental_selection = {
           enable = true,
           keymaps = {

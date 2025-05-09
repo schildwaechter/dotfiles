@@ -85,6 +85,8 @@ brew install tfk8s
 brew install podman-desktop
 brew install minikube
 brew install istioctl
+brew install tilt
+brew install ctlptl
 brew tap robusta-dev/homebrew-krr
 brew install FairwindsOps/tap/pluto
 brew install krr

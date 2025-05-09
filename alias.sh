@@ -12,6 +12,8 @@ export LESS_TERMCAP_ue=$'\e[0m'
 export GROFF_NO_SGR=1                  # for konsole and gnome-terminal
 export MANPAGER='less -s -M +Gg'
 
+alias nvim-ks='NVIM_APPNAME="nvim-ks" nvim'
+
 # https://unix.stackexchange.com/a/302391
 # Prefer nvim over vim over vi
 export EDITOR="$(command -v nvim 2>/dev/null || command -v vim 2>/dev/null || command -v vi)"
