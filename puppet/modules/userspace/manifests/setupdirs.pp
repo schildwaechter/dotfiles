@@ -80,4 +80,32 @@ class userspace::setupdirs (
     linkfile   => '/.config/ghostty/config',
   }
 
+
+  file { "${facts['homedir']}/.config/aerospace":
+    ensure  => directory,
+  }
+  ->userspace::dotfilelink { 'aerospace.toml':
+    targetfile => "${facts['dotfiles']}/config/aerospace/aerospace.toml",
+    linkfile   => '/.config/aerospace/aerospace.toml',
+  }
+  file { "${facts['homedir']}/.config/borders":
+    ensure  => directory,
+  }
+  ->userspace::dotfilelink { 'bordersrc':
+    targetfile => "${facts['dotfiles']}/config/borders/bordersrc",
+    linkfile   => '/.config/borders/bordersrc',
+  }
+  userspace::dotfilelink { 'sketchybar':
+    targetfile => "${facts['dotfiles']}/config/sketchybar",
+    linkfile   => '/.config/sketchybar',
+  }
+
+  file { "${facts['homedir']}/.config/fastfetch":
+    ensure  => directory,
+  }
+  ->userspace::dotfilelink { 'fastfetchconfig':
+    targetfile => "${facts['dotfiles']}/config/fastfetch/config.jsonc",
+    linkfile   => '/.config/fastfetch/config.jsonc',
+  }
+
 }
