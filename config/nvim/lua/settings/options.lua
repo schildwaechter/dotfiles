@@ -35,7 +35,7 @@ vim.opt.colorcolumn = { 80, 120, 180 }
 vim.opt.splitright = true -- split to the right
 vim.opt.splitbelow = true -- split down
 
-vim.highlight.priorities.semantic_tokens = 95 -- Or any number lower than 100, treesitter's priority level
+vim.hl.priorities.semantic_tokens = 95 -- Or any number lower than 100, treesitter's priority level
 
 vim.filetype.add({
   pattern = {

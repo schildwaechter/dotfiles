@@ -32,7 +32,8 @@ return { -- Autoformat
       lua = { "stylua" },
       python = { "ruff" },
       bash = { "shfmt" },
-      go = { "gofmt" },
+      go = { "gofmt", "goimports" },
+      terraform = { "terraform_fmt" },
       -- Conform can also run multiple formatters sequentially
       -- python = { "isort", "black" },
       --

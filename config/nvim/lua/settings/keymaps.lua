@@ -11,6 +11,9 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 -- Diagnostic keymaps
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
+-- duplicate current line and comment the first
+vim.keymap.set("n", "ycc", "yygccp", { remap = true })
+
 vim.keymap.set(
   "n",
   "<leader>kz",

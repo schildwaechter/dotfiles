@@ -267,6 +267,12 @@ return {
       gitlint = {},
 
       bashls = {},
+      ltex = {
+        flags = {
+          debounce_text_changes = 500,
+        },
+        filetypes = { "markdown", "text", "tex" },
+      },
       texlab = {},
 
       lua_ls = {
@@ -306,7 +312,7 @@ return {
       "shellcheck", -- Used to lint shell scripts
       --"shellharden", -- another shell linter
       "markdownlint-cli2", -- Used to lint markdown files
-      "vale", -- Used to lint prose in text, markdown and LaTeX
+      --"vale", -- Used to lint prose in text, markdown and LaTeX
       "proselint", -- Used to lint prose in text and markdown
     })
     require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
