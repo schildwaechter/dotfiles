@@ -24,7 +24,7 @@ exec-on-workspace-change = ['/bin/bash', '-c',
 
 
 # Start AeroSpace at login
-start-at-login = false
+start-at-login = true
 
 # Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
 enable-normalization-flatten-containers = true
@@ -73,7 +73,7 @@ automatically-unhide-macos-hidden-apps = false
     inner.vertical =   4
     outer.left =       4
     outer.bottom =     4
-    outer.top =        25
+    outer.top =        27
     outer.right =      4
 
 # 'main' binding mode declaration
@@ -231,8 +231,11 @@ automatically-unhide-macos-hidden-apps = false
 
 [workspace-to-monitor-force-assignment]
 
-1 = 1
-2 = 2
+  1 = 'P27h-20 (1)'
+  2 = 'P27h-20 (2)'
+  3 = 'Built-in Retina Display'
+
+  9 = 'SAMSUNG'
 
 
 
