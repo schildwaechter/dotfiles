@@ -1,6 +1,6 @@
 macos-titlebar-proxy-icon = hidden
-theme = Solarized Dark - Patched
-#theme = rose-pine-moon
+theme = Solarized Dark Patched
+#theme = Rose Pine Moon
 font-family = "MesloLGS NF"
 # no ligatures
 font-feature = -calt, -liga, -dlig
@@ -18,3 +18,5 @@ keybind = super+up=new_split:up
 keybind = super+right=new_split:right
 keybind = super+left=new_split:left
 keybind = super+x=close_surface
+# a bit more...
+scrollback-limit = 25000000

@@ -13,6 +13,7 @@ palette:
   teal: "#047E84"
   teal_blue: "#33658A"
   white: "#FFFFFF"
+  dark: "#49404f"
 blocks:
   - type: prompt
     alignment: left
@@ -84,7 +85,7 @@ blocks:
         properties:
           cache_duration: none
       - template: ' 󱃾 {{ last ( splitList "_" .Cluster ) }}{{if .Namespace}}/{{.Namespace}}{{end}} '
-        foreground: "#ffffff"
+        foreground: p:white
         powerline_symbol: 
         background: p:sky
         type: kubectl
@@ -92,8 +93,8 @@ blocks:
         invert_powerline: true
         properties:
           cache_duration: none
-      - template: " 󱁢 {{.WorkspaceName}} "
-        foreground: "#ffffff"
+      - template: ' 󱁢 {{ if not (eq .WorkspaceName "default")}}{{.WorkspaceName}}{{end}} '
+        foreground: p:white
         powerline_symbol: 
         background: p:teal_blue
         type: terraform
@@ -102,7 +103,7 @@ blocks:
         properties:
           cache_duration: none
       - template: "{{ if .SSHSession }}  {{ .UserName }}@{{ .HostName }} {{ end }}"
-        foreground: "#ffffff"
+        foreground: p:white
         powerline_symbol: 
         background: p:salmon
         type: session
@@ -111,10 +112,20 @@ blocks:
         properties:
           always_enabled: true
           cache_duration: none
+      - template: "  {{ .FormattedMs }} "
+        foreground: p:white
+        powerline_symbol: 
+        background: p:dark
+        type: executiontime
+        style: powerline
+        invert_powerline: true
+        properties:
+          always_enabled: true
+          style: amarillo
       - leading_diamond: 
         trailing_diamond: 
         template: "{{ if eq .Code 0 }} ♥ {{ else }} 󰈸 {{ end }}"
-        foreground: "#ffffff"
+        foreground: p:white
         background: p:teal
         type: status
         style: diamond

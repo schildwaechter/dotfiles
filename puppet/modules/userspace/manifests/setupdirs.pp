@@ -68,7 +68,7 @@ class userspace::setupdirs (
     ensure  => directory,
   }
   ->userspace::dotfilelink { 'k9s-config':
-    targetfile => "${facts['dotfiles']}/.config/k9s/config.yaml",
+    targetfile => "${facts['dotfiles']}/config/k9s/config.yaml",
     linkfile   => '/.config/k9s/config.yaml',
   }
 
@@ -78,6 +78,42 @@ class userspace::setupdirs (
   ->userspace::dotfilelink { 'ghostty-config':
     targetfile => "${facts['dotfiles']}/config/ghostty/config",
     linkfile   => '/.config/ghostty/config',
+  }
+
+
+  file { "${facts['homedir']}/.config/aerospace":
+    ensure  => directory,
+  }
+  ->userspace::dotfilelink { 'aerospace.toml':
+    targetfile => "${facts['dotfiles']}/config/aerospace/aerospace.toml",
+    linkfile   => '/.config/aerospace/aerospace.toml',
+  }
+  file { "${facts['homedir']}/.config/borders":
+    ensure  => directory,
+  }
+  ->userspace::dotfilelink { 'bordersrc':
+    targetfile => "${facts['dotfiles']}/config/borders/bordersrc",
+    linkfile   => '/.config/borders/bordersrc',
+  }
+  userspace::dotfilelink { 'sketchybar':
+    targetfile => "${facts['dotfiles']}/config/sketchybar",
+    linkfile   => '/.config/sketchybar',
+  }
+
+  file { "${facts['homedir']}/.config/fastfetch":
+    ensure  => directory,
+  }
+  ->userspace::dotfilelink { 'fastfetchconfig':
+    targetfile => "${facts['dotfiles']}/config/fastfetch/config.jsonc",
+    linkfile   => '/.config/fastfetch/config.jsonc',
+  }
+
+  file { "${facts['homedir']}/.kube":
+    ensure  => directory,
+  }
+  ->userspace::dotfilelink { 'kuberc':
+    targetfile => "${facts['dotfiles']}/kuberc",
+    linkfile   => '/.kube/kuberc',
   }
 
 }

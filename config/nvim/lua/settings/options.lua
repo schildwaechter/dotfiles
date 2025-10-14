@@ -20,13 +20,13 @@ vim.o.autoindent = true -- Keep identation from previous line
 vim.o.scrolloff = 4 -- Minimal number of screen lines to keep above and below the cursor (default: 0)
 vim.o.sidescrolloff = 3 -- Minimal number of screen columns either side of cursor if wrap is `false` (default: 0)
 
-vim.o.cursorline = false -- Highlight the current line (default: false)
+vim.o.cursorline = true -- Highlight the current line (default: false)
 
 vim.o.hlsearch = true -- Set highlight on search (default: true)
 vim.o.incsearch = true -- Incremental search while typing (default: false)
 vim.o.showmatch = true -- Show matching brackets when text indicator is over them (default: false)
 
-vim.opt.list = true
+vim.opt.list = true -- Show following invisible characters (default: false)
 vim.opt.listchars = { tab = "▸ ", trail = "￮", nbsp = "‿" }
 -- vim.opt.listchars = { tab = '▸␣', trail = '￮', nbsp = '‿', eol = '¬' }
 
@@ -36,6 +36,7 @@ vim.opt.splitright = true -- split to the right
 vim.opt.splitbelow = true -- split down
 
 vim.hl.priorities.semantic_tokens = 95 -- Or any number lower than 100, treesitter's priority level
+vim.opt.winborder = "solid" -- https://neovim.io/doc/user/options.html#'winborder'
 
 vim.filetype.add({
   pattern = {

@@ -1,13 +1,16 @@
-return { -- Linting
+return {
   "mfussenegger/nvim-lint",
   event = { "BufReadPre", "BufNewFile" },
   config = function()
     local lint = require("lint")
     lint.linters_by_ft = {
-      --markdown = { "vale" },
+      dockerfile = { "hadolint" },
+      gitcommit = { "gitlint" },
+      markdown = { "markdownlint-cli2" },
+      python = { "ruff" },
+      sh = { "shellcheck" },
       terraform = { "tflint" },
-      --tex = { "ltex" },
-      --text = { "vale" },
+      text = { "proselint" },
     }
 
     -- To allow other plugins to add linters to require('lint').linters_by_ft,

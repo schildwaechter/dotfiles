@@ -26,7 +26,7 @@
     # last commit
     last = log -1 HEAD
     # graphed log
-    lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(blue)%h%C(reset) - %C(bold blue)(%ar)%C(reset) %C(white)%s%C(reset) [%an]%C(bold yellow)%d%C(reset)' --all
+    lg = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(green)(%ar)%C(reset) %C(white)%s%C(reset) [%an]%C(bold yellow)%d%C(reset)' --all
     # `main` or a `master` repo?
     mainormaster = "!git branch --format '%(refname:short)' --sort=-committerdate --list master main | head -n1"
     # pull with rebase followed by push

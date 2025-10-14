@@ -22,13 +22,13 @@ log out and back in and apply through settings.
 
 Mac software installation is not automated.
 
-* [iTerm2](https://iterm2.com/)
 * [1Password](https://1password.com/downloads/mac/)
 * [Nextcloud](https://nextcloud.com/install/)
 * [Firefox](https://www.mozilla.org/en-US/firefox/new/)
 * [MacVim](https://macvim.org/)
 * [Homebrew](https://brew.sh/)
 * [Rectangle](https://rectangleapp.com/)
+* [OpenVox](https://downloads.voxpupuli.org/mac/openvox8/)
 
 ```shell
 sudo nvram StartupMute=%01
@@ -40,12 +40,28 @@ sudo nvram StartupMute=%01
 brew install --cask ghostty
 brew tap 1password/tap
 brew install --cask 1password/tap/1password-cli
-brew tap puppetlabs/puppet
-brew install --cask puppetlabs/puppet/puppet-agent
-brew install --cask meld
 brew install bash
 brew install btop
 brew install coreutils
+brew install gopls
+brew install ruff # Python linter
+brew install python-lsp-server
+brew install docker-ls
+brew install terraform-ls
+brew install marksman
+brew install gitlint
+brew install bash-language-server
+brew install ltex-ls-plus
+brew install lua-language-server
+brew install hadolint # docker linter
+brew install stylua
+brew install shfmt
+brew install shellcheck
+brew install markdownlint-cli2
+brew install proselint
+brew install yaml-language-server
+brew install yamlfmt
+brew install tree-sitter-cli
 brew install gh
 brew install kubernetes-cli
 brew install kubectx
@@ -72,6 +88,7 @@ brew install fzf
 brew install jq
 brew install yq
 brew install grip
+brew install mdserve
 brew install ripgrep
 brew install tree
 brew install direnv
@@ -93,13 +110,19 @@ brew install krr
 brew install --cask virtualbox
 brew install --cask notunes
 brew install --cask spotify
-brew install --cask iterm2
 brew install --cask visual-studio-code
 brew install --cask vlc
 brew install --cask firefox
 brew install --cask paintbrush
 brew install --cask font-meslo-lg-nerd-font
 brew install jandedobbeleer/oh-my-posh/oh-my-posh
+brew install macmediakeyforwarder
+```
+
+and
+
+```
+xattr -rd com.apple.quarantine /Applications/MacMediaKeyForwarder.app
 ```
 
 ```shell

@@ -5,41 +5,31 @@
 This folder contains all of CaT's public dotfiles.
 They can be installed using puppet.
 
-This has most recently been tested on both Debian 12 and macOS 13.
+This has most recently been tested on both Debian 12 and macOS 15.
 
 ### install
 
 The repository uses submodules
-```
+
+```shell
 git clone https://github.com/schildwaechter/dotfiles ~/.dotfiles
 cd ~/.dotfiles
 git submodule init
 git submodule update
 ```
 
-Install [puppet](https://www.puppet.com/docs/puppet/7/install_agents.html)
-```bash
-apt install puppet-agent
-```
-Or, once Puppet decides to support current Debian, this should work again
-```bash
-wget -q "https://apt.puppetlabs.com/puppet-release-$(lsb_release -cs).deb"
-dpkg -i "puppet-release-$(lsb_release -cs).deb";
-rm "puppet-release-$(lsb_release -cs).deb";
-apt-get update;
-apt-get -y install puppet-agent;
-```
-
-Or use Homebrew for MacOS.
+Install [OpenVox](https://voxpupuli.org/openvox/install) as we use puppet configs.
 
 Then run `install.sh` from within the folder.
 
 ### upgrades
 
 After pulling the latest changes or whenever you feel like it, run
-```
+
+```shell
 dotfiles upgrade
 ```
+
 to apply the latest version.
 
 ## software
@@ -48,20 +38,21 @@ to apply the latest version.
 
 Some software must (currently) be installed manually
 
-* [Oh My ZSH!](https://ohmyz.sh/)
 * [Oh My Posh](https://ohmyposh.dev/)
   and the [Nerd Font](https://ohmyposh.dev/docs/installation/fonts)
 
-### MacOS
+### macOS
 
-See [MacOS.md](MacOS.md).
+See [macOS.md](macOS.md).
 
 ### Ubuntu software packages
 
-The puppet configuration also contains software installation for Ubuntu, via
-```
+The puppet configuration also contains software installation for Debian, via
+
+```shell
 dotfiles software
 ```
+
 to install the provided selection (requires `sudo`).
 
-It has most recently been tested on jammy.
+It has most recently been tested on bookworm.
