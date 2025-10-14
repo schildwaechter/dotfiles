@@ -31,6 +31,7 @@ vim.opt.listchars = { tab = "▸ ", trail = "￮", nbsp = "‿" }
 -- vim.opt.listchars = { tab = '▸␣', trail = '￮', nbsp = '‿', eol = '¬' }
 
 vim.opt.colorcolumn = { 80, 120, 180 }
+vim.opt.winborder = "rounded"
 
 vim.opt.splitright = true -- split to the right
 vim.opt.splitbelow = true -- split down

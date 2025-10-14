@@ -1,5 +1,5 @@
 return {
-    'ibhagwan/smartyank.nvim',
+	'ibhagwan/smartyank.nvim',
     event = { "BufReadPost", "BufNewFile" },
     opts = {
         highlight = {

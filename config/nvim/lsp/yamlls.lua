@@ -15,7 +15,6 @@ return require("schema-companion").setup_client(
 
     {
 
-        cmd = { "yaml-language-server", "--stdio" },
         filetypes = {
             "yaml",
             "yaml.gitlab-ci",

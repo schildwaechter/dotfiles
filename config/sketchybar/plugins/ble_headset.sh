@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+DEVICES=$(system_profiler SPBluetoothDataType -json -detailLevel basic 2>/dev/null | jq '.SPBluetoothDataType[0].device_connected[]? | select( .[] | .device_minorType == "Headphones") | keys[]')
+
+if [ "$DEVICES" = "" ]; then
+  # sketchybar --set $NAME icon.drawing=off background.padding_right=0 background.padding_left=0 label=""
+  sketchybar --set $NAME icon.drawing=off
+else
+  # sketchybar --set $NAME icon.drawing=on background.padding_right=1 background.padding_left=4 label="$DEVICES"
+  sketchybar --set $NAME icon.drawing=on
+fi

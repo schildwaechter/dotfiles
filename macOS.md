@@ -10,7 +10,7 @@ To install the keyboard layout, do
 sudo cp ~/.dotfiles/us_cat/osx/*.keylayout /Library/Keyboard\ Layouts
 ```
 
-then copy the Caps-Lock-Fix
+then copy the Caps-Lock-Fix unless Hyperkey is used!
 
 ```shell
 cp ~/.dotfiles/macos-KeyRemapping.plist ~/Library/LaunchAgents/com.local.KeyRemapping.plist
@@ -29,6 +29,8 @@ Mac software installation is not automated.
 * [Homebrew](https://brew.sh/)
 * [Rectangle](https://rectangleapp.com/)
 * [OpenVox](https://downloads.voxpupuli.org/mac/openvox8/)
+* [Hyperkey](https://hyperkey.app/)
+* [sketchybar-app-font](https://github.com/kvndrsslr/sketchybar-app-font)
 
 ```shell
 sudo nvram StartupMute=%01
@@ -116,6 +118,11 @@ brew install --cask firefox
 brew install --cask paintbrush
 brew install --cask font-meslo-lg-nerd-font
 brew install jandedobbeleer/oh-my-posh/oh-my-posh
+brew tap FelixKratz/formulae
+brew install sketchybar
+brew install borders
+brew install --cask nikitabobko/tap/aerospace
+brew services start sketchybar
 brew install macmediakeyforwarder
 ```
 

@@ -1,28 +1,14 @@
 return {
-	cmd = {
-		"lua-language-server",
-	},
-	filetypes = {
-		"lua",
-	},
-	root_markers = {
-		".git",
-		".luacheckrc",
-		".luarc.json",
-		".luarc.jsonc",
-		".stylua.toml",
-		"selene.toml",
-		"selene.yml",
-		"stylua.toml",
-	},
-	-- settings = {
-	--     Lua = {
-	--         diagnostics = {
-	--             --     disable = { "missing-parameters", "missing-fields" },
-	--         },
-	--     },
-	-- },
-
-	single_file_support = true,
-	log_level = vim.lsp.protocol.MessageType.Warning,
+    -- cmd = { ... },
+    -- filetypes = { ... },
+    -- capabilities = {},
+    settings = {
+        Lua = {
+        completion = {
+            callSnippet = "Replace",
+        },
+        -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+        diagnostics = { disable = { "missing-fields" }, globals = { "vim" } },
+        },
+    },
 }
