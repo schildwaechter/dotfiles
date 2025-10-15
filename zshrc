@@ -68,3 +68,5 @@ export FZF_DEFAULT_OPTS="
 #     --color=border:$highlightMed,header:$pine,gutter:$base
 #     --color=spinner:$gold,info:$foam
 #     --color=pointer:$iris,marker:$love,prompt:$subtle"
+
+export KUBECTL_KYAML=true

@@ -42,6 +42,8 @@ brew tap 1password/tap
 brew install --cask 1password/tap/1password-cli
 brew install bash
 brew install btop
+brew install bat
+brew install lsd
 brew install coreutils
 brew install gopls
 brew install ruff # Python linter
@@ -60,7 +62,9 @@ brew install shellcheck
 brew install markdownlint-cli2
 brew install proselint
 brew install yaml-language-server
+brew install helm-ls
 brew install yamlfmt
+brew install actionlint
 brew install tree-sitter-cli
 brew install gh
 brew install kubernetes-cli

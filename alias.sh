@@ -110,8 +110,6 @@ alias alert='notify-send -i /usr/share/icons/gnome/32x32/apps/gnome-terminal.png
 
 alias fontlist="fc-list '' family | sort -u"
 alias fontupdate='fc-cache -v -f'
-alias linecount='wc -l $1'
-alias wordcount='wc -w $1'
 alias epochtime='date +%s'
 alias timestamp='date "+%Y%m%dT%H%M%S"'
 alias heute='date +"%A, %-d. %B %Y"'

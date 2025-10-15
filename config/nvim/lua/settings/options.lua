@@ -41,5 +41,6 @@ vim.opt.winborder = "solid" -- https://neovim.io/doc/user/options.html#'winborde
 vim.filetype.add({
   pattern = {
     [".*/templates/.*%.yaml"] = "helm",
+    [".*/.github/workflows/.*%.yaml"] = "yaml.ghaction",
   },
 })

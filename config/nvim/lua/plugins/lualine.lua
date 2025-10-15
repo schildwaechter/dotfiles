@@ -73,7 +73,7 @@ return {
                 },
                 "filename",
             },
-            lualine_x = { "encoding", "fileformat", "filetype", "diagnostics" },
+            lualine_x = { "copilot", "encoding", "fileformat", "filetype", "diagnostics" },
         },
         })
     end,

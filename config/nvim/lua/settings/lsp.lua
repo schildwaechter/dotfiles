@@ -1,9 +1,11 @@
 vim.lsp.enable({
     "gopls",
+    "helmls",
     "ltex_plus",
     "lua_ls",
     "marksman",
     "pylsp",
+    "terraformls",
     "yamlls",
 })
 
