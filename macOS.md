@@ -36,10 +36,21 @@ sudo nvram StartupMute=%01
 
 ### Homebrew
 
+Use the Brewfile
+
+```shell
+brew bundle install --file=${HOME}/${FACTER_dotfiles}/Brewfile
+```
+
+Or do it manually
+
 ```shell
 brew install --cask ghostty
 brew tap 1password/tap
 brew install --cask 1password/tap/1password-cli
+brew install cbonsai
+brew install cmatrix
+brew install asciinema
 brew install bash
 brew install btop
 brew install bat
@@ -76,6 +87,7 @@ brew install kustomize
 brew install pre-commit
 brew tap hashicorp/tap
 brew install hashicorp/tap/terraform
+brew install warrensbox/tap/tfswitch
 brew install terraform-docs
 brew install pre-commit
 brew install fluxcd/tap/flux && brew link flux
@@ -125,7 +137,7 @@ brew install macmediakeyforwarder
 
 and
 
-```
+```shell
 xattr -rd com.apple.quarantine /Applications/MacMediaKeyForwarder.app
 ```
 

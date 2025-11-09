@@ -248,6 +248,7 @@ fi
     content =>  inline_template("[user]
   name = <%= scope['::userspace::displayname'] %>
   email = <%= scope['::userspace::mailaddress']%>
+  signingkey = <%= scope['::userspace::gitsigningkey']%>
 
 [diff]
   tool = meld
@@ -263,6 +264,16 @@ fi
 
 [core]
   excludesfile = <%= scope['::homedir']%>/<%= scope['::dotfiles']%>/gitignore_global
+
+[gpg]
+  format = ssh
+
+[gpg \"ssh\"]
+  program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+  allowedSignersFile = <%= scope['::homedir']%>/<%= scope['::dotsecrets']%>/ssh/allowed_git_signers
+
+[commit]
+  gpgsign = true
     ")
   }
 
@@ -311,6 +322,11 @@ Include <%= scope['::homedir']%>/<%= scope['::dotsecrets']%>/ssh/config_<%= scop
       'gitdiff.py',
     ]
     userspace::dotfileexecutable { $dotfileexecutables: }
+  }
+
+  file { "${facts['homedir']}/.zprofile":
+    ensure  => present,
+    content => "export SHELL_SESSIONS_DISABLE=1\n",
   }
 
   file { "${facts['homedir']}/.hushlogin":

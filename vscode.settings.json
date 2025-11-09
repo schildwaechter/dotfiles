@@ -1,84 +1,106 @@
 {
-    "application.shellEnvironmentResolutionTimeout": 15,
-    "autopep8.args": [
-        "--ignore=E501"
-    ],
-    "cSpell.language": "en-GB,de,no",
     "code-runner.runInTerminal": true,
-    "diffEditor.ignoreTrimWhitespace": false,
-    "diffEditor.renderSideBySide": false,
-    "editor.comments.ignoreEmptyLines": false,
-    "editor.copyWithSyntaxHighlighting": false,
-    "editor.detectIndentation": false,
-    "editor.fontFamily": "MesloLGS Nerd Font, Menlo, Monaco, 'Courier New', monospace",
-    "editor.fontLigatures": false,
-    "editor.fontSize": 13,
-    "editor.formatOnSave": true,
-    "editor.guides.indentation": true,
-    "editor.lightbulb.enabled": "off",
-    "editor.minimap.enabled": false,
+    "go.lintTool": "golint",
+    "redhat.telemetry.enabled": false,
+    "go.toolsManagement.autoUpdate": true,
+    "[python]": {
+        "editor.formatOnType": true
+    },
+    "yaml.completion": false,
+    "yaml.format.enable": true,
+    "[json]": {
+        "editor.tabSize": 2
+    },
+    "[yaml]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml",
+        "editor.tabSize": 2
+    },
+    "[github-actions-workflow]": {
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "[helm]": {
+        "editor.tabSize": 2
+    },
+    "cSpell.language": "en-GB,de,no",
+    "vs-kubernetes": {
+        "vs-kubernetes.crd-code-completion": "enabled",
+        "vscode-kubernetes.minikube-path.mac": "/Users/cthiel/.vs-kubernetes/tools/minikube/darwin-arm64/minikube",
+        "vscode-kubernetes.minikube-path-mac": "/Users/cthiel/.vs-kubernetes/tools/minikube/darwin-arm64/minikube",
+        "vscode-kubernetes.kubectl-path-mac": "/Users/cthiel/.vs-kubernetes/tools/kubectl/kubectl"
+    },
+    "files.insertFinalNewline": true,
+    "git.autofetch": false,
     "editor.rulers": [
         80,
         120,
         180
     ],
-    "editor.unicodeHighlight.nonBasicASCII": false,
-    "editor.wordWrapColumn": 120,
-    "evenBetterToml.formatter.alignComments": true,
-    "evenBetterToml.formatter.alignEntries": true,
-    "evenBetterToml.formatter.allowedBlankLines": 2,
-    "evenBetterToml.formatter.columnWidth": 120,
-    "evenBetterToml.formatter.indentEntries": true,
-    "files.insertFinalNewline": true,
-    "files.trimFinalNewlines": true,
-    "files.trimTrailingWhitespace": true,
-    "git.autofetch": false,
-    "github.copilot.selectedCompletionModel": "",
-    "githubPullRequests.pullBranch": "never",
-    "gitlens.codeLens.enabled": false,
-    "gitlens.plusFeatures.enabled": false,
-    "go.experiments": {
-        "testExplorer": true
+    "workbench.colorCustomizations": {
+        "editorRuler.foreground": "#073642" //solarized base02
+        //"editorRuler.foreground": "#28253d" // for rose-pine-moon ??
     },
-    "go.lintTool": "golint",
-    "go.toolsManagement.autoUpdate": true,
+    "editor.fontFamily": "MesloLGS Nerd Font, Menlo, Monaco, 'Courier New', monospace",
+    "editor.fontSize": 13,
+    "editor.formatOnSave": true,
+    "editor.comments.ignoreEmptyLines": false,
+    "editor.detectIndentation": false,
+    "diffEditor.renderSideBySide": false,
+    "gitlens.plusFeatures.enabled": false,
+    "gitlens.codeLens.enabled": false,
+    "githubPullRequests.pullBranch": "never",
+    "workbench.colorTheme": "Solarized Dark",
+    "workbench.iconTheme": "vscode-icons",
     "indentRainbow.colors": [
         "rgba(255,255,64,0.07)",
         "rgba(127,255,127,0.07)",
         "rgba(255,127,255,0.07)",
         "rgba(79,236,236,0.07)"
     ],
-    "makefile.configureOnOpen": true,
-    "redhat.telemetry.enabled": false,
-    "telemetry.telemetryLevel": "off",
     "todohighlight.keywords": [
         "TODO(cthiel):",
         "TODO(cat):"
     ],
-    "vs-kubernetes": {
-        "vs-kubernetes.crd-code-completion": "enabled"
+    "telemetry.telemetryLevel": "off",
+    "editor.minimap.enabled": false,
+    "editor.unicodeHighlight.nonBasicASCII": false,
+    "application.shellEnvironmentResolutionTimeout": 15,
+    "makefile.configureOnOpen": true,
+    "editor.wordWrapColumn": 120,
+    "autopep8.args": [
+        "--ignore=E501"
+    ],
+    "go.experiments": {
+        "testExplorer": true
     },
-    "workbench.colorCustomizations": {
-        "editorRuler.foreground": "#073642"
-    },
-    "workbench.colorTheme": "Solarized Dark",
-    "workbench.iconTheme": "vscode-icons",
-    "workbench.startupEditor": "none",
+    "editor.copyWithSyntaxHighlighting": false,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "files.trimTrailingWhitespace": true,
+    "files.trimFinalNewlines": true,
+    "editor.guides.indentation": true,
     "workbench.tips.enabled": false,
-    "yaml.completion": false,
-    "yaml.format.enable": true,
-    "[github-actions-workflow]": {
+    "editor.lightbulb.enabled": "off",
+    "editor.fontLigatures": false,
+    "workbench.startupEditor": "none",
+    "evenBetterToml.formatter.alignEntries": true,
+    "evenBetterToml.formatter.alignComments": true,
+    "evenBetterToml.formatter.allowedBlankLines": 2,
+    "evenBetterToml.formatter.columnWidth": 120,
+    "evenBetterToml.formatter.indentEntries": true,
+    "github.copilot.selectedCompletionModel": "",
+    "docker.extension.enableComposeLanguageServer": false,
+    "[dockercompose]": {
+        "editor.insertSpaces": true,
         "editor.tabSize": 2,
-        "editor.insertSpaces": true
+        "editor.autoIndent": "advanced",
+        "editor.quickSuggestions": {
+            "other": true,
+            "comments": false,
+            "strings": true
+        },
+        "editor.defaultFormatter": "redhat.vscode-yaml"
     },
-    "[helm]": {
-        "editor.tabSize": 2
-    },
-    "[python]": {
-        "editor.formatOnType": true
-    },
-    "[yaml]": {
-        "editor.defaultFormatter": "redhat.vscode-yaml",
-        "editor.tabSize": 2
-    }
+    "vsicons.dontShowNewVersionMessage": true
 }
+

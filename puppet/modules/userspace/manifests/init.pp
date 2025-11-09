@@ -2,6 +2,7 @@ class userspace (
     $displayname       = $facts['identity']['user'],
     $mailaddress       = "${facts['identity']['user']}@${facts['networking']['fqdn']}",
     $conkyrc           = "${facts['dotfiles']}/conkyrc-default",
+    $gitsigningkey     = '',
     $github_user       = '',
     $grip_github_token = '',
     $sshkeys           = [],

@@ -116,4 +116,12 @@ class userspace::setupdirs (
     linkfile   => '/.kube/kuberc',
   }
 
+  file { "${facts['homedir']}/.config/yamlfmt":
+    ensure  => directory,
+  }
+  ->userspace::dotfilelink { 'yamlfmt':
+    targetfile => "${facts['dotfiles']}/config/yamlfmt/.yamlfmt",
+    linkfile   => '/.config/yamlfmt/.yamlfmt',
+  }
+
 }

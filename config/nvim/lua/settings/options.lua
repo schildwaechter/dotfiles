@@ -42,5 +42,6 @@ vim.filetype.add({
   pattern = {
     [".*/templates/.*%.yaml"] = "helm",
     [".*/.github/workflows/.*%.yaml"] = "yaml.ghaction",
+    [".*/.github/workflows/.*%.yml"] = "yaml.ghaction",
   },
 })

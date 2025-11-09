@@ -27,7 +27,7 @@ fi
 source ${HOME}/${FACTER_dotfiles}/alias.sh
 
 # History settings
-HISTSIZE=5000
+HISTSIZE=25000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
@@ -51,6 +51,7 @@ bindkey -e
 
 alias loadhistory='fc -RI'
 export POWERLEVEL9K_INSTANT_PROMPT=quiet
+export BAT_THEME="Solarized (dark)"
 
 # completion fall-back to case insensitive
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
@@ -70,3 +71,90 @@ export FZF_DEFAULT_OPTS="
 #     --color=pointer:$iris,marker:$love,prompt:$subtle"
 
 export KUBECTL_KYAML=true
+
+k8sdebugshell() {
+    if ! kubectl get pod --namespace carsten-debug k8sdebugger > /dev/null 2>&1; then
+      if ! kubectl get namespace carsten-debug > /dev/null 2>&1; then
+        kubectl create namespace carsten-debug
+      fi
+      kubectl run --namespace carsten-debug k8sdebugger --image=schildwaechter/k8sdebugger \
+        --overrides='{
+            "apiVersion": "v1",
+            "spec": {
+              "containers": [
+                {
+                  "name": "k8sdebugger",
+                  "image": "docker.io/schildwaechter/k8sdebugger:latest",
+                  "resources": {
+                    "limits": {
+                      "memory": "100Mi"
+                    },
+                    "requests": {
+                      "cpu": "5m",
+                      "memory": "10Mi"
+                    }
+                  },
+                  "command": [
+                    "/bin/bash"
+                  ],
+                  "args": [
+                    "-c",
+                    "--",
+                    "while true; do sleep 30; done;"
+                  ]
+                }
+              ],
+              "terminationGracePeriodSeconds": 0
+            }
+          }'
+      kubectl wait --namespace carsten-debug --for=condition=Ready pod/k8sdebugger
+    fi
+    #POD=$(kubectl get pods --namespace carsten-debug -l "app=k8sdebugger" -o jsonpath="{.items[0].metadata.name}")
+    kubectl --namespace carsten-debug exec --stdin --tty k8sdebugger -- /bin/bash
+}
+
+bindkey "\e[3~"  delete-char
+
+bindkey  "^[[1;3A"  beginning-of-line
+bindkey  "^[[1;3B"  end-of-line
+
+bindkey  "^[[H"  beginning-of-line
+bindkey  "^[[F"  end-of-line
+bindkey "^[^[[C" forward-word  ## mac with option/alt
+bindkey "^[^[[D" backward-word ## mac with option/alt
+export WORDCHARS='*?_[]~=&;!#$%^(){}<>'
+
+# bindkey -v # vi key bindings
+# export KEYTIMEOUT=1
+#
+# # v in normal node launches vim
+# export EDITOR='nvim'
+# autoload edit-command-line
+# zle -N edit-command-line
+# bindkey -M vicmd v edit-command-line
+#
+# export VI_MODE_SET_CURSOR=true
+#
+# function zle-keymap-select {
+#   if [[ ${KEYMAP} = vicmd ]]; then
+#     echo -ne '\e[2 q' # block
+#   else
+#     echo -ne '\e[6 q' # beam
+#   fi
+# }
+# zle -N zle-keymap-select
+#
+# function zle-line-init() {
+#   zle -K viins
+#   echo -ne '\e[6 g'
+# }
+# zle -N zle-line-init
+#
+# # yank to system
+# function vi-yank-clipboard {
+#   zle vi-yank
+#   echo "${CUTBUFFER}" | pbcopy -i
+# }
+# zle -N vi-yank-clipboard
+# bindkey -M vicmd 'y' vi-yank-clipboard
+
