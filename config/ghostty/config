@@ -11,12 +11,16 @@ selection-background = #073642
 selection-foreground = #93a1a1
 ##rosepine
 #background=#232136
-keybind = super+shift+left=previous_tab
-keybind = super+shift+right=next_tab
-keybind = super+down=new_split:down
-keybind = super+up=new_split:up
-keybind = super+right=new_split:right
-keybind = super+left=new_split:left
-keybind = super+x=close_surface
+keybind = ctrl+alt+shift+o=previous_tab
+keybind = ctrl+alt+shift+p=next_tab
+keybind = ctrl+alt+shift+h=goto_split:left
+keybind = ctrl+alt+shift+j=goto_split:bottom
+keybind = ctrl+alt+shift+k=goto_split:top
+keybind = ctrl+alt+shift+l=goto_split:right
+keybind = ctrl+alt+shift+m=new_split:down
+keybind = ctrl+alt+shift+,=new_split:up
+keybind = ctrl+alt+shift+.=new_split:right
+keybind = ctrl+alt+shift+n=new_split:left
+keybind = ctrl+alt+shift+x=close_surface
 # a bit more...
 scrollback-limit = 25000000

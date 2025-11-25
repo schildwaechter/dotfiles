@@ -27,7 +27,7 @@ fi
 source ${HOME}/${FACTER_dotfiles}/alias.sh
 
 # History settings
-HISTSIZE=25000
+HISTSIZE=50000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
