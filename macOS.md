@@ -7,7 +7,7 @@ Run the `macos.sh` script for a number of settings.
 To install the keyboard layout, do
 
 ```shell
-sudo cp ~/.dotfiles/us_cat/osx/*.keylayout /Library/Keyboard\ Layouts
+sudo cp ~/.dotfiles/us_cat/macOS/*.keylayout /Library/Keyboard\ Layouts
 ```
 
 then copy the Caps-Lock-Fix

@@ -1,9 +1,9 @@
----
-:hierarchy:
-  - "%{::hostname}"
-  - default
-:backends:
-  - yaml
-:yaml:
-  :datadir: "%{::homedir}/%{::dotsecrets}/hiera"
-
+version: 5
+defaults:
+  datadir: "../../.dotsecrets/hiera"
+  data_hash: yaml_data
+hierarchy:
+  - name: "Node Name"
+    path: "%{trusted.hostname}.yaml"
+  - name: "Defaults"
+    path: "default.yaml"

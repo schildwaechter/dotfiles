@@ -64,7 +64,7 @@ dotfiles ()
     *status)
       cd <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %> && git status && cd -
     ;;
-<% if scope['::operatingsystem'] == 'Debian' -%>
+<% if @os['family'] == 'Debian' -%>
     *software)
       echo \"Running 'sudo puppet apply'\"
       env FACTER_dotfilespath=<%= scope['::homedir'] %>/<%= scope['::dotfiles'] %> sudo -E <%= scope['::puppetbin'] %> apply \\
@@ -78,10 +78,8 @@ dotfiles ()
       echo -e \"dotfiles upgrade  [install dotfiles via puppet apply] \"
       echo -e \"dotfiles update   [update dotfile repository] \"
       echo -e \"dotfiles status   [check dotfiles repository status] \"
-<% if scope['::operatingsystem'] == 'Debian' -%>
+<% if @os['family'] == 'Debian' -%>
       echo -e \"dotfiles software [install software via sudo puppet apply] \\n\"
-<% else -%>
-      echo -e \"\nSoftware is managed through boxen!\"
 <% end -%>
       tput sgr0
     ;;
@@ -90,7 +88,7 @@ dotfiles ()
 _dotfiles()
 {
     local cur=\${COMP_WORDS[COMP_CWORD]}
-<% if scope['::operatingsystem'] == 'Debian' -%>
+<% if @os['family'] == 'Debian' -%>
     COMPREPLY=( \$(compgen -W \"upgrade update status software\" -- \$cur) )
 <% else -%>
     COMPREPLY=( \$(compgen -W \"upgrade update status\" -- \$cur) )
@@ -98,7 +96,7 @@ _dotfiles()
 }
 complete -F _dotfiles dotfiles
 
-<% if scope['::operatingsystem'] == 'Debian' -%>
+<% if @os['family'] == 'Debian' -%>
 alias mvim='gvim'
 <% end -%>
 
@@ -133,7 +131,7 @@ dotfiles ()
     *status)
       cd <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %> && git status && cd -
     ;;
-<% if scope['::operatingsystem'] == 'Debian' -%>
+<% if @os['family'] == 'Debian' -%>
     *software)
       echo \"Running 'sudo puppet apply'\"
       env FACTER_dotfilespath=<%= scope['::homedir'] %>/<%= scope['::dotfiles'] %> sudo -E <%= scope['::puppetbin'] %> apply \\
@@ -147,10 +145,8 @@ dotfiles ()
       echo -e \"dotfiles upgrade  [install dotfiles via puppet apply] \"
       echo -e \"dotfiles update   [update dotfile repository] \"
       echo -e \"dotfiles status   [check dotfiles repository status] \"
-<% if scope['::operatingsystem'] == 'Debian' -%>
+<% if @os['family'] == 'Debian' -%>
       echo -e \"dotfiles software [install software via sudo puppet apply] \\n\"
-<% else -%>
-      echo -e \"\nSoftware is managed through boxen!\"
 <% end -%>
       tput sgr0
     ;;
@@ -159,7 +155,7 @@ dotfiles ()
 _dotfiles()
 {
     local cur=\${COMP_WORDS[COMP_CWORD]}
-<% if scope['::operatingsystem'] == 'Debian' -%>
+<% if @os['family'] == 'Debian' -%>
     COMPREPLY=( \$(compgen -W \"upgrade update status software\" -- \$cur) )
 <% else -%>
     COMPREPLY=( \$(compgen -W \"upgrade update status\" -- \$cur) )
@@ -167,20 +163,13 @@ _dotfiles()
 }
 complete -F _dotfiles dotfiles
 
-<% if scope['::operatingsystem'] == 'Debian' -%>
+<% if @os['family'] == 'Debian' -%>
 alias mvim='gvim'
 <% end -%>
 source ~/.profile
-<% if scope['::operatingsystem'] == 'Darwin' -%>
-if [ -d \"/Applications/MacVim.app/Contents/bin\" ] ; then
-  PATH=\"/Applications/MacVim.app/Contents/bin:\$PATH\"
-fi
-<% end -%>
 
 export DEBFULLNAME='<%= scope['::userspace::displayname'] %>'
 export DEBEMAIL='<%= scope['::userspace::mailaddress'] %>'
-
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # ###############
 # DO EDITS THERE:
@@ -289,7 +278,7 @@ KexAlgorithms curve25519-sha256@libssh.org,ecdh-sha2-nistp521,ecdh-sha2-nistp384
 MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com
 Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr
 
-<% if scope['::operatingsystem'] == 'Darwin' -%>
+<% if @os['family'] == 'Darwin' -%>
 Host *
   AddKeysToAgent yes
   UseKeychain yes
@@ -297,7 +286,8 @@ Host *
   IdentityFile ~/.ssh/id_rsa
 <% end -%>
 
-Include <%= scope['::homedir']%>/<%= scope['::dotsecrets']%>/ssh/config_<%= scope['::hostname']%>
+Include <%= scope['::homedir']%>/<%= scope['::dotsecrets']%>/ssh/config_<%= @networking['hostname']%>
+
     ")
   }
 

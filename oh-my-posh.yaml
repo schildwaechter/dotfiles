@@ -1,172 +1,166 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
 # inspired by https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/M365Princess.omp.json
 
-console_title_template: "{{.PWD}}{{if .Root}} :: root{{end}}"
-version: 3
-final_space: true
 palette:
-  blush: "#DA627D"
-  plum: "#9A348E"
-  salmon: "#FCA17D"
-  sky: "#86BBD8"
-  tan: "#CC3802"
-  teal: "#047E84"
-  teal_blue: "#33658A"
-  white: "#FFFFFF"
-  dark: "#49404f"
+  blush: '#DA627D'
+  dark: '#49404f'
+  plum: '#9A348E'
+  salmon: '#FCA17D'
+  sky: '#86BBD8'
+  tan: '#CC3802'
+  teal: '#047E84'
+  teal_blue: '#33658A'
+  white: '#FFFFFF'
+console_title_template: '{{.PWD}}{{if .Root}} :: root{{end}}'
 blocks:
   - type: prompt
     alignment: left
     segments:
-      - leading_diamond: 
-        template: "{{ .Icon }} "
+      - options:
+          cache_duration: none
+        leading_diamond: 
+        template: '{{ .Icon }} '
         foreground: p:white
         background: p:plum
         type: os
         style: diamond
-        properties:
+      - options:
           cache_duration: none
-      - template: " {{ .Path }} "
+          folder_icon: 
+          home_icon: "~"
+          style: agnoster
+        template: ' {{ .Path }} '
         foreground: p:white
         powerline_symbol: 
         background: p:blush
         type: path
         style: powerline
-        properties:
+      - options:
           cache_duration: none
-          home_icon: "~"
-          folder_icon: ""
-          style: agnoster
-          #style: agnoster_full
-      - template: "  {{ .Full }} "
+        template: '  {{ .Full }} '
         foreground: p:white
         powerline_symbol: 
         background: p:salmon
         type: python
         style: powerline
-        properties:
+      - options:
           cache_duration: none
-      - template: "  {{ .Full }} "
+        template: '  {{ .Full }} '
         foreground: p:white
         powerline_symbol: 
         background: p:sky
         type: go
         style: powerline
-        properties:
-          cache_duration: none
-      - trailing_diamond: 
-        template: " 󰊢 {{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus
-          }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and
-          (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }} 
-          {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{
-          end }}"
-        foreground: p:white
-        powerline_symbol: 
-        background: p:teal_blue
-        type: git
-        style: diamond
-        properties:
+      - options:
           branch_icon: ""
           cache_duration: none
           fetch_stash_count: true
           fetch_status: true
           fetch_upstream_icon: true
+        trailing_diamond: 
+        template: " \U000F02A2 {{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }}  {{ .Working.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Staging.Changed }}  {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0 }}  {{ .StashCount }}{{ end }}"
+        foreground: p:white
+        powerline_symbol: 
+        background: p:teal_blue
+        type: git
+        style: diamond
   - type: prompt
-    #- type: rprompt
     alignment: right
     segments:
-      - template: " ⚡"
-        foreground: "#FFD700"
+      - options:
+          cache_duration: none
+        template: ' ⚡'
+        foreground: '#FFD700'
         powerline_symbol: 
-        background: "#86BBD8"
+        background: '#86BBD8'
         type: root
         style: powerline
         invert_powerline: true
-        properties:
+      - options:
           cache_duration: none
-      - template: ' 󱃾 {{ last ( splitList "_" .Cluster ) }}{{if .Namespace}}/{{.Namespace}}{{end}} '
+        template: " \U000F10FE {{ last ( splitList \"_\" .Cluster ) }}{{if .Namespace}}/{{.Namespace}}{{end}} "
         foreground: p:white
         powerline_symbol: 
         background: p:sky
         type: kubectl
         style: powerline
         invert_powerline: true
-        properties:
+      - options:
           cache_duration: none
-      - template: ' 󱁢 {{ if not (eq .WorkspaceName "default")}}{{.WorkspaceName}}{{end}} '
+        template: " \U000F1062 {{ if not (eq .WorkspaceName \"default\")}}{{.WorkspaceName}}{{end}} "
         foreground: p:white
         powerline_symbol: 
         background: p:teal_blue
         type: terraform
         style: powerline
         invert_powerline: true
-        properties:
+      - options:
+          always_enabled: true
           cache_duration: none
-      - template: "{{ if .SSHSession }}  {{ .UserName }}@{{ .HostName }} {{ end }}"
+        template: '{{ if .SSHSession }}  {{ .UserName }}@{{ .HostName }} {{ end }}'
         foreground: p:white
         powerline_symbol: 
         background: p:salmon
         type: session
         style: powerline
         invert_powerline: true
-        properties:
+      - options:
           always_enabled: true
-          cache_duration: none
-      - template: "  {{ .FormattedMs }} "
+          style: amarillo
+        template: '  {{ .FormattedMs }} '
         foreground: p:white
         powerline_symbol: 
         background: p:dark
         type: executiontime
         style: powerline
         invert_powerline: true
-        properties:
+      - options:
           always_enabled: true
-          style: amarillo
-      - leading_diamond: 
+          cache_duration: none
+        leading_diamond: 
         trailing_diamond: 
-        template: "{{ if eq .Code 0 }} ♥ {{ else }} 󰈸 {{ end }}"
+        template: "{{ if eq .Code 0 }} ♥ {{ else }} \U000F0238 {{ end }}"
         foreground: p:white
         background: p:teal
         type: status
         style: diamond
         background_templates:
-          - "{{ if .Error }}#e91e63{{ end }}"
+          - '{{ if .Error }}#e91e63{{ end }}'
         invert_powerline: true
-        properties:
-          always_enabled: true
-          cache_duration: none
   - type: prompt
     alignment: left
-    newline: true
     segments:
-      - template: "  "
+      - options:
+          cache_duration: none
+        template: '  '
         type: root
         style: plain
-        properties:
+      - options:
           cache_duration: none
-      - template: ❯
+        template: ❯
         foreground: p:white
         type: text
         style: plain
-        properties:
-          cache_duration: none
+    newline: true
 tooltips:
-  - type: gcp
+  - leading_diamond: 
+    trailing_diamond: 
+    template: '  {{.Project}} :: {{.Account}} '
+    foreground: '#193549'
+    background: p:salmon
+    type: gcp
+    style: diamond
     tips:
       - gcloud
-    style: diamond
-    foreground: "#193549"
-    background: p:salmon
-    leading_diamond: 
+  - leading_diamond: 
     trailing_diamond: 
-    template: "  {{.Project}} :: {{.Account}} "
-  - type: az
+    template: '  {{.TenantDisplayName}}/{{ .Name }} :: {{.User.Name}}'
+    foreground: '#193549'
+    background: p:salmon
+    type: az
+    style: diamond
     tips:
       - az
       - azcopy
-    style: diamond
-    foreground: "#193549"
-    background: p:salmon
-    leading_diamond: 
-    trailing_diamond: 
-    template: "  {{.TenantDisplayName}}/{{ .Name }} :: {{.User.Name}}"
+version: 4
+final_space: true
