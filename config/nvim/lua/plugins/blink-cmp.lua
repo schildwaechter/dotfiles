@@ -1,15 +1,32 @@
+local fuzzy_opt = {}
+---@diagnostic disable-next-line: undefined-field
+if vim.loop.os_uname().sysname == "Darwin" then
+  ---@diagnostic disable-next-line: undefined-field
+  if vim.loop.os_uname().machine == "x86_64" then
+    fuzzy_opt = { implementation = "lua" }
+  end
+end
+
 return {
   "saghen/blink.cmp",
   optional = true,
-  dependencies = { "fang2hou/blink-copilot" },
+  dependencies = {
+    "fang2hou/blink-copilot",
+    opts = {
+      max_completions = 1, -- Global default for max completions
+      max_attempts = 2, -- Global default for max attempts
+    },
+  },
   -- dependencies = {
   --   {
   --     "giuxtaposition/blink-cmp-copilot",
   --   },
   -- },
   opts = {
+    fuzzy = fuzzy_opt,
     sources = {
-      default = { "copilot", "lsp", "path", "snippets", "buffer" },
+      -- default = { "copilot", "lsp", "path", "snippets", "buffer" },
+      default = { "lsp", "path", "snippets", "buffer" },
       -- default = {},
       providers = {
         copilot = {
@@ -18,54 +35,31 @@ return {
           score_offset = 100,
           async = true,
           enabled = true,
-          transform_items = function(_, items)
-            local CompletionItemKind = require("blink.cmp.types").CompletionItemKind
-            local kind_idx = #CompletionItemKind + 1
-            CompletionItemKind[kind_idx] = "Copilot"
-            for _, item in ipairs(items) do
-              item.kind = kind_idx
-            end
-            return items
-          end,
+          opts = {
+            -- Local options override global ones
+            max_completions = 3, -- Override global max_completions
+
+            -- Final settings:
+            -- * max_completions = 3
+            -- * max_attempts = 2
+            -- * all other options are default
+            -- max_completions = 3,
+            max_attempts = 4,
+            kind_name = "Copilot", ---@type string | false
+            kind_icon = " ", ---@type string | false
+            kind_hl = false, ---@type string | false
+            debounce = 200, ---@type integer | false
+            auto_refresh = {
+              backward = true,
+              forward = true,
+            },
+          },
         },
       },
     },
     appearance = {
-      use_nvim_cmp_as_default = true,
+      -- use_nvim_cmp_as_default = true,
       nerd_font_variant = "mono",
-      kind_icons = {
-        Copilot = "",
-        Text = "󰉿",
-        Method = "󰊕",
-        Function = "󰊕",
-        Constructor = "󰒓",
-
-        Field = "󰜢",
-        Variable = "󰆦",
-        Property = "󰖷",
-
-        Class = "󱡠",
-        Interface = "󱡠",
-        Struct = "󱡠",
-        Module = "󰅩",
-
-        Unit = "󰪚",
-        Value = "󰦨",
-        Enum = "󰦨",
-        EnumMember = "󰦨",
-
-        Keyword = "󰻾",
-        Constant = "󰏿",
-
-        Snippet = "󱄽",
-        Color = "󰏘",
-        File = "󰈔",
-        Reference = "󰬲",
-        Folder = "󰉋",
-        Event = "󱐋",
-        Operator = "󰪚",
-        TypeParameter = "󰬛",
-      },
     },
     completion = {
     --   enabled_providers = { "copilot", "lsp", "path", "buffer" },
