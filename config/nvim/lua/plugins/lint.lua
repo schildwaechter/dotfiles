@@ -14,6 +14,15 @@ return {
       text = { "proselint" },
     }
 
+    -- linters = {
+    --   ['markdownlint-cli2'] = {
+    --     args = {
+    --       '--config',
+    --       vim.fn.stdpath('config') .. '/lua/plugins/cfg_linters/global.markdownlint-cli2.jsonc',
+    --       '--',
+    --     },
+    --   },
+
     -- To allow other plugins to add linters to require('lint').linters_by_ft,
     -- instead set linters_by_ft like this:
     -- lint.linters_by_ft = lint.linters_by_ft or {}

@@ -262,3 +262,5 @@ activate-venv() {
     source "$HOME/.venv/$selected_env/bin/activate"
   fi
 }
+
+alias avante='nvim -c "lua vim.defer_fn(function()require(\"avante.api\").zen_mode()end, 100)"'

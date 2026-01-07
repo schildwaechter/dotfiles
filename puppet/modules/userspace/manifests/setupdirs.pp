@@ -80,6 +80,14 @@ class userspace::setupdirs (
     linkfile   => '/.config/ghostty/config',
   }
 
+  file { "${facts['homedir']}/.config/bat":
+    ensure  => directory,
+  }
+  ->userspace::dotfilelink { 'bat-config':
+    targetfile => "${facts['dotfiles']}/config/bat/config",
+    linkfile   => '/.config/bat/config',
+  }
+
 
   file { "${facts['homedir']}/.config/aerospace":
     ensure  => directory,

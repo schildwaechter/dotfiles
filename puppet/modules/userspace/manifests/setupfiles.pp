@@ -316,7 +316,7 @@ Include <%= scope['::homedir']%>/<%= scope['::dotsecrets']%>/ssh/config_<%= @net
 
   file { "${facts['homedir']}/.zprofile":
     ensure  => present,
-    content => "export SHELL_SESSIONS_DISABLE=1\n",
+    content => "eval \"$(/usr/local/bin/brew shellenv)\"\nexport SHELL_SESSIONS_DISABLE=1\n",
   }
 
   file { "${facts['homedir']}/.hushlogin":
