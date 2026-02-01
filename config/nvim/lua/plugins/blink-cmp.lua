@@ -68,7 +68,7 @@ return {
       },
     },
     completion = {
-      enabled_providers = { "copilot", "lsp", "path", "buffer" },
+    --   enabled_providers = { "copilot", "lsp", "path", "buffer" },
       -- enabled_providers = { "copilot", "lsp", "path", "buffer", "snippets" },
       menu = {
         border = nil,

@@ -6,6 +6,7 @@ class userspace::setupfiles {
     'dircolors',
     'inputrc',
     'locale',
+    'markdownlint-cli2.jsonc',
     'p10k.zsh',
     'screenrc',
     'toprc',
@@ -314,9 +315,20 @@ Include <%= scope['::homedir']%>/<%= scope['::dotsecrets']%>/ssh/config_<%= @net
     userspace::dotfileexecutable { $dotfileexecutables: }
   }
 
+
+
+
+
   file { "${facts['homedir']}/.zprofile":
     ensure  => present,
-    content => "export SHELL_SESSIONS_DISABLE=1\n",
+    content => inline_template("# custom settings
+<% if @os['family'] == 'Darwin' and @os['architecture'] == 'arm64' -%>
+eval \"$(/opt/homebrew/bin/brew shellenv)\"
+<%- elsif @os['family'] == 'Darwin' and @os['architecture'] == 'amd64' -%>
+eval \"$(/usr/local/bin/brew shellenv)\"
+<% end -%>
+export SHELL_SESSIONS_DISABLE=1
+    ")
   }
 
   file { "${facts['homedir']}/.hushlogin":

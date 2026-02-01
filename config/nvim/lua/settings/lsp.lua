@@ -8,6 +8,7 @@ vim.lsp.enable({
   "marksman",
   "pylsp",
   "terraformls",
+  "tilt",
   "yamlls",
 })
 

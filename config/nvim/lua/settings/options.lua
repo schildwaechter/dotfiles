@@ -38,6 +38,10 @@ vim.opt.splitbelow = true -- split down
 vim.hl.priorities.semantic_tokens = 95 -- Or any number lower than 100, treesitter's priority level
 vim.opt.winborder = "solid" -- https://neovim.io/doc/user/options.html#'winborder'
 
+vim.opt.title = true
+-- Set the title string to show "Neovim" with the current working directory and open file name
+vim.opt.titlestring = "Neovim: " .. vim.fn.fnamemodify(vim.fn.getcwd(), ":t") .. "/%f"
+
 vim.filetype.add({
   pattern = {
     [".*/templates/.*%.yaml"] = "helm",

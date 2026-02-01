@@ -9,6 +9,9 @@ defaults:
     options:
       - name: interactive
         default: "true"
+credentialPluginPolicy: Allowlist
+credentialPluginAllowlist:
+  - name: kubelogin
 aliases:
 - name: getj
   command: get

@@ -124,6 +124,7 @@ alias k='kubectl'
 alias tf='terraform'
 alias kubcetl='kubectl'
 alias terrafrom='terraform'
+alias yless="jless --yaml"
 
 if [[ $(uname) == 'Darwin' ]]; then
   alias code="open -a 'Visual Studio Code'"

@@ -70,6 +70,8 @@ export FZF_DEFAULT_OPTS="
 #     --color=spinner:$gold,info:$foam
 #     --color=pointer:$iris,marker:$love,prompt:$subtle"
 
+export LESSCHARSET=utf-8
+
 export KUBECTL_KYAML=true
 
 k8sdebugshell() {

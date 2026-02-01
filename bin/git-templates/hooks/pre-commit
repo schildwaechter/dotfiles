@@ -14,12 +14,11 @@ echo "### Committing as: $(git var GIT_COMMITTER_IDENT) with author $(git var GI
 echo "### Performing Syntax checks ###"
 
 # PUPPET
-if [ "$(command -v puppet)" ] ; then
-  for file in $(git diff --name-only --cached | grep -E '\.(pp)')
-  do
-    if [[ -f $file && $file == *.pp ]] ; then
+if [ "$(command -v puppet)" ]; then
+  for file in $(git diff --name-only --cached | grep -E '\.(pp)'); do
+    if [[ -f $file && $file == *.pp ]]; then
       puppet parser validate "${file}"
-      if [[ $? -ne 0 ]] ; then
+      if [[ $? -ne 0 ]]; then
         echo "ERROR: puppet parser failed at: $file"
         syntax_is_bad=1
       else
@@ -30,12 +29,11 @@ if [ "$(command -v puppet)" ] ; then
 fi
 
 # ERB TEMPLATE
-if [ "$(command -v erb)" ] && [ "$(command -v ruby)" ] ; then
-  for file in $(git diff --name-only --cached | grep -E '\.(erb)')
-  do
-    if [[ -f $file ]] ; then
-      erb -P -x -T '-' "${file}" | ruby -c > /dev/null
-      if [[ $? -ne 0 ]] ; then
+if [ "$(command -v erb)" ] && [ "$(command -v ruby)" ]; then
+  for file in $(git diff --name-only --cached | grep -E '\.(erb)'); do
+    if [[ -f $file ]]; then
+      erb -P -x -T '-' "${file}" | ruby -c >/dev/null
+      if [[ $? -ne 0 ]]; then
         echo "ERROR: ruby template parser failed at: $file"
         syntax_is_bad=1
       else
@@ -46,12 +44,11 @@ if [ "$(command -v erb)" ] && [ "$(command -v ruby)" ] ; then
 fi
 
 # EPP TEMPLATE
-if [ "$(command -v puppet)" ] ; then
-  for file in $(git diff --name-only --cached | grep -E '\.(epp)')
-  do
-    if [[ -f $file ]] ; then
+if [ "$(command -v puppet)" ]; then
+  for file in $(git diff --name-only --cached | grep -E '\.(epp)'); do
+    if [[ -f $file ]]; then
       puppet epp validate "${file}"
-      if [[ $? -ne 0 ]] ; then
+      if [[ $? -ne 0 ]]; then
         echo "ERROR: puppet template parser failed at: $file"
         syntax_is_bad=1
       else
@@ -62,15 +59,20 @@ if [ "$(command -v puppet)" ] ; then
 fi
 
 # YAML
-if [ "$(command -v ruby)" ] ; then
+if [ "$(command -v yq)" ]; then
   function checkyaml() {
-    ruby -e "require 'yaml'; YAML.load_file('$1')"
+    yq eval '.' "$1" >/dev/null 2>&1
+    return $?
   }
-  for file in $(git diff --name-only --cached | grep -E '\.(yaml)')
-  do
-    if [[ -f $file ]] ; then
+  for file in $(git diff --name-only --cached | grep -E '\.(yaml)'); do
+    # Skip Helm chart templates
+    if [[ $file =~ /templates/ ]] && [[ -f $(dirname "$file")/../Chart.yaml || -f $(dirname "$file")/../../Chart.yaml ]]; then
+      echo "SKIP: $file is a Helm chart template"
+      continue
+    fi
+    if [[ -f $file ]]; then
       checkyaml "${file}"
-      if [[ $? -ne 0 ]] ; then
+      if [[ $? -ne 0 ]]; then
         echo "ERROR: YAML syntax validation failed at: $file"
         syntax_is_bad=1
       else
@@ -81,12 +83,11 @@ if [ "$(command -v ruby)" ] ; then
 fi
 
 #METADATA.JSON
-if [ "$(command -v metadata-json-lint)" ] ; then
-  for file in $(git diff --name-only --cached | grep -E '(metadata)\.(json)')
-  do
-    if [[ -f $file ]] ; then
+if [ "$(command -v metadata-json-lint)" ]; then
+  for file in $(git diff --name-only --cached | grep -E '(metadata)\.(json)'); do
+    if [[ -f $file ]]; then
       metadata-json-lint "${file}"
-      if [[ $? -ne 0 ]] ; then
+      if [[ $? -ne 0 ]]; then
         echo "ERROR: metadata.json linting failed at: $file"
         syntax_is_bad=1
       else
@@ -97,17 +98,16 @@ if [ "$(command -v metadata-json-lint)" ] ; then
 fi
 
 #Markdown
-if [ "$(command -v mdl)" ] ; then
-  for file in $(git diff --name-only --cached | grep -E '\.(md)')
-  do
-    if [[ -f $file ]] ; then
+if [ "$(command -v mdl)" ]; then
+  for file in $(git diff --name-only --cached | grep -E '\.(md)'); do
+    if [[ -f $file ]]; then
       mdl "${file}"
-      if [[ $? -ne 0 ]] ; then
+      if [[ $? -ne 0 ]]; then
         echo "ERROR: markdown linting failed at: $file"
         syntax_is_bad=1
       else
         gofmt -l "${file}"
-        if [[ $? -ne 0 ]] ; then
+        if [[ $? -ne 0 ]]; then
           echo "ERROR: markdown linting failed at: $file"
           syntax_is_bad=1
         else
@@ -119,17 +119,16 @@ if [ "$(command -v mdl)" ] ; then
 fi
 
 #GOLANG
-if [ "$(command -v go)" ] && [ "$(command -v golint)" ] ; then
-  for file in $(git diff --name-only --cached | grep -E '\.(go)')
-  do
-    if [[ -f $file ]] ; then
+if [ "$(command -v go)" ] && [ "$(command -v golint)" ]; then
+  for file in $(git diff --name-only --cached | grep -E '\.(go)'); do
+    if [[ -f $file ]]; then
       golint -set_exit_status "${file}"
-      if [[ $? -ne 0 ]] ; then
+      if [[ $? -ne 0 ]]; then
         echo "ERROR: GO linting failed at: $file"
         syntax_is_bad=1
       else
         gofmt -l "${file}"
-        if [[ $? -ne 0 ]] ; then
+        if [[ $? -ne 0 ]]; then
           echo "ERROR: GO fmt failed at: $file"
           syntax_is_bad=1
         else
@@ -141,17 +140,18 @@ if [ "$(command -v go)" ] && [ "$(command -v golint)" ] ; then
 fi
 
 #TERRAFORM
-if [ "$(command -v terraform)" ] && [ "$(command -v tflint)" ] ; then
-  for file in $(git diff --name-only --cached | grep -E '\.(tf)$')
-  do
-    if [[ -f $file ]] ; then
+if [ "$(command -v terraform)" ] && [ "$(command -v tflint)" ]; then
+  has_tf_files=0
+  for file in $(git diff --name-only --cached | grep -E '\.(tf)$'); do
+    has_tf_files=1
+    if [[ -f $file ]]; then
       terraform fmt -check "${file}"
-      if [[ $? -ne 0 ]] ; then
+      if [[ $? -ne 0 ]]; then
         echo "ERROR: Formating wrong for: ${file}"
         syntax_is_bad=1
       else
         tflint --minimum-failure-severity=error --filter="${file}"
-        if [[ $? -ne 0 ]] ; then
+        if [[ $? -ne 0 ]]; then
           echo "ERROR: TFlint failed at: $file"
           syntax_is_bad=1
         else
@@ -161,10 +161,10 @@ if [ "$(command -v terraform)" ] && [ "$(command -v tflint)" ] ; then
     fi
   done
   # validate only if we haven't failed already
-  if [[ ! $syntax_is_bad -eq 1 ]] ; then
+  if [[ $syntax_is_bad -ne 1 ]] && [[ $has_tf_files -eq 1 ]]; then
     echo -n "Performing Terraform validate ..."
     terraform validate
-    if [[ $? -ne 0 ]] ; then
+    if [[ $? -ne 0 ]]; then
       echo "\nERROR: Terraform validate failed."
       syntax_is_bad=1
     else
@@ -173,13 +173,10 @@ if [ "$(command -v terraform)" ] && [ "$(command -v tflint)" ] ; then
   fi
 fi
 
-
-if [[ $syntax_is_bad -eq 1 ]]
-then
+if [[ $syntax_is_bad -eq 1 ]]; then
   echo "FATAL: Syntax is bad. See above errors"
   echo "Aborting"
   exit 1
 else
   echo "Everything looks good."
 fi
-

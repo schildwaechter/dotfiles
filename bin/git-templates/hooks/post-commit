@@ -8,7 +8,6 @@ else
 fi
 
 # Copy last commit hash to clipboard on commit
-if [ $(command -v "${clipcopy}") ] ; then
+if [ $(command -v "${clipcopy}") ]; then
   git log -1 --format=format:%H | $clipcopy
 fi
-
