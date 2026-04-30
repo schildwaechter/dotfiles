@@ -78,10 +78,21 @@ blocks:
         invert_powerline: true
       - options:
           cache_duration: none
+        template: '{{ if eq .Env.SVAIKUBECAGE "true" }} SVAI-KubeCage {{ end }}'
+        foreground: p:white
+        powerline_symbol: 
+        background: p:plum
+        type: text
+        style: powerline
+        invert_powerline: true
+      - options:
+          cache_duration: none
         template: " \U000F10FE {{ last ( splitList \"_\" .Cluster ) }}{{if .Namespace}}/{{.Namespace}}{{end}} "
         foreground: p:white
         powerline_symbol: 
         background: p:sky
+        background_templates:
+          - '{{ if eq .Env.SVAIKUBECAGE "true" }}p:blush{{ end }}'
         type: kubectl
         style: powerline
         invert_powerline: true

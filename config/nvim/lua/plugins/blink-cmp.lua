@@ -1,3 +1,12 @@
+local fuzzy_opt = {}
+---@diagnostic disable-next-line: undefined-field
+if vim.loop.os_uname().sysname == "Darwin" then
+  ---@diagnostic disable-next-line: undefined-field
+  -- if vim.loop.os_uname().machine == "x86_64" then
+  fuzzy_opt = { implementation = "lua" }
+  -- end
+end
+
 return {
   "saghen/blink.cmp",
   optional = true,
@@ -8,6 +17,7 @@ return {
   --   },
   -- },
   opts = {
+    fuzzy = fuzzy_opt,
     sources = {
       default = { "copilot", "lsp", "path", "snippets", "buffer" },
       -- default = {},
@@ -68,7 +78,7 @@ return {
       },
     },
     completion = {
-    --   enabled_providers = { "copilot", "lsp", "path", "buffer" },
+      --   enabled_providers = { "copilot", "lsp", "path", "buffer" },
       -- enabled_providers = { "copilot", "lsp", "path", "buffer", "snippets" },
       menu = {
         border = nil,

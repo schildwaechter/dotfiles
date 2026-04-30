@@ -24,3 +24,7 @@ keybind = ctrl+alt+shift+n=new_split:left
 keybind = ctrl+alt+shift+x=close_surface
 # a bit more...
 scrollback-limit = 25000000
+# more practical workdir inheritance
+window-inherit-working-directory = false
+tab-inherit-working-directory = false
+split-inherit-working-directory = true

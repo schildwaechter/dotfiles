@@ -18,6 +18,7 @@ return require("schema-companion").setup_client(
     cmd = { "yaml-language-server", "--stdio" },
     filetypes = {
       "yaml",
+      "yaml.helm-values",
       "yaml.ghaction",
       "yaml.gitlab-ci",
       "yaml.compose",
