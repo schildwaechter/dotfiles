@@ -10,6 +10,7 @@ end
 return {
   "saghen/blink.cmp",
   optional = true,
+  version = "1.*",
   dependencies = { "fang2hou/blink-copilot" },
   -- dependencies = {
   --   {
