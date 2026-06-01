@@ -1,57 +1,60 @@
 return {
-  "nvim-treesitter/nvim-treesitter",
-  version = false,
-  build = ":TSUpdate",
-  event = { "BufReadPost", "BufNewFile" },
-  opts = {
-    sync_install = false,
-    ignore_install = { "javascript" },
-    highlight = {
-      enable = true,
-      additional_vim_regex_highlighting = false,
-    },
-    indent = { enable = true },
-    auto_install = true,
-    ensure_installed = {
-      "bash",
-      "c",
-      "go",
-      "gomod",
-      "gosum",
-      "gowork",
-      "hcl",
-      "helm",
-      "html",
-      "javascript",
-      "json",
-      "lua",
-      "luadoc",
-      "luap",
-      "query",
-      "regex",
-      "rust",
-      "terraform",
-      "vim",
-      "vimdoc",
-      "yaml",
-    },
-    incremental_selection = {
-      enable = true,
-      keymaps = {
-        init_selection = "<leader>vv",
-        node_incremental = "+",
-        scope_incremental = false,
-        node_decremental = "_",
-      },
-    },
-  },
-  -- config = function()
-  --     -- In nvim-treesitter 1.0+, highlight and indent are auto-enabled
-  --     -- No setup() call needed for basic functionality
-  --
-  --     -- Enable folding
-  --     vim.opt.foldmethod = "expr"
-  --     vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
-  --     vim.opt.foldlevel = 99 -- Start with all folds open
-  -- end,
+	"nvim-treesitter/nvim-treesitter",
+	branch = "main",
+	lazy = false,
+	build = ":TSUpdate",
+	event = { "BufReadPost", "BufNewFile" },
+	config = function()
+		local parsers = require("nvim-treesitter")
+		local ts_config = require("nvim-treesitter.config")
+
+		parsers.setup({
+			install_dir = vim.fn.stdpath("data") .. "/site",
+		})
+
+		local ensure_installed = {
+			"bash",
+			"c",
+			"go",
+			"gomod",
+			"gosum",
+			"gowork",
+			"hcl",
+			"helm",
+			"html",
+			"javascript",
+			"json",
+			"lua",
+			"luadoc",
+			"luap",
+			"query",
+			"regex",
+			"rust",
+			"terraform",
+			"vim",
+			"vimdoc",
+			"yaml",
+		}
+
+		local installed = ts_config.get_installed()
+		local missing = vim.tbl_filter(function(lang)
+			return not vim.list_contains(installed, lang)
+		end, ensure_installed)
+
+		if #missing > 0 then
+			parsers.install(missing)
+		end
+
+		vim.api.nvim_create_autocmd("FileType", {
+			group = vim.api.nvim_create_augroup("treesitter-features", { clear = true }),
+			callback = function(args)
+				pcall(vim.treesitter.start, args.buf)
+				if vim.treesitter.foldexpr then
+					vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+					vim.wo.foldmethod = "expr"
+				end
+				vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+			end,
+		})
+	end,
 }
