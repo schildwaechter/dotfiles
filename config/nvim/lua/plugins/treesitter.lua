@@ -52,6 +52,7 @@ return {
 				if vim.treesitter.foldexpr then
 					vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 					vim.wo.foldmethod = "expr"
+					vim.wo.foldlevel = 99
 				end
 				vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 			end,
