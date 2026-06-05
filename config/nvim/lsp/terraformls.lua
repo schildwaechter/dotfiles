@@ -29,5 +29,8 @@ return {
         },
     },
     cmd = { "terraform-ls", "serve" },
+    on_attach = function(client)
+        client.server_capabilities.semanticTokensProvider = nil
+    end,
     root_markers = { ".git" },
 }

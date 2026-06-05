@@ -22,6 +22,9 @@ vim.o.sidescrolloff = 3 -- Minimal number of screen columns either side of curso
 
 vim.o.cursorline = true -- Highlight the current line (default: false)
 
+vim.o.foldlevel = 99 -- Keep folds open by default
+vim.o.foldlevelstart = 99 -- Open files with folds expanded
+
 vim.o.hlsearch = true -- Set highlight on search (default: true)
 vim.o.incsearch = true -- Incremental search while typing (default: false)
 vim.o.showmatch = true -- Show matching brackets when text indicator is over them (default: false)

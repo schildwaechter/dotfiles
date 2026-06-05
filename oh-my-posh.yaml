@@ -78,7 +78,7 @@ blocks:
         invert_powerline: true
       - options:
           cache_duration: none
-        template: '{{ if eq .Env.SVAIKUBECAGE "true" }} SVAI-KubeCage {{ end }}'
+        template: '{{ if eq .Env.SVAISHELL "true" }} SVAI-SHELL {{ end }}'
         foreground: p:white
         powerline_symbol: 
         background: p:plum

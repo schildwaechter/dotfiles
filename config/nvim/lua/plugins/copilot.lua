@@ -15,18 +15,19 @@ return {
       },
       -- panel = { enabled = false, auto_refresh = true },
       panel = { enabled = false },
-      filetypes = {
-        -- explicitly enable/disable filetypes
-        dockerfile = true,
-        go = true,
-        lua = true,
-        make = true,
-        python = true,
-        sh = true,
-        terraform = true,
-        yaml = true,
-        ["*"] = false, -- disable for all other filetypes and ignore default `filetypes`
-      },
+		filetypes = {
+			-- explicitly enable/disable filetypes
+			dockerfile = true,
+			go = true,
+			lua = true,
+			make = true,
+			python = true,
+			sh = true,
+			terraform = true,
+			["terraform-vars"] = true,
+			yaml = true,
+			["*"] = false, -- disable for all other filetypes and ignore default `filetypes`
+		},
     })
   end,
 }
