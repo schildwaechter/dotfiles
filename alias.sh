@@ -121,6 +121,7 @@ alias ccat='pygmentize -g'
 
 alias v='nvim'
 alias k='kubectl'
+alias wk='watch kubectl'
 alias tf='terraform'
 alias kubcetl='kubectl'
 alias terrafrom='terraform'
