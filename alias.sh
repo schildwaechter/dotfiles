@@ -36,6 +36,10 @@ export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:="${HOME}/.config"}
 alias cp='cp -i'
 alias mv='mv -i'
 
+if [ "$(uname)" = "Darwin" ]; then
+  alias pc="pwd | pbcopy"
+fi
+
 if [[ -n $(which gdircolors &>/dev/null) ]]; then
   test -r ~/.dircolors && eval "$(gdircolors -b ~/.dircolors)" || eval "$(gdircolors -b)"
 
@@ -121,6 +125,7 @@ alias ccat='pygmentize -g'
 
 alias v='nvim'
 alias k='kubectl'
+alias wk='watch kubectl'
 alias tf='terraform'
 alias kubcetl='kubectl'
 alias terrafrom='terraform'

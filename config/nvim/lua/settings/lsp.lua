@@ -1,6 +1,7 @@
 vim.lsp.enable({
   "bashls",
   "copilot",
+  "docker_language_server",
   "gopls",
   "helmls",
   "ltex_plus",

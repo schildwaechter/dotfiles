@@ -148,9 +148,11 @@ oh-my-posh font install meslo
 ```shell
 kubectl krew list
 PLUGIN         VERSION
+klock          v0.9.1
 modify-secret  v0.0.47
 neat           v2.0.4
 tree           v0.4.3
+who-can        v0.4.0
 ```
 
 ```shell
