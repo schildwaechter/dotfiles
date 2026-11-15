@@ -65,13 +65,10 @@ dotfiles ()
     *status)
       cd <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %> && git status && cd -
     ;;
-<% if @os['family'] == 'Debian' -%>
+<% if @os['family'] == 'Debian' || @os['family'] == 'Archlinux' -%>
     *software)
-      echo \"Running 'sudo puppet apply'\"
-      env FACTER_dotfilespath=<%= scope['::homedir'] %>/<%= scope['::dotfiles'] %> sudo -E <%= scope['::puppetbin'] %> apply \\
-        --modulepath <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/puppet/modules --show_diff \\
-        --hiera_config <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/puppet/hiera.yaml \\
-        <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/puppet/manifest.pp
+      echo \"Running system package setup\"
+      sudo <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/linux.sh --packages
     ;;
 <% end -%>
     *)
@@ -79,8 +76,8 @@ dotfiles ()
       echo -e \"dotfiles upgrade  [install dotfiles via puppet apply] \"
       echo -e \"dotfiles update   [update dotfile repository] \"
       echo -e \"dotfiles status   [check dotfiles repository status] \"
-<% if @os['family'] == 'Debian' -%>
-      echo -e \"dotfiles software [install software via sudo puppet apply] \\n\"
+<% if @os['family'] == 'Debian' || @os['family'] == 'Archlinux' -%>
+      echo -e \"dotfiles software [install system packages via linux.sh] \\n\"
 <% end -%>
       tput sgr0
     ;;
@@ -89,7 +86,7 @@ dotfiles ()
 _dotfiles()
 {
     local cur=\${COMP_WORDS[COMP_CWORD]}
-<% if @os['family'] == 'Debian' -%>
+<% if @os['family'] == 'Debian' || @os['family'] == 'Archlinux' -%>
     COMPREPLY=( \$(compgen -W \"upgrade update status software\" -- \$cur) )
 <% else -%>
     COMPREPLY=( \$(compgen -W \"upgrade update status\" -- \$cur) )
@@ -132,13 +129,10 @@ dotfiles ()
     *status)
       cd <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %> && git status && cd -
     ;;
-<% if @os['family'] == 'Debian' -%>
+<% if @os['family'] == 'Debian' || @os['family'] == 'Archlinux' -%>
     *software)
-      echo \"Running 'sudo puppet apply'\"
-      env FACTER_dotfilespath=<%= scope['::homedir'] %>/<%= scope['::dotfiles'] %> sudo -E <%= scope['::puppetbin'] %> apply \\
-        --modulepath <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/puppet/modules --show_diff \\
-        --hiera_config <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/puppet/hiera.yaml \\
-        <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/puppet/manifest.pp
+      echo \"Running system package setup\"
+      sudo <%= scope['::homedir'] %>/<%= scope['::dotfiles'] %>/linux.sh --packages
     ;;
 <% end -%>
     *)
@@ -146,8 +140,8 @@ dotfiles ()
       echo -e \"dotfiles upgrade  [install dotfiles via puppet apply] \"
       echo -e \"dotfiles update   [update dotfile repository] \"
       echo -e \"dotfiles status   [check dotfiles repository status] \"
-<% if @os['family'] == 'Debian' -%>
-      echo -e \"dotfiles software [install software via sudo puppet apply] \\n\"
+<% if @os['family'] == 'Debian' || @os['family'] == 'Archlinux' -%>
+      echo -e \"dotfiles software [install system packages via linux.sh] \\n\"
 <% end -%>
       tput sgr0
     ;;
@@ -156,7 +150,7 @@ dotfiles ()
 _dotfiles()
 {
     local cur=\${COMP_WORDS[COMP_CWORD]}
-<% if @os['family'] == 'Debian' -%>
+<% if @os['family'] == 'Debian' || @os['family'] == 'Archlinux' -%>
     COMPREPLY=( \$(compgen -W \"upgrade update status software\" -- \$cur) )
 <% else -%>
     COMPREPLY=( \$(compgen -W \"upgrade update status\" -- \$cur) )

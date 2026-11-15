@@ -16,3 +16,40 @@ vim.keymap.set("n", "ycc", "yygccp", { remap = true })
 
 -- taken from nvim-lspconfig
 vim.api.nvim_create_user_command('LspInfo', ':checkhealth vim.lsp', { desc = 'Alias to `:checkhealth vim.lsp`' })
+
+-- Allow accidental use of Shift with quit/write commands
+vim.api.nvim_create_user_command("W", "w<bang> <args>", {
+  bang = true,
+  nargs = "*",
+  complete = "file",
+  desc = "Write (alias for :w)",
+})
+
+vim.api.nvim_create_user_command("Wq", "wq<bang> <args>", {
+  bang = true,
+  nargs = "*",
+  complete = "file",
+  desc = "Write and quit (alias for :wq)",
+})
+
+vim.api.nvim_create_user_command("WQ", "wq<bang> <args>", {
+  bang = true,
+  nargs = "*",
+  complete = "file",
+  desc = "Write and quit (alias for :wq)",
+})
+
+vim.api.nvim_create_user_command("Q", "q<bang>", {
+  bang = true,
+  desc = "Quit (alias for :q)",
+})
+
+vim.api.nvim_create_user_command("QA", "qa<bang>", {
+  bang = true,
+  desc = "Quit all (alias for :qa)",
+})
+
+vim.api.nvim_create_user_command("Qa", "qa<bang>", {
+  bang = true,
+  desc = "Quit all (alias for :qa)",
+})

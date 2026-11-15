@@ -29,33 +29,81 @@ export SUDO_EDITOR
 
 export BROWSER="firefox"
 
-export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:="${HOME}/.config"}
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:="${HOME}/.config"}"
 
 # confirm overwrite
 #set -o noclobber
 alias cp='cp -i'
 alias mv='mv -i'
 
-if [ "$(uname)" = "Darwin" ]; then
+# identify operating system
+is_debian_family() {
+  local ID ID_LIKE
+  [[ -r /etc/os-release ]] || return 1
+  # shellcheck source=/dev/null
+  source /etc/os-release
+  [[ "$ID" == "debian" || "$ID_LIKE" == *"debian"* || "$ID_LIKE" == *"ubuntu"* ]]
+}
+
+is_arch_family() {
+  local ID ID_LIKE
+  [[ -r /etc/os-release ]] || return 1
+  # shellcheck source=/dev/null
+  source /etc/os-release
+  [[ "$ID" == "arch" || "$ID" == "cachyos" || "$ID_LIKE" == *"arch"* ]]
+}
+
+is_macos() {
+  [[ "$(uname -s)" == "Darwin" ]]
+}
+
+
+if command -v wl-copy >/dev/null 2>&1 && [[ -n "${WAYLAND_DISPLAY:-}" ]]; then
+  alias pc="pwd | wl-copy"
+elif command -v pbcopy >/dev/null 2>&1; then
   alias pc="pwd | pbcopy"
+elif command -v xsel >/dev/null 2>&1; then
+  alias ps="pwd | xsel --clipboard"
 fi
 
-if [[ -n $(which gdircolors &>/dev/null) ]]; then
-  test -r ~/.dircolors && eval "$(gdircolors -b ~/.dircolors)" || eval "$(gdircolors -b)"
+if is_arch_family; then
+  alias apt='man pacman'
+  alias apt-get="man pacman"
+fi
+
+if is_debian_family; then
+  alias pacman='man apt'
+fi
+
+if is_macos; then
+  alias apt='man brew'
+  alias pacman='man brew'
+fi
+
+if command -v gdircolors >/dev/null 2>&1; then
+  if [ -r ~/.dircolors ]; then
+    eval "$(gdircolors -b ~/.dircolors)"
+  else
+    eval "$(gdircolors -b)"
+  fi
 
   alias grepc='grep -n --color=auto'
-  alias fgrepc='fgrep -n --color=auto'
-  alias egrepc='egrep -n --color=auto'
-elif [ -x /usr/bin/dircolors ]; then
-  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+  alias fgrepc='grep -F -n --color=auto'
+  alias egrepc='grep -E -n --color=auto'
+elif command -v dircolors >/dev/null 2>&1; then
+  if [ -r ~/.dircolors ]; then
+    eval "$(dircolors -b ~/.dircolors)"
+  else
+    eval "$(dircolors -b)"
+  fi
 
   alias grepc='grep -n --color=auto'
-  alias fgrepc='fgrep -n --color=auto'
-  alias egrepc='egrep -n --color=auto'
+  alias fgrepc='grep -F -n --color=auto'
+  alias egrepc='grep -E -n --color=auto'
 fi
 
 if [[ $(uname) == 'Darwin' ]]; then
-  if [[ -n $(which gls &>/dev/null) ]]; then
+  if command -v gls >/dev/null 2>&1; then
     alias ls='gls -CF    --color=auto'
     alias ks='gls -CF    --color=auto'
     alias l='gls  -lF    --color=auto --time-style=+\ %d.%m.%Y\ %R'
@@ -93,7 +141,7 @@ alias ..4='cd ../../../..'
 alias myinxi='inxi -CDGIMPRS'
 
 if [[ $(uname) == 'Darwin' ]]; then
-  if [[ -n $(which gdu &>/dev/null) ]]; then
+  if command -v gdu >/dev/null 2>&1; then
     alias du='gdu'
     alias du0='gdu --max-depth=0'
     alias du1='gdu --max-depth=1'
@@ -143,7 +191,7 @@ catnocomment() {
   if [ $# -lt 1 ] || [ $# -gt 2 ]; then
     echo "please specify file"
   else
-    egrep -a -v '^[[:space:]]*#' $1 | egrep -a '[[:print:]]'
+    grep -E -a -v '^[[:space:]]*#' "$1" | grep -E -a '[[:print:]]'
   fi
 }
 
@@ -153,7 +201,11 @@ cless() {
 }
 
 grepp() {
-  [ $# -eq 1 ] && perl -00ne "print if /$1/i" || perl -00ne "print if /$1/i" <"$2"
+  if [ $# -eq 1 ]; then
+    perl -00ne "print if /$1/i"
+  else
+    perl -00ne "print if /$1/i" <"$2"
+  fi
 }
 
 hgg() {
@@ -161,47 +213,53 @@ hgg() {
     echo "search shell history"
     echo "usage: hgg [search pattern]"
   else
-    history | grep -i $1 | grep -v hg
+    history | grep -i "$1" | grep -v hg
   fi
 }
 
 # countfiles copyright 2007 - 2010 Christopher Bratusek
 countfiles() {
+  local ewhite eorange egreen eiceblue reset
+  ewhite=$'\e[1;37m'
+  eorange=$'\e[38;5;208m'
+  egreen=$'\e[32m'
+  eiceblue=$'\e[38;5;81m'
+  reset=$'\e[0m'
+
   case $1 in
   *+h)
-    echo $(($(ls --color=no -1 -la . | grep -v ^l | wc -l) - 1))
+    printf '%s\n' "$(find . -maxdepth 1 -mindepth 1 \( -type f -o -type d \) | wc -l | tr -d '[:space:]')"
     ;;
   *-h)
-    echo $(($(ls --color=no -1 -l . | grep -v ^l | wc -l) - 1))
+    printf '%s\n' "$(find . -maxdepth 1 -mindepth 1 \( -type f -o -type d \) ! -name '.*' | wc -l | tr -d '[:space:]')"
     ;;
   *+d)
-    echo $(($(ls --color=no -1 -la . | grep -v ^- | wc -l) - 1))
+    printf '%s\n' "$(find . -maxdepth 1 -mindepth 1 -type d | wc -l | tr -d '[:space:]')"
     ;;
   *-d)
-    echo $(($(ls --color=no -1 -l . | grep -v ^- | wc -l) - 1))
+    printf '%s\n' "$(find . -maxdepth 1 -mindepth 1 -type d ! -name '.*' | wc -l | tr -d '[:space:]')"
     ;;
   *+f)
-    echo $(($(ls --color=no -1 -la . | grep -v ^d | wc -l) - 1))
+    printf '%s\n' "$(find . -maxdepth 1 -mindepth 1 -type f | wc -l | tr -d '[:space:]')"
     ;;
   *-f)
-    echo $(($(ls --color=no -1 -l . | grep -v ^d | wc -l) - 1))
+    printf '%s\n' "$(find . -maxdepth 1 -mindepth 1 -type f ! -name '.*' | wc -l | tr -d '[:space:]')"
     ;;
   *)
-    echo -e "\n${ewhite}Usage:"
-    echo -e "\n${eorange}count_files${ewhite} | ${egreen}+h ${eiceblue}[count files and folders - include hidden ones] \
-			\n${eorange}count_files${ewhite} | ${egreen}-h ${eiceblue}[count files and folders - exclude hidden ones] \
-			\n${eorange}count_files${ewhite} | ${egreen}+d ${eiceblue}[count folders - include hidden ones] \
-			\n${eorange}count_files${ewhite} | ${egreen}-d ${eiceblue}[count folders - exclude hidden ones] \
-			\n${eorange}count_files${ewhite} | ${egreen}+f ${eiceblue}[count files - include hidden ones] \
-			\n${eorange}count_files${ewhite} | ${egreen}-f ${eiceblue}[count files - exclude hidden ones]\n"
-    tput sgr0
+    printf '\n%sUsage:\n' "$ewhite"
+    printf '\n%scount_files%s | %s+h %s[count files and folders - include hidden ones]\n' "$eorange" "$ewhite" "$egreen" "$eiceblue"
+    printf '%scount_files%s | %s-h %s[count files and folders - exclude hidden ones]\n' "$eorange" "$ewhite" "$egreen" "$eiceblue"
+    printf '%scount_files%s | %s+d %s[count folders - include hidden ones]\n' "$eorange" "$ewhite" "$egreen" "$eiceblue"
+    printf '%scount_files%s | %s-d %s[count folders - exclude hidden ones]\n' "$eorange" "$ewhite" "$egreen" "$eiceblue"
+    printf '%scount_files%s | %s+f %s[count files - include hidden ones]\n' "$eorange" "$ewhite" "$egreen" "$eiceblue"
+    printf '%scount_files%s | %s-f %s[count files - exclude hidden ones]\n%s' "$eorange" "$ewhite" "$egreen" "$eiceblue" "$reset"
     ;;
   esac
 }
 
 ### find dead links - copyright 2007 - 2010 Christopher Bratusek
 deadlink() {
-  find -L -type l
+  find -L . -type l
 }
 
 ### generate a random password
@@ -210,61 +268,65 @@ deadlink() {
 # copyright 2007 - 2010 Christopher Bratusek
 randompw() {
   if [[ $2 == "!" ]]; then
-    echo $(cat /dev/urandom | tr -cd '[:graph:]' | head -c ${1:-14})
+    tr -cd '[:graph:]' < /dev/urandom | head -c "${1:-14}"
   else
-    echo $(cat /dev/urandom | tr -cd '[:alnum:]' | head -c ${1:-14})
+    tr -cd '[:alnum:]' < /dev/urandom | head -c "${1:-14}"
   fi
 }
 
 ### Counts files, subdirectories and directory size and displays details
 lls() {
-  echo -n "<$(find . -maxdepth 1 -mindepth 1 -type f | wc -l | tr -d '[:space:]') files>"
-  echo -n " <$(find . -maxdepth 1 -mindepth 1 -type d | wc -l | tr -d '[:space:]') dirs/>"
-  echo -n " <$(find . -maxdepth 1 -mindepth 1 -type l | wc -l | tr -d '[:space:]') links@>"
-  echo " <~$(du -sh . 2>/dev/null | cut -f1)>"
-  ROWS=$(stty size | cut -d' ' -f1)
-  FILES=$(find . -maxdepth 1 -mindepth 1 |
-    wc -l | tr -d '[:space:]')
+  printf '<%s files>' "$(find . -maxdepth 1 -mindepth 1 -type f | wc -l | tr -d '[:space:]')"
+  printf ' <%s dirs/>' "$(find . -maxdepth 1 -mindepth 1 -type d | wc -l | tr -d '[:space:]')"
+  printf ' <%s links@>' "$(find . -maxdepth 1 -mindepth 1 -type l | wc -l | tr -d '[:space:]')"
+  printf ' <~%s>\n' "$(du -sh . 2>/dev/null | cut -f1)"
 }
 
 ### remove latex remnants
 unlatex() {
-  if [ "$1" == "" ]; then
+  if [ -z "$1" ]; then
     return
   fi
+  local i
   i=${1%%.*}
-  rm -f $i.aux $i.toc $i.lof $i.lot $i.los $i.?*~ $i.loa $i.log $i.bbl $i.blg $i.glo
-  rm -f $i.odt $i.tns $i.fax $i.bm $i.out $i.nav $i.snm
-  rm -f $i.mtc* $i.bmt
-  rm -f $i.dvi $i.ps
-  unset i
+  rm -f "$i".aux "$i".toc "$i".lof "$i".lot "$i".los "$i".?*~ "$i".loa "$i".log "$i".bbl "$i".blg "$i".glo
+  rm -f "$i".odt "$i".tns "$i".fax "$i".bm "$i".out "$i".nav "$i".snm
+  rm -f "$i".mtc* "$i".bmt
+  rm -f "$i".dvi "$i".ps
 }
 
 ### general network information
 netinfo() {
-  echo "Internal IPv4 address: " $(ifconfig | grep 'inet addr:' | grep -v '127.0.0.1' | cut -d: -f4 | awk '{ print $1}')
+  local IPV4 IPV6TEST
+  printf 'Internal IPv4 address:  %s\n' "$(ifconfig | grep 'inet addr:' | grep -v '127.0.0.1' | cut -d: -f4 | awk '{ print $1}')"
   IPV4=$(myipv4)
-  echo "External IPv4 address: " $IPV4
-  echo "Internal IPv6 address: " $(ifconfig | grep 'inet6 addr:' | grep -v '1/128' | grep -v 'Scope:Link' | cut -d: -f5- | awk '{ print $1}')
+  printf 'External IPv4 address:  %s\n' "$IPV4"
+  printf 'Internal IPv6 address:  %s\n' "$(ifconfig | grep 'inet6 addr:' | grep -v '1/128' | grep -v 'Scope:Link' | cut -d: -f5- | awk '{ print $1}')"
   IPV6TEST=$(myipv6)
-  if [ $IPV6TEST != $IPV4 ]; then
-    echo "External IPv6 address: " $IPV6TEST
+  if [ "$IPV6TEST" != "$IPV4" ]; then
+    printf 'External IPv6 address:  %s\n' "$IPV6TEST"
   fi
-  echo "MAC: " $(ifconfig | awk '/HWaddr/ { print $NF }')
+  printf 'MAC:  %s\n' "$(ifconfig | awk '/HWaddr/ { print $NF }')"
 }
 
 sourcedotenv() {
   if [ -f .env ]; then
-    set -o allexport && source .env && set +o allexport
+    set -o allexport
+    # shellcheck source=/dev/null
+    source .env
+    local rc=$?
+    set +o allexport
+    return $rc
   fi
 }
 
 activate-venv() {
   # https://seb.jambor.dev/posts/improving-shell-workflows-with-fzf/
   local selected_env
-  selected_env=$(ls -1 ~/.venv/ | fzf)
+  selected_env=$(find ~/.venv -maxdepth 1 -mindepth 1 -type d | sed 's|.*/||' | fzf)
 
   if [ -n "$selected_env" ]; then
+    # shellcheck source=/dev/null
     source "$HOME/.venv/$selected_env/bin/activate"
   fi
 }

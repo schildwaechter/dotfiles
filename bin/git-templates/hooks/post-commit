@@ -1,13 +1,21 @@
-#!/bin/bash
+#!/usr/bin/env bash
+#
+# Git template hook: copy the last commit hash to the system clipboard.
+# Supports Wayland (wl-copy), macOS (pbcopy), and X11 (xsel/xclip).
 
-# tool to copy to clipboard
-if [[ $(uname) == 'Darwin' ]]; then
-  clipcopy='pbcopy'
+set -euo pipefail
+
+commit_hash=$(git log -1 --format=format:%H)
+
+if command -v wl-copy >/dev/null 2>&1 && [[ -n "${WAYLAND_DISPLAY:-}" ]]; then
+  printf '%s' "$commit_hash" | wl-copy
+elif command -v pbcopy >/dev/null 2>&1; then
+  printf '%s' "$commit_hash" | pbcopy
+elif command -v xsel >/dev/null 2>&1; then
+  printf '%s' "$commit_hash" | xsel --clipboard
+elif command -v xclip >/dev/null 2>&1; then
+  printf '%s' "$commit_hash" | xclip -selection clipboard
 else
-  clipcopy='xsel --clipboard'
-fi
-
-# Copy last commit hash to clipboard on commit
-if [ $(command -v "${clipcopy}") ]; then
-  git log -1 --format=format:%H | $clipcopy
+  echo "No clipboard tool found (wl-copy, pbcopy, xsel, xclip); commit hash not copied." >&2
+  exit 1
 fi
