@@ -24,7 +24,7 @@ fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 ## LOAD COMMON ALIASES
-source ${HOME}/${FACTER_dotfiles}/alias.sh
+source "${DOTFILES_DIR:-$HOME/.dotfiles}/alias.sh"
 
 # History settings
 HISTSIZE=50000
@@ -159,4 +159,3 @@ export WORDCHARS='*?_[]~=&;!#$%^(){}<>'
 # }
 # zle -N vi-yank-clipboard
 # bindkey -M vicmd 'y' vi-yank-clipboard
-

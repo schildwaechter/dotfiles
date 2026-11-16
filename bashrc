@@ -39,4 +39,4 @@ then
 fi
 
 ## LOAD COMMON ALIASES
-source alias.sh
+source "${DOTFILES_DIR:-$HOME/.dotfiles}/alias.sh"

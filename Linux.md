@@ -72,14 +72,8 @@ To force a reinstall or upgrade:
 sudo ./linux.sh --lima --force
 ```
 
-## dotfiles command
+## Dotfiles
 
-After running the dotfiles install, the `dotfiles` shell function provides:
-
-```shell
-dotfiles upgrade   # apply dotfiles via puppet (user-space side)
-dotfiles update    # update the dotfiles repository
-dotfiles status    # check the dotfiles repository status
-dotfiles software  # run linux.sh --packages
-```
-
+User configuration is managed by chezmoi. From the dotfiles repository, run
+`./install.sh` once, then use `chezmoi diff` and `chezmoi apply` for future
+updates. System setup remains explicit through `sudo ./linux.sh`.

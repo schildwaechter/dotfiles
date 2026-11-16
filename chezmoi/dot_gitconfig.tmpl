@@ -1,0 +1,31 @@
+[user]
+  name = {{ .gitName | quote }}
+  email = {{ .gitEmail | quote }}
+  signingkey = {{ .gitSigningKey | quote }}
+
+[diff]
+  tool = meld
+
+[difftool]
+  prompt = false
+
+[include]
+  path = {{ .chezmoi.sourceDir }}/../gitconfig
+
+[init]
+  templatedir = {{ .chezmoi.sourceDir }}/../bin/git-templates/
+
+[core]
+  excludesfile = {{ .chezmoi.sourceDir }}/../gitignore_global
+
+[gpg]
+  format = ssh
+
+[gpg "ssh"]
+{{- if eq .chezmoi.os "darwin" }}
+  program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+{{- end }}
+  allowedSignersFile = {{ .chezmoi.homeDir }}/.dotsecrets/ssh/allowed_git_signers
+
+[commit]
+  gpgsign = true

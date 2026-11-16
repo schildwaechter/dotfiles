@@ -28,7 +28,6 @@ Mac software installation is not automated.
 * [MacVim](https://macvim.org/)
 * [Homebrew](https://brew.sh/)
 * [Rectangle](https://rectangleapp.com/)
-* [OpenVox](https://downloads.voxpupuli.org/mac/openvox8/)
 
 ```shell
 sudo nvram StartupMute=%01
@@ -39,7 +38,7 @@ sudo nvram StartupMute=%01
 Use the Brewfile
 
 ```shell
-brew bundle install --file=${HOME}/${FACTER_dotfiles}/Brewfile
+brew bundle install --file=~/.dotfiles/Brewfile
 ```
 
 and fix permissions

@@ -1,0 +1,5 @@
+# Non-secret defaults used by templates. Override identity values in the
+# untracked ~/.config/chezmoi/chezmoi.toml on each machine.
+gitName = ""
+gitEmail = ""
+gitSigningKey = ""

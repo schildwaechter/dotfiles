@@ -1,29 +1,21 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-if which puppet > /dev/null ; then
-  export FACTER_puppetbin=`which puppet`
-elif [[ -x "/opt/puppetlabs/bin/puppet" ]] ; then
-  export FACTER_puppetbin=/opt/puppetlabs/bin/puppet
-else
-  echo "No puppet binary found!"
+set -euo pipefail
+
+if ! command -v chezmoi >/dev/null 2>&1; then
+  printf 'chezmoi is required. Install it first: https://www.chezmoi.io/install/\n' >&2
   exit 1
 fi
 
-export FACTER_homedir=$HOME
-export FACTER_dotfiles=${DOTFILES:=".dotfiles"}
-: ${DOTSECRETS:=".dotsecrets"}
-if [ -e "${HOME}/${DOTSECRETS}" ] ; then
-  export FACTER_dotsecrets=$DOTSECRETS
+dotfiles_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+source_dir="$dotfiles_dir/chezmoi"
+
+if [[ ! -d "$source_dir" ]]; then
+  printf 'chezmoi source directory not found: %s\n' "$source_dir" >&2
+  exit 1
 fi
 
-$FACTER_puppetbin apply --show_diff \
-  --modulepath $HOME/$FACTER_dotfiles/puppet/modules \
-  --hiera_config $HOME/$FACTER_dotfiles/puppet/hiera.yaml \
-  --show_diff $HOME/$FACTER_dotfiles/puppet/manifest.pp
+chezmoi init --source "$source_dir"
+chezmoi diff
 
-if [[ $# -eq 0 ]] ; then
-  echo '---'
-  echo 'Please log out and back in to apply all changes!'
-  echo ''
-fi
-
+printf '\nReview the diff, then run: chezmoi apply\n'
